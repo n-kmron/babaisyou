@@ -1,10 +1,24 @@
 cmake_minimum_required(VERSION 3.5)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#comment : ask for all warnings and strict compliance with the standard
+set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
+
+#ajouter les fichiers ici
 add_executable(ProjectStructure
     main.cpp
-    MyClass.h
-    MyClass.cpp
+    model/element.h
+    model/direction.h
+    model/position.h
+    model/gameobject.h
+    model/levelmechanics.h
+    model/element.cpp
+    model/direction.cpp
+    model/position.cpp
+    model/gameobject.cpp
+    model/levelmechanics.cpp
 )
 
 install(TARGETS ProjectStructure

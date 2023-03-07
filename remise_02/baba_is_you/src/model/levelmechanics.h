@@ -1,6 +1,8 @@
 #ifndef LEVELMECHANICS_H
 #define LEVELMECHANICS_H
 
+#include "level.h"
+#include "rulemanager.h"
 #include "gameobject.h"
 #include <iostream>
 #include <vector>

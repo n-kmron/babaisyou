@@ -9,11 +9,19 @@ set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 #ajouter les fichiers ici
 add_executable(ProjectStructure
     main.cpp
+    model/rulemanager.h
+    model/game.h
+    model/level.h
+    model/levelloader.h
     model/element.h
     model/direction.h
     model/position.h
     model/gameobject.h
     model/levelmechanics.h
+    model/rulemanager.cpp
+    model/game.cpp
+    model/level.cpp
+    model/levelloader.cpp
     model/element.cpp
     model/direction.cpp
     model/position.cpp

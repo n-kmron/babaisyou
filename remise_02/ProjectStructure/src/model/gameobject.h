@@ -22,7 +22,7 @@ class GameObject
          *
          * \throw std::invalid_argument si un des paramètres n'est pas valide.
          */
-        inline GameObject(const Element & element, const Position & pos);
+        GameObject(const Element & element, const Position & pos);
 
 
         // autres méthodes
@@ -32,7 +32,7 @@ class GameObject
          *
          * \return le GameObject sous forme de chaîne de caractères
          */
-        inline std::string to_string() const;
+        std::string to_string() const;
 
         // getters
         /*!
@@ -40,14 +40,14 @@ class GameObject
          *
          * \return l'element du GameObject
          */
-        inline Element element() const;
+        Element element() const;
 
         /*!
          * \brief Accesseur en lecture de la position du GameObject.
          *
          * \return la position du GameObject
          */
-        inline Position pos() const;
+        Position pos() const;
 };
 
 

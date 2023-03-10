@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.5)
 
 add_executable(ProjectStructureTests
 
-    testMyClass.cpp
-    ../src/MyClass.cpp
+    testPosition.cpp
+    ../src/position.cpp
 )
 target_include_directories(ProjectStructureTests PRIVATE
     ../src

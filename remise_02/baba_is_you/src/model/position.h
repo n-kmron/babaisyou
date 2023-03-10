@@ -2,6 +2,7 @@
 #define POSITION_H
 
 #include "direction.h"
+#include <stdexcept>
 
 class Position {
 
@@ -21,6 +22,13 @@ class Position {
          * \throw std::invalid_argument si un des paramètres est négatif.
          */
         inline Position(const int & row, const int & col);
+
+
+        /**
+         * @brief Position
+         * @param other
+         */
+        Position(const Position& other) : row_(other.row_), col_(other.col_) {}
 
         // autres méthodes
         /**
@@ -47,5 +55,43 @@ class Position {
          */
         inline int col() const;
 };
+
+//implémentation du constructeur
+Position::Position(const int & row, const int & col) : row_ { row }, col_ { col }
+{
+    if(row < 0 || col < 0) {
+        throw std::invalid_argument("row and col must be positive");
+    }
+}
+
+//implémentation des getters
+int Position::row() const {
+    return this->row_;
+}
+
+int Position::col() const {
+    return this->col_;
+}
+
+//implémentation des méthodes
+Position Position::next(const Direction & dir) {
+        switch (dir)
+        {
+            case Direction::UP:
+                row_ += 1;
+                break;
+            case Direction::RIGHT:
+                col_ += 1;
+                break;
+            case Direction::DOWN:
+                row_ -= 1;
+                break;
+            case Direction::LEFT:
+                col_ -= 1;
+                break;
+        }
+        return this;
+}
+
 
 #endif // POSITION_H

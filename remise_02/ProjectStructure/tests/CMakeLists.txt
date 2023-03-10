@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 add_executable(ProjectStructureTests
 
     testPosition.cpp
-    ../src/position.cpp
+    ../src/model/position.cpp
 )
 target_include_directories(ProjectStructureTests PRIVATE
     ../src

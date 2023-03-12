@@ -31,6 +31,8 @@ class Position {
          * @param dir la direction
          *
          * @return la position déplacée
+         *
+         * @throw si une des coordonnées est négative
          */
         Position next(const Direction & dir);
 

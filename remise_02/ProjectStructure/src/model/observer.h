@@ -4,7 +4,7 @@
 class Observer
 {
     public:
-        inline void update();
+        void update();
 };
 
 #endif // OBSERVER_H

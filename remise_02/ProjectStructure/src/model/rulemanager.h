@@ -18,7 +18,7 @@ class RuleManager
          * \brief Constructeur par default de RuleManager.
          *
          */
-        inline RuleManager();
+        RuleManager();
 
         /*!
          * \brief Constructeur de RuleManager à partir d'une liste de d'element sur lesquels vont s'appliquer
@@ -30,7 +30,7 @@ class RuleManager
          *
          * \throw std::invalid_argument si un des paramètres n'est pas valide.
          */
-        inline RuleManager(const std::vector<Element> & subject,const Element & complement);
+        RuleManager(const std::vector<Element> & subject,const Element & complement);
 
         /*!
          * \brief Permet d'ajouter une regles à la map rules en attributs.
@@ -41,7 +41,7 @@ class RuleManager
          *
          * \throw std::invalid_argument si un des paramètres n'est pas valide.
          */
-        inline void addRule(const Element & complement,const Element & subject);
+        void addRule(const Element & complement,const Element & subject);
 
         /*!
          * \brief Permet de retirer une règle de la map rules.
@@ -52,19 +52,19 @@ class RuleManager
          *
          * \throw std::invalid_argument si un des paramètres n'est pas valide.
          */
-        inline void removeRule(const Element & complement,const Element & subject);
+        void removeRule(const Element & complement,const Element & subject);
 
         /*!
          * \brief Permet de verifier si l'element est un mot qui peut se placer à gauche/en haut d'un IS.
          *
          */
-        inline bool isWordLeft();
+        bool isWordLeft();
 
         /*!
          * \brief Permet de verifier si l'element est un mot qui peut se placer à droite/en bas d'un IS.
          *
          */
-        inline bool isWordRight();
+        bool isWordRight();
 };
 
 #endif // RULEMANAGER_H

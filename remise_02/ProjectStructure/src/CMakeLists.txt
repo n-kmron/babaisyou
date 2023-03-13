@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.5)
 #comment : ask for all warnings and strict compliance with the standard
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
+
 #ajouter les fichiers ici
 add_executable(ProjectStructure
     main.cpp

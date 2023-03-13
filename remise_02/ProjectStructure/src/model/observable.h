@@ -6,11 +6,11 @@
 class Observable
 {
     public:
-        inline void registerObserver(const Observer & obs);
+        void registerObserver(const Observer & obs);
 
-        inline void removeObserver(const Observer & obs);
+        void removeObserver(const Observer & obs);
 
-        inline void notifyObserver();
+        void notifyObserver();
 };
 
 #endif // OBSERVABLE_H

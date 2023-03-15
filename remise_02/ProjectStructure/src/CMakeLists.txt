@@ -5,6 +5,9 @@ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
 
+# Ajouter le fichier texte
+#set(txt_file "${CMAKE_CURRENT_SOURCE_DIR}/nom_fichier.txt")
+
 #ajouter les fichiers ici
 add_executable(ProjectStructure
     main.cpp
@@ -28,6 +31,7 @@ add_executable(ProjectStructure
     model/position.cpp
     model/gameobject.cpp
     model/levelmechanics.cpp
+    #${txt_file}
 )
 
 install(TARGETS ProjectStructure

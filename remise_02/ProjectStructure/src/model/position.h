@@ -51,6 +51,21 @@ class Position {
          * \return la colonne de la position
          */
         int col() const;
+
+        /*!
+             * \brief to_string
+             * \return
+             */
+            std::string to_string() const;
+
 };
 
+
+/*!
+ * \brief operator <<
+ * \param out
+ * \param in
+ * \return
+ */
+std::ostream & operator<<(std::ostream & out, const Position & in);
 #endif // POSITION_H

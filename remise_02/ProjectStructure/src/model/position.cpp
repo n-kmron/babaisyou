@@ -1,5 +1,8 @@
 #include "position.h"
+#include <string>
+#include <iostream>
 
+using namespace std;
 
 //implémentation du constructeur
 Position::Position(const int & row, const int & col) : row_ { row }, col_ { col }
@@ -38,4 +41,21 @@ Position Position::next(const Direction & dir) {
                 break;
         }
         return Position(row, col) ;
+}
+
+string Position::to_string() const {
+    string result;
+    result
+    .append("[")
+    .append(std::to_string(this->col()))
+    .append(";")
+    .append(std::to_string(this->row()))
+    .append("]");
+
+    return result;
+}
+
+//implémentation des opérateurs
+std::ostream & operator<<(std::ostream & out, const Position & in) {
+    return out << in.to_string();
 }

@@ -5,24 +5,97 @@
 
 using namespace std;
 
+
+LevelLoader::LevelLoader(const int & numLevel) {
+    // Ouvrir le fichier
+
+    stringstream ss;
+    ss << "level_" << numLevel << ".txt";
+    string filename = ss.str();
+    std::ifstream level(filename);
+
+    // Vérifier si l'ouverture a réussi
+    if (!level.is_open()) {
+        throw std::ifstream::failure("Impossible d'ouvrir le fichier.");
+    }
+
+    // Lire le contenu du fichier et placer chaque ligne dans un vector
+    std::string fileLine;
+    while (std::getline(level, fileLine)) {
+        this->fileAllLines_.push_back(fileLine);
+    }
+
+    // Fermer le fichier
+    level.close();
+}
+
+vector<std::string> & LevelLoader::fileAllLines() {
+    return this->fileAllLines_;
+}
+
+
+/**
+ * @brief conversionElementByString retrouve le littéral correspondant à l'énum Element à partir d'un string
+ * @param elem l'élément à chercher
+ * @return l'élément sous forme d'enum
+ */
+Element static conversionElementByString(const string & elem) {
+    map<string, Element> elemConversion;
+    elemConversion.insert(std::make_pair("text_baba", Element::TEXT_BABA));
+    elemConversion.insert(std::make_pair("text_wall", Element::TEXT_WALL));
+    elemConversion.insert(std::make_pair("text_rock", Element::TEXT_ROCK));
+    elemConversion.insert(std::make_pair("text_lava", Element::TEXT_LAVA));
+    elemConversion.insert(std::make_pair("text_grass", Element::TEXT_GRASS));
+    elemConversion.insert(std::make_pair("text_metal", Element::TEXT_METAL));
+    elemConversion.insert(std::make_pair("text_goop", Element::TEXT_GOOP));
+    elemConversion.insert(std::make_pair("text_flag", Element::TEXT_FLAG));
+    elemConversion.insert(std::make_pair("is", Element::IS));
+    elemConversion.insert(std::make_pair("you", Element::YOU));
+    elemConversion.insert(std::make_pair("win", Element::WIN));
+    elemConversion.insert(std::make_pair("stop", Element::STOP));
+    elemConversion.insert(std::make_pair("sink", Element::SINK));
+    elemConversion.insert(std::make_pair("push", Element::PUSH));
+    elemConversion.insert(std::make_pair("kill", Element::KILL));
+    elemConversion.insert(std::make_pair("baba", Element::BABA));
+    elemConversion.insert(std::make_pair("wall", Element::WALL));
+    elemConversion.insert(std::make_pair("rock", Element::ROCK));
+    elemConversion.insert(std::make_pair("lava", Element::LAVA));
+    elemConversion.insert(std::make_pair("grass", Element::GRASS));
+    elemConversion.insert(std::make_pair("metal", Element::METAL));
+    elemConversion.insert(std::make_pair("goop", Element::GOOP));
+    elemConversion.insert(std::make_pair("flag", Element::FLAG));
+
+    return elemConversion.at(elem);
+}
+
+vector<GameObject> LevelLoader::generateElements() {
+    //Vector servant pour le constructeur d'un LevelMechanics
+    vector<GameObject> elements;
+
+    for(int i=0; i<fileAllLines().size(); ++i) {
+        std::vector<string> splittedElem; //vector contenant chaque mot du string
+        string line { fileAllLines().at(i) };
+        stringstream ss(line);
+            string elementPart;
+            while (ss >> elementPart) {
+                splittedElem.push_back(elementPart);
+            }
+            //récupérer le type de notre élément
+            string type { splittedElem[0] };
+            // Convertir les deux derniers mots en entiers
+            int posCol = stoi(splittedElem[1]); //la colonne de la postion est le deuxième mot de la découpe
+            int posRow = stoi(splittedElem[2]); //la colonne de la postion est le troisième mot de la découpe
+
+            Position pos(posRow, posCol);
+            GameObject finalElem(conversionElementByString(type), pos);
+            elements.push_back(finalElem);
+    }
+    return elements;
+}
+
+
+
 LevelMechanics LevelLoader::createLevel() {
 
-    //concatenate the string and the int
-    stringstream sstm;
-    sstm << "resources/levels/empty_levels/level_" << this->numLevel << ".txt";
-    string filename = sstm.str();
-
-    //read the file
-    fstream readLevel(filename, ios::in);
-    if(readLevel.is_open()) {
-        string line;
-        while(getline(readLevel, line)) {
-            cout << line << endl;
-        }
-        cout << "Fin de la lecture des données du fichier" << endl;
-        readLevel.close();
-    } else {
-        cout << "erreur lors de l'ouverture" << endl;
-    }
 }
 

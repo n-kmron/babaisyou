@@ -38,14 +38,6 @@ class LevelLoader
         * @return
         */
        std::vector<GameObject> generateElements();
-
-       /**
-        * @brief Génère une map avec comme clé le complément de règle et comme valeur le(s) sujet(s) de la règle
-        * @return
-        */
-       std::map<Element, std::vector<Element>> generateRules();
-
-
 };
 
 #endif // LEVELLOADER_H

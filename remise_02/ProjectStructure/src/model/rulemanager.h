@@ -9,16 +9,11 @@
 class RuleManager
 {
     private:
-        std::map<Element,std::vector<Element>> rules;
-        inline static const std::vector<Element> leftWords;
-        inline static const std::vector<Element> rightWords;
+        std::map<Element,std::vector<Element>> rules_;
+        inline static const std::vector<Element> leftWords_;
+        inline static const std::vector<Element> rightWords_;
 
     public:
-        /*!
-         * \brief Constructeur par default de RuleManager.
-         *
-         */
-        RuleManager();
 
         /*!
          * \brief Constructeur de RuleManager à partir d'une liste de d'element sur lesquels vont s'appliquer
@@ -31,6 +26,13 @@ class RuleManager
          * \throw std::invalid_argument si un des paramètres n'est pas valide.
          */
         RuleManager(const std::vector<Element> & subject,const Element & complement);
+
+
+        /**
+         * @brief getter of rules_ attribute
+         * @return
+         */
+        std::map<Element,std::vector<Element>> rules();
 
         /*!
          * \brief Permet d'ajouter une regles à la map rules en attributs.
@@ -53,6 +55,11 @@ class RuleManager
          * \throw std::invalid_argument si un des paramètres n'est pas valide.
          */
         void removeRule(const Element & complement,const Element & subject);
+
+        /**
+         * @brief scanne l'ensemble du plateau de jeu pour trouver les règles actives et met à jour la liste des règles
+         */
+        void scanRules();
 
         /*!
          * \brief Permet de verifier si l'element est un mot qui peut se placer à gauche/en haut d'un IS.

@@ -33,7 +33,7 @@ class LevelMechanics
          * @param elements les éléments actifs
          * @param rules les règles actives
          */
-        LevelMechanics(const std::vector<GameObject> & elements, const std::vector<RuleManager> & rules);
+        LevelMechanics(const std::vector<GameObject> & elements);
 
         // getters
         /*!
@@ -129,7 +129,7 @@ class LevelMechanics
         /**
          * @brief scanne l'ensemble du plateau de jeu pour trouver les règles actives et met à jour la liste des règles
          */
-        void findAllRules();
+        //void findAllRules();
 };
 
 #endif // LEVELMECHANICS_H

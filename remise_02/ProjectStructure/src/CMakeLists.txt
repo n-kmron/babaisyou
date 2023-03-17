@@ -24,10 +24,7 @@ add_executable(ProjectStructure
     model/levelmechanics.h
     model/rulemanager.cpp
     model/game.cpp
-    model/level.cpp
     model/levelloader.cpp
-    model/element.cpp
-    model/direction.cpp
     model/position.cpp
     model/gameobject.cpp
     model/levelmechanics.cpp

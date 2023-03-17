@@ -6,11 +6,15 @@
 using namespace std;
 
 
-LevelLoader::LevelLoader(const int & numLevel) {
+LevelLoader::LevelLoader(const int & numLevel) : numLevel_ { numLevel } {
+    fileAllLines();
+}
+
+void LevelLoader::fileAllLines() {
     // Ouvrir le fichier
 
     stringstream ss;
-    ss << "level_" << numLevel << ".txt";
+    ss << "level_" << numLevel_ << ".txt";
     string filename = ss.str();
     std::ifstream level(filename);
 
@@ -27,10 +31,6 @@ LevelLoader::LevelLoader(const int & numLevel) {
 
     // Fermer le fichier
     level.close();
-}
-
-vector<std::string> & LevelLoader::fileAllLines() {
-    return this->fileAllLines_;
 }
 
 
@@ -68,17 +68,21 @@ Element static conversionElementByString(const string & elem) {
     return elemConversion.at(elem);
 }
 
-vector<GameObject> LevelLoader::generateElements() {
+
+LevelMechanics LevelLoader::createLevel() {
     //Vector servant pour le constructeur d'un LevelMechanics
     vector<GameObject> elements;
 
-    for(int i=0; i<fileAllLines().size(); ++i) {
+    for(int i=0; i<fileAllLines_.size(); ++i) {
         std::vector<string> splittedElem; //vector contenant chaque mot du string
-        string line { fileAllLines().at(i) };
+        string line { fileAllLines_.at(i) };
         stringstream ss(line);
             string elementPart;
             while (ss >> elementPart) {
                 splittedElem.push_back(elementPart);
+            }
+            if(splittedElem.size() != 3) {
+                throw std::invalid_argument("Le fichier n'est pas bien configuré");
             }
             //récupérer le type de notre élément
             string type { splittedElem[0] };
@@ -90,12 +94,6 @@ vector<GameObject> LevelLoader::generateElements() {
             GameObject finalElem(conversionElementByString(type), pos);
             elements.push_back(finalElem);
     }
-    return elements;
-}
-
-
-
-LevelMechanics LevelLoader::createLevel() {
-
+    return LevelMechanics(elements);
 }
 

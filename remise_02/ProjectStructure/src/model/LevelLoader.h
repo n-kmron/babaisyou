@@ -6,8 +6,13 @@
 class LevelLoader
 {
     private:
-        int numLevel;
+        int numLevel_;
         std::vector<std::string> fileAllLines_;
+
+        /**
+         * @brief rempli l'attribut fileAllLines_ avec le contenu du fichier (sous forme de vector<string>)
+         */
+        void fileAllLines();
 
     public:
         /*!
@@ -21,23 +26,12 @@ class LevelLoader
        LevelLoader(const int & numLevel);
 
 
-       /**
-        * @brief getter de fileAllLines_
-        * @return
-        */
-       std::vector<std::string> & fileAllLines();
-
        /*!
         * \brief Permet de créer un LevelMechanics à partir d'un fichier .txt.
         *
         */
        LevelMechanics createLevel();
 
-       /**
-        * @brief Génère un vector de GameObject à portir du fichier correspondant au level
-        * @return
-        */
-       std::vector<GameObject> generateElements();
 };
 
 #endif // LEVELLOADER_H

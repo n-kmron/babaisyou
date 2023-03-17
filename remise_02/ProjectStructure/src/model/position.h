@@ -53,10 +53,10 @@ class Position {
         int col() const;
 
         /*!
-             * \brief to_string
-             * \return
-             */
-            std::string to_string() const;
+        * \brief to_string
+        * \return
+        */
+        std::string to_string() const;
 
 };
 

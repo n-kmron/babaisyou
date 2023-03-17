@@ -5,28 +5,22 @@
 #include <vector>
 #include <map>
 #include "element.h"
+#include "gameobject.h"
 
 class RuleManager
 {
     private:
         std::map<Element,std::vector<Element>> rules_;
-        inline static const std::vector<Element> leftWords_;
-        inline static const std::vector<Element> rightWords_;
+        inline static std::vector<Element> material_; //left words
+        inline static std::vector<Element> aspect_; //right words
 
     public:
 
-        /*!
-         * \brief Constructeur de RuleManager à partir d'une liste de d'element sur lesquels vont s'appliquer
-         * le complement pour former une règle.
-         *
-         *
-         * \param subject les sujet sur qui une actions est appliqué(complement) pour faire une règles.
-         * \param complement l'action/le comportement que l'on souhaite appliqué aux elements de subject.
-         *
-         * \throw std::invalid_argument si un des paramètres n'est pas valide.
+        /**
+         * @brief Constructeur de RuleManager
+         * instancie les 2 vector static
          */
-        RuleManager(const std::vector<Element> & subject,const Element & complement);
-
+        RuleManager();
 
         /**
          * @brief getter of rules_ attribute
@@ -41,37 +35,25 @@ class RuleManager
          * \param complement l'action/le comportement qui défini la règle.
          * \param subject le type de l'element sur le quel s'appliquera la règle.
          *
-         * \throw std::invalid_argument si un des paramètres n'est pas valide.
          */
-        void addRule(const Element & complement,const Element & subject);
-
-        /*!
-         * \brief Permet de retirer une règle de la map rules.
-         *
-         *
-         * \param complement l'action/le comportement qui défini la règle à supprimer.
-         * \param subject le type de l'element sur le quel s'applique la règle à supprimer.
-         *
-         * \throw std::invalid_argument si un des paramètres n'est pas valide.
-         */
-        void removeRule(const Element & complement,const Element & subject);
+        void addRule(const Element & aspect,const Element & material);
 
         /**
          * @brief scanne l'ensemble du plateau de jeu pour trouver les règles actives et met à jour la liste des règles
          */
-        void scanRules();
+        void scanRules(const std::vector<GameObject> & elements);
 
         /*!
-         * \brief Permet de verifier si l'element est un mot qui peut se placer à gauche/en haut d'un IS.
+         * \brief Permet de verifier si l'element est un 'material' d'une règle, mot qui peut se placer à gauche/en haut d'un IS.
          *
          */
-        bool isWordLeft();
+        bool isMaterial(const Element & element);
 
         /*!
-         * \brief Permet de verifier si l'element est un mot qui peut se placer à droite/en bas d'un IS.
+         * \brief Permet de verifier si l'element est un 'aspect' d'une règle, mot qui peut se placer à droite/en bas d'un IS.
          *
          */
-        bool isWordRight();
+        bool isAspect(const Element & element);
 };
 
 #endif // RULEMANAGER_H

@@ -22,4 +22,12 @@ class Level
         inline int width() const;
 };
 
+int Level::height() const {
+    return height_;
+}
+
+int Level::width() const {
+    return width_;
+}
+
 #endif // LEVEL_H

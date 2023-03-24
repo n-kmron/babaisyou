@@ -6,7 +6,7 @@
 using namespace std;
 
 
-LevelLoader::LevelLoader(const int & numLevel) : numLevel_ { numLevel } {
+LevelLoader::LevelLoader(const int & numLevel) : numLevel_ { numLevel-1 } {
     fileAllLines();
 }
 

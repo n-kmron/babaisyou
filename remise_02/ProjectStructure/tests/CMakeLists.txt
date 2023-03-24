@@ -4,6 +4,8 @@ add_executable(ProjectStructureTests
 
     testPosition.cpp
     ../src/model/position.cpp
+    testRuleManager.cpp
+    ../src/model/rulemanager.cpp
 )
 target_include_directories(ProjectStructureTests PRIVATE
     ../src

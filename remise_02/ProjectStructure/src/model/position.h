@@ -58,14 +58,12 @@ class Position {
         */
         std::string to_string() const;
 
+        bool operator==(const Position & other) const;
+
 };
 
 
-/*!
- * \brief operator <<
- * \param out
- * \param in
- * \return
- */
 std::ostream & operator<<(std::ostream & out, const Position & in);
+
+
 #endif // POSITION_H

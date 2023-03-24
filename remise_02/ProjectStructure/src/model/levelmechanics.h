@@ -130,6 +130,15 @@ class LevelMechanics
          * @brief scanne l'ensemble du plateau de jeu pour trouver les règles actives et met à jour la liste des règles
          */
         //void findAllRules();
+
+        void setElements(const std::vector<GameObject> & elements);
+
+        void setLevel(const Level & level);
+
+        void setRules(const RuleManager & rules);
+
+        LevelMechanics & operator=(const LevelMechanics & other);
 };
+
 
 #endif // LEVELMECHANICS_H

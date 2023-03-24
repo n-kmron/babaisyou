@@ -44,6 +44,15 @@ void RuleManager::addRule(const Element & aspect,const Element & material) {
     rules_[aspect].push_back(material);
 }
 
+vector<Element> findElementAtPosition(const vector<GameObject> & elements, const Position & pos) {
+    vector<Element> elementsAtPos;
+    for(int elementIndex=0; elementIndex<elements.size(); ++elementIndex) {
+        if(elements.at(elementIndex).pos() == pos) {
+            elementsAtPos.push_back(elements.at(elementIndex).element());
+        }
+    }
+    return elementsAtPos;
+}
 
 void RuleManager::scanRules(const vector<GameObject> & elements) {
     //on vide l'ensemble des règles avant de les rescanner
@@ -52,39 +61,33 @@ void RuleManager::scanRules(const vector<GameObject> & elements) {
     //on scanne l'ensemble des éléments
     for(int i=0; i<elements.size(); ++i) {
         if(elements.at(i).element() == Element::IS) { //chercher les is
-            for(int j=0; j<elements.size(); ++j) {
-
-
-                //chercher si il y a un mot à gauche et à droite
-                if(elements.at(i).pos().row() == elements.at(j).pos().row() && elements.at(i).pos().col() == elements.at(j).pos().col()-1) {
-                    for(int k=0; k<elements.size(); ++k) {
-                        if(elements.at(i).pos().row() == elements.at(k).pos().row() && elements.at(i).pos().col() == elements.at(k).pos().col()+1) { //chercher si il y a un mot à droite
-                            //CA VEUT DIRE QUON A UN ELEMENT A GAUCHE ET A DROITE
-                            if(isMaterial(elements.at(j).element()) && isAspect(elements.at(k).element())) {
-                                addRule(elements.at(k).element(), elements.at(j).element());
-                            }
+            Position leftPos(elements.at(i).pos().row(), elements.at(i).pos().col()-1);
+            vector<Element> leftElements = findElementAtPosition(elements, leftPos);
+            if(!leftElements.empty()) {
+                Position rightPos(elements.at(i).pos().row(), elements.at(i).pos().col()+1);
+                vector<Element> rightElements = findElementAtPosition(elements, rightPos);
+                if(!rightElements.empty()) {
+                    int materialIndex = -1;
+                    int aspectIndex = - 1;
+                     for(int vectorIndex=0; vectorIndex<leftElements.size(); ++vectorIndex) {
+                        if(isMaterial(leftElements.at(vectorIndex))) {
+                            materialIndex = vectorIndex;
                         }
-                    }
-                }
-
-
-
-                //chercher si il y a un mot en haut et en bas
-                if(elements.at(i).pos().row() == elements.at(j).pos().row()-1 && elements.at(i).pos().col() == elements.at(j).pos().col()) {
-                    for(int k=0; k<elements.size(); ++k) {
-                        if(elements.at(i).pos().row() == elements.at(k).pos().row()+1 && elements.at(i).pos().col() == elements.at(k).pos().col()) {
-                            //CA VEUT DIRE QUON A UN ELEMENT EN HAUT ET EN BAS
-                            if(isMaterial(elements.at(j).element()) && isAspect(elements.at(k).element())) {
-                                addRule(elements.at(k).element(), elements.at(j).element());
-                            }
+                     }
+                     for(int vectorIndex=0; vectorIndex<rightElements.size(); ++vectorIndex) {
+                        if(isMaterial(rightElements.at(vectorIndex))) {
+                            aspectIndex = vectorIndex;
                         }
-                    }
+                     }
+                     if(materialIndex != -1 && aspectIndex != -1) {
+                         addRule(rightElements.at(aspectIndex), leftElements.at(materialIndex));
+                     }
+
                 }
             }
         }
     }
 }
-
 
 bool RuleManager::isMaterial(const Element & element) {
     for(int i=0; i<material_.size(); ++i) {
@@ -103,3 +106,7 @@ bool RuleManager::isAspect(const Element & element) {
     }
     return false;
 }
+
+
+
+

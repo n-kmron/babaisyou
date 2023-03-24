@@ -55,7 +55,13 @@ string Position::to_string() const {
     return result;
 }
 
+
+
 //implémentation des opérateurs
 std::ostream & operator<<(std::ostream & out, const Position & in) {
     return out << in.to_string();
+}
+
+bool Position::operator==(const Position & other) const {
+    return (row_ == other.row_ && col_ == other.col_);
 }

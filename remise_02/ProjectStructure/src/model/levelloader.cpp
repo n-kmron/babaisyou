@@ -5,16 +5,42 @@
 
 using namespace std;
 
+static map<string, Element> elemConversion_;
 
 LevelLoader::LevelLoader(const int & numLevel) : numLevel_ { numLevel-1 } {
     fileAllLines();
+    elemConversion_ = {
+        {"text_baba", Element::TEXT_BABA},
+        {"text_wall", Element::TEXT_WALL},
+        {"text_rock", Element::TEXT_ROCK},
+        {"text_lava", Element::TEXT_LAVA},
+        {"text_grass", Element::TEXT_GRASS},
+        {"text_metal", Element::TEXT_METAL},
+        {"text_goop", Element::TEXT_GOOP},
+        {"text_flag", Element::TEXT_FLAG},
+        {"is", Element::IS},
+        {"you", Element::YOU},
+        {"win", Element::WIN},
+        {"stop", Element::STOP},
+        {"sink", Element::SINK},
+        {"push", Element::PUSH},
+        {"kill", Element::KILL},
+        {"baba", Element::BABA},
+        {"wall", Element::WALL},
+        {"rock", Element::ROCK},
+        {"lava", Element::LAVA},
+        {"grass", Element::GRASS},
+        {"metal", Element::METAL},
+        {"goop", Element::GOOP},
+        {"flag", Element::FLAG}
+    };
 }
 
 void LevelLoader::fileAllLines() {
     // Ouvrir le fichier
 
     stringstream ss;
-    ss << "level_" << numLevel_ << ".txt";
+    ss << "level" << numLevel_ << ".txt";
     string filename = ss.str();
     std::ifstream level(filename);
 
@@ -40,36 +66,10 @@ void LevelLoader::fileAllLines() {
  * @return l'élément sous forme d'enum
  */
 Element static conversionElementByString(const string & elem) {
-    map<string, Element> elemConversion;
-    elemConversion.insert(std::make_pair("text_baba", Element::TEXT_BABA));
-    elemConversion.insert(std::make_pair("text_wall", Element::TEXT_WALL));
-    elemConversion.insert(std::make_pair("text_rock", Element::TEXT_ROCK));
-    elemConversion.insert(std::make_pair("text_lava", Element::TEXT_LAVA));
-    elemConversion.insert(std::make_pair("text_grass", Element::TEXT_GRASS));
-    elemConversion.insert(std::make_pair("text_metal", Element::TEXT_METAL));
-    elemConversion.insert(std::make_pair("text_goop", Element::TEXT_GOOP));
-    elemConversion.insert(std::make_pair("text_flag", Element::TEXT_FLAG));
-    elemConversion.insert(std::make_pair("is", Element::IS));
-    elemConversion.insert(std::make_pair("you", Element::YOU));
-    elemConversion.insert(std::make_pair("win", Element::WIN));
-    elemConversion.insert(std::make_pair("stop", Element::STOP));
-    elemConversion.insert(std::make_pair("sink", Element::SINK));
-    elemConversion.insert(std::make_pair("push", Element::PUSH));
-    elemConversion.insert(std::make_pair("kill", Element::KILL));
-    elemConversion.insert(std::make_pair("baba", Element::BABA));
-    elemConversion.insert(std::make_pair("wall", Element::WALL));
-    elemConversion.insert(std::make_pair("rock", Element::ROCK));
-    elemConversion.insert(std::make_pair("lava", Element::LAVA));
-    elemConversion.insert(std::make_pair("grass", Element::GRASS));
-    elemConversion.insert(std::make_pair("metal", Element::METAL));
-    elemConversion.insert(std::make_pair("goop", Element::GOOP));
-    elemConversion.insert(std::make_pair("flag", Element::FLAG));
-
-    return elemConversion.at(elem);
+    return elemConversion_.at(elem);
 }
 
-
-LevelMechanics LevelLoader::createLevel() {
+vector<GameObject> LevelLoader::createLevel() {
     //Vector servant pour le constructeur d'un LevelMechanics
     vector<GameObject> elements;
 
@@ -94,6 +94,5 @@ LevelMechanics LevelLoader::createLevel() {
             GameObject finalElem(conversionElementByString(type), pos);
             elements.push_back(finalElem);
     }
-    return LevelMechanics(elements);
+    return elements;
 }
-

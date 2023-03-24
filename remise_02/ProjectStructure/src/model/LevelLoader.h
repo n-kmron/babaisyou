@@ -30,7 +30,7 @@ class LevelLoader
         * \brief Permet de créer un LevelMechanics à partir d'un fichier .txt.
         *
         */
-       LevelMechanics createLevel();
+       std::vector<GameObject> createLevel();
 
 };
 

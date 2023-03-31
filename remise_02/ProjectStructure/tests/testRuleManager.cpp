@@ -1,39 +1,60 @@
 #include <catch2/catch_test_macros.hpp>
 #include "model/levelloader.h"
+#include "model/rulemanager.h"
 #include <map>
 
-TEST_CASE("scanRules() donne l'ensemble des règles à un moment donné de la partie") {
-    // Initialiser un level
-    /*LevelLoader loader(1);
-    LevelMechanics myLevel(loader.createLevel());
-    myLevel.rules().scanRules(myLevel.elements());*/
+TEST_CASE("checkRules() donne l'ensemble des règles à un moment donné de la partie") {
 
-    /*SECTION("LEVEL 1 : ") {
+    SECTION("LEVEL 1 : ") {
+        // Initialiser un level
+        LevelLoader loader(1);
+        RuleManager rm;
+        rm.checkRules(loader.createLevel());
+
         std::map<Element, std::vector<Element>> expected;
-
+        //ASPECT = KEY
         //remplir expected
-        std::vector<Element> aspect;
+        std::vector<Element> material;
         //1ère règle
-        aspect.push_back(Element::STOP);
-        expected.insert(std::make_pair(Element::TEXT_WALL, aspect));
-        aspect.clear();
+        material.push_back(Element::TEXT_WALL);
+        expected.insert(std::make_pair(Element::STOP, material));
+        material.clear();
         //2è règle
-        aspect.push_back(Element::PUSH);
-        expected.insert(std::make_pair(Element::ROCK, aspect));
-        aspect.clear();
+        material.push_back(Element::TEXT_ROCK);
+        expected.insert(std::make_pair(Element::PUSH, material));
+        material.clear();
         //3è règle
-        aspect.push_back(Element::YOU);
-        expected.insert(std::make_pair(Element::TEXT_BABA, aspect));
-        aspect.clear();
+        material.push_back(Element::TEXT_BABA);
+        expected.insert(std::make_pair(Element::YOU, material));
+        material.clear();
         //4è règle
-        aspect.push_back(Element::WIN);
-        expected.insert(std::make_pair(Element::TEXT_FLAG, aspect));
-        aspect.clear();
+        material.push_back(Element::TEXT_FLAG);
+        expected.insert(std::make_pair(Element::WIN, material));
+        material.clear();
 
-        //REQUIRE(myLevel.rules().rules() == expected);
+        std::map<Element, std::vector<Element>> result = rm.rules();
+        /*for (const auto& pair : result) {
+                std::cout << "Clé : " << static_cast<int>(pair.first) << std::endl;
+                std::cout << "Valeurs :";
+                for (const auto& value : pair.second) {
+                    std::cout << " " << static_cast<int>(value);
+                }
+                std::cout << std::endl;
+            }
+        std::cout << "EXP" << std::endl;
+
+        for (const auto& pair : expected) {
+                std::cout << "Clé : " << static_cast<int>(pair.first) << std::endl;
+                std::cout << "Valeurs :";
+                for (const auto& value : pair.second) {
+                    std::cout << " " << static_cast<int>(value);
+                }
+                std::cout << std::endl;
+        }*/
+        REQUIRE( result == expected );
     }
 
 
     SECTION("Position does not move with invalid direction") {
-    }*/
+    }
 }

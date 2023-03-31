@@ -1,3 +1,5 @@
+#include "model/levelloader.h"
+#include "text_view.cpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -6,6 +8,7 @@
 #include <vector>
 #include <map>
 
+
 using namespace std;
 
 
@@ -13,6 +16,8 @@ using namespace std;
 
 int main()
 {
-
-
+    LevelLoader level(1);
+    TextView view;
+    view.displayTitle();
+    view.displayMap(level.createLevel());
 }

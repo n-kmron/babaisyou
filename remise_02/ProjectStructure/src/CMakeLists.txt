@@ -11,6 +11,9 @@ set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 #ajouter les fichiers ici
 add_executable(ProjectStructure
     main.cpp
+    util.cpp
+    view.h
+    text_view.cpp
     model/observer.h
     model/observable.h
     model/rulemanager.h

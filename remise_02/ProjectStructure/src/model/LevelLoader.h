@@ -1,12 +1,13 @@
 #ifndef LEVELLOADER_H
 #define LEVELLOADER_H
 
-#include "levelmechanics.h"
+#include "gameobject.h"
+#include <vector>
 
 class LevelLoader
 {
     private:
-        int numLevel_;
+        unsigned int numLevel_;
         std::vector<std::string> fileAllLines_;
 
         /**
@@ -23,7 +24,7 @@ class LevelLoader
          *
          * \throw std::invalid_argument si le paramètre n'est pas valide.
          */
-       LevelLoader(const int & numLevel);
+       LevelLoader(const unsigned int & numLevel);
 
 
        /*!

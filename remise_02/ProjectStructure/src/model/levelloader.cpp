@@ -1,46 +1,22 @@
 #include "levelloader.h"
+#include "element.h"
+#include "../util.cpp"
+#include <map>
 #include <sstream>
 #include <iostream>
 #include <fstream>
 
 using namespace std;
 
-static map<string, Element> elemConversion_;
-
-LevelLoader::LevelLoader(const int & numLevel) : numLevel_ { numLevel-1 } {
+LevelLoader::LevelLoader(const unsigned int & numLevel) : numLevel_ { numLevel-1 } {
     fileAllLines();
-    elemConversion_ = {
-        {"text_baba", Element::TEXT_BABA},
-        {"text_wall", Element::TEXT_WALL},
-        {"text_rock", Element::TEXT_ROCK},
-        {"text_lava", Element::TEXT_LAVA},
-        {"text_grass", Element::TEXT_GRASS},
-        {"text_metal", Element::TEXT_METAL},
-        {"text_goop", Element::TEXT_GOOP},
-        {"text_flag", Element::TEXT_FLAG},
-        {"is", Element::IS},
-        {"you", Element::YOU},
-        {"win", Element::WIN},
-        {"stop", Element::STOP},
-        {"sink", Element::SINK},
-        {"push", Element::PUSH},
-        {"kill", Element::KILL},
-        {"baba", Element::BABA},
-        {"wall", Element::WALL},
-        {"rock", Element::ROCK},
-        {"lava", Element::LAVA},
-        {"grass", Element::GRASS},
-        {"metal", Element::METAL},
-        {"goop", Element::GOOP},
-        {"flag", Element::FLAG}
-    };
 }
 
 void LevelLoader::fileAllLines() {
     // Ouvrir le fichier
 
     stringstream ss;
-    ss << "level" << numLevel_ << ".txt";
+    ss << "level_" << numLevel_ << ".txt";
     string filename = ss.str();
     std::ifstream level(filename);
 
@@ -59,15 +35,6 @@ void LevelLoader::fileAllLines() {
     level.close();
 }
 
-
-/**
- * @brief conversionElementByString retrouve le littéral correspondant à l'énum Element à partir d'un string
- * @param elem l'élément à chercher
- * @return l'élément sous forme d'enum
- */
-Element static conversionElementByString(const string & elem) {
-    return elemConversion_.at(elem);
-}
 
 vector<GameObject> LevelLoader::createLevel() {
     //Vector servant pour le constructeur d'un LevelMechanics
@@ -91,7 +58,7 @@ vector<GameObject> LevelLoader::createLevel() {
             int posRow = stoi(splittedElem[2]); //la colonne de la postion est le troisième mot de la découpe
 
             Position pos(posRow, posCol);
-            GameObject finalElem(conversionElementByString(type), pos);
+            GameObject finalElem(conversionElementFromText(type), pos);
             elements.push_back(finalElem);
     }
     return elements;

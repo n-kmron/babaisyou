@@ -41,9 +41,9 @@ class RuleManager
         /**
          * @brief scanne l'ensemble du plateau de jeu pour trouver les règles actives et met à jour la liste des règles
          */
-        void scanRules(const std::vector<GameObject> & elements);
+        void checkRules(const std::vector<GameObject> & elements);
 
-        std::vector<Element> findElementAtPosition(const std::vector<GameObject> & elements, const Position & pos);
+        void scanRules(const std::vector<GameObject> & elements, int isIndex, Direction materialDir, Direction aspectDir);
 
         /*!
          * \brief Permet de verifier si l'element est un 'material' d'une règle, mot qui peut se placer à gauche/en haut d'un IS.

@@ -1,5 +1,6 @@
 #include "rulemanager.h"
 #include "gameobject.h"
+#include "../util.cpp"
 
 using namespace std;
 
@@ -44,47 +45,46 @@ void RuleManager::addRule(const Element & aspect,const Element & material) {
     rules_[aspect].push_back(material);
 }
 
-vector<Element> findElementAtPosition(const vector<GameObject> & elements, const Position & pos) {
-    vector<Element> elementsAtPos;
-    for(int elementIndex=0; elementIndex<elements.size(); ++elementIndex) {
-        if(elements.at(elementIndex).pos() == pos) {
-            elementsAtPos.push_back(elements.at(elementIndex).element());
+void RuleManager::scanRules(const vector<GameObject> & elements, int isIndex, Direction materialDir, Direction aspectDir) {
+    Position materialPos = elements.at(isIndex).pos().next(materialDir);
+    vector<Element> materialElements = findElementAtPosition(elements, materialPos);
+
+    if(!materialElements.empty()) {
+        Position aspectPos = elements.at(isIndex).pos().next(aspectDir);
+        vector<Element> aspectElements = findElementAtPosition(elements, aspectPos);
+
+        if(!aspectElements.empty()) {
+            int materialIndex = -1;
+            int aspectIndex = - 1;
+
+             for(int vectorIndex=0; vectorIndex<materialElements.size(); ++vectorIndex) {
+                if(isMaterial(materialElements.at(vectorIndex))) {
+                    materialIndex = vectorIndex;
+                }
+             }
+
+             for(int vectorIndex=0; vectorIndex<aspectElements.size(); ++vectorIndex) {
+                if(isAspect(aspectElements.at(vectorIndex))) {
+                    aspectIndex = vectorIndex;
+                }
+             }
+             if(materialIndex != -1 && aspectIndex != -1) {
+                 addRule(aspectElements.at(aspectIndex), materialElements.at(materialIndex));
+             }
+
         }
     }
-    return elementsAtPos;
 }
 
-void RuleManager::scanRules(const vector<GameObject> & elements) {
+void RuleManager::checkRules(const vector<GameObject> & elements) {
     //on vide l'ensemble des règles avant de les rescanner
     rules_.clear();
 
     //on scanne l'ensemble des éléments
     for(int i=0; i<elements.size(); ++i) {
         if(elements.at(i).element() == Element::IS) { //chercher les is
-            Position leftPos(elements.at(i).pos().row(), elements.at(i).pos().col()-1);
-            vector<Element> leftElements = findElementAtPosition(elements, leftPos);
-            if(!leftElements.empty()) {
-                Position rightPos(elements.at(i).pos().row(), elements.at(i).pos().col()+1);
-                vector<Element> rightElements = findElementAtPosition(elements, rightPos);
-                if(!rightElements.empty()) {
-                    int materialIndex = -1;
-                    int aspectIndex = - 1;
-                     for(int vectorIndex=0; vectorIndex<leftElements.size(); ++vectorIndex) {
-                        if(isMaterial(leftElements.at(vectorIndex))) {
-                            materialIndex = vectorIndex;
-                        }
-                     }
-                     for(int vectorIndex=0; vectorIndex<rightElements.size(); ++vectorIndex) {
-                        if(isMaterial(rightElements.at(vectorIndex))) {
-                            aspectIndex = vectorIndex;
-                        }
-                     }
-                     if(materialIndex != -1 && aspectIndex != -1) {
-                         addRule(rightElements.at(aspectIndex), leftElements.at(materialIndex));
-                     }
-
-                }
-            }
+            scanRules(elements, i, Direction::LEFT, Direction::RIGHT);
+            scanRules(elements, i, Direction::UP, Direction::DOWN);
         }
     }
 }

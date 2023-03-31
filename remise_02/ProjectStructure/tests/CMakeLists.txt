@@ -2,10 +2,14 @@ cmake_minimum_required(VERSION 3.5)
 
 add_executable(ProjectStructureTests
 
-    testPosition.cpp
     ../src/model/position.cpp
-    testRuleManager.cpp
     ../src/model/rulemanager.cpp
+    ../src/model/levelloader.cpp
+    ../src/model/gameobject.cpp
+    ../src/model/game.cpp
+    ../src/model/levelmechanics.cpp
+    testRuleManager.cpp
+    testPosition.cpp
 )
 target_include_directories(ProjectStructureTests PRIVATE
     ../src

@@ -1,4 +1,3 @@
-#include "model/levelloader.h"
 #include "text_view.cpp"
 #include <iostream>
 #include <string>
@@ -12,12 +11,7 @@
 using namespace std;
 
 
-
-
 int main()
 {
-    LevelLoader level(1);
     TextView view;
-    view.displayTitle();
-    view.displayBoard(level.createLevel());
 }

@@ -1,7 +1,6 @@
 #ifndef LEVELMECHANICS_H
 #define LEVELMECHANICS_H
 
-#include "level.h"
 #include "rulemanager.h"
 #include "gameobject.h"
 #include <iostream>
@@ -16,11 +15,6 @@ class LevelMechanics
         std::vector<GameObject> elements_;
 
         /**
-         * @brief level_ level's data
-         */
-        Level level_;
-
-        /**
          * @brief rules_ active rules in the game
          */
         RuleManager rules_;
@@ -33,16 +27,12 @@ class LevelMechanics
         LevelMechanics(const std::vector<GameObject> & elements);
 
         // getters
-        std::vector<GameObject> elements() const;
+        std::vector<GameObject> & elements();
 
         RuleManager rules() const;
 
-        Level level() const;
-
         // setters
         void setElements(const std::vector<GameObject> & elements);
-
-        void setLevel(const Level & level);
 
         void setRules(const RuleManager & rules);
 

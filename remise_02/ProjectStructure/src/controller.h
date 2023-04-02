@@ -7,7 +7,8 @@ class Controller {
 
 private:
 
-    Game game_;
+    std::unique_ptr<Game> game_;
+
 public:
 
     Controller(Game & game);

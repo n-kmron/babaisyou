@@ -9,9 +9,9 @@
 class Observable
 {
     public:
-        virtual void registerObserver(const Observer & obs) = 0;
+        virtual void registerObserver(Observer * obs) = 0;
 
-        virtual void removeObserver(const Observer & obs) = 0;
+        virtual void removeObserver(Observer * obs) = 0;
 
         virtual void notifyObserver() = 0;
 };

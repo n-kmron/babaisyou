@@ -2,23 +2,24 @@
 #define GAME_H
 
 #include "direction.h"
+#include "level.h"
+#include "levelloader.h"
+#include "levelmechanics.h"
+#include "observable.h"
+#include "observer.h"
+#include <vector>
 
-class Game
+class Game : public Observable
 {
     private:
-        //il faut mettre les attribut qui sont representé par les fleches
+        std::vector<Observer*> observers_;
+        LevelLoader loader_;
+        Level level_;
+        LevelMechanics levelMechanics_;
 
     public:
 
-        Game() = default;
-
-        /*!
-         * \brief Constructor of Game from his number
-         *
-         *
-         * \param numLevel the number of the level to build
-        */
-        Game(const unsigned int & numLevel);
+        Game();
 
         /*!
          * \brief Start the game
@@ -38,6 +39,12 @@ class Game
         void playShot(const Direction & dir);
 
         void restart();
+
+        std::vector<GameObject> & elements();
+
+        void registerObserver(Observer * obs) override;
+        void removeObserver(Observer * obs) override;
+        void notifyObserver() override;
 };
 
 #endif // GAME_H

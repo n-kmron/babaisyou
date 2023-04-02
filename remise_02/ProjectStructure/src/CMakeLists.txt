@@ -13,6 +13,8 @@ add_executable(ProjectStructure
     main.cpp
     util.cpp
     view.h
+    controller.h
+    controller.cpp
     text_view.cpp
     model/observer.h
     model/observable.h

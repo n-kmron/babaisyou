@@ -1,0 +1,11 @@
+# pas de dossier build-*
+build-*/
+
+# pas de fichier .user
+*.user
+
+# pas de DS Store
+*.DS_Store
+
+# pas de DS Store
+.DS_Store

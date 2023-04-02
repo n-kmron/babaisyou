@@ -6,7 +6,7 @@ using namespace std;
 
 
 RuleManager::RuleManager() {
-    //création du vector material_
+    //initialize a vector 'material_'
     material_.push_back(Element::TEXT_BABA);
     material_.push_back(Element::TEXT_WALL);
     material_.push_back(Element::TEXT_ROCK);
@@ -16,7 +16,7 @@ RuleManager::RuleManager() {
     material_.push_back(Element::TEXT_GOOP);
     material_.push_back(Element::TEXT_FLAG);
 
-    //création du vector aspect_
+    //initialize a vector 'aspect_'
     aspect_.push_back(Element::YOU);
     aspect_.push_back(Element::WIN);
     aspect_.push_back(Element::STOP);
@@ -45,7 +45,7 @@ void RuleManager::addRule(const Element & aspect,const Element & material) {
     rules_[aspect].push_back(material);
 }
 
-void RuleManager::scanRules(const vector<GameObject> & elements, int isIndex, Direction materialDir, Direction aspectDir) {
+void RuleManager::checkRules(const vector<GameObject> & elements, int isIndex, Direction materialDir, Direction aspectDir) {
     Position materialPos = elements.at(isIndex).pos().next(materialDir);
     vector<Element> materialElements = findElementAtPosition(elements, materialPos);
 
@@ -76,15 +76,14 @@ void RuleManager::scanRules(const vector<GameObject> & elements, int isIndex, Di
     }
 }
 
-void RuleManager::checkRules(const vector<GameObject> & elements) {
-    //on vide l'ensemble des règles avant de les rescanner
+void RuleManager::scanRules(const vector<GameObject> & elements) {
+    //empty it before complete it
     rules_.clear();
 
-    //on scanne l'ensemble des éléments
     for(int i=0; i<elements.size(); ++i) {
         if(elements.at(i).element() == Element::IS) { //chercher les is
-            scanRules(elements, i, Direction::LEFT, Direction::RIGHT);
-            scanRules(elements, i, Direction::UP, Direction::DOWN);
+            checkRules(elements, i, Direction::LEFT, Direction::RIGHT);
+            checkRules(elements, i, Direction::UP, Direction::DOWN);
         }
     }
 }

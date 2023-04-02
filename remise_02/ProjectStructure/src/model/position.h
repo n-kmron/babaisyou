@@ -7,55 +7,31 @@
 class Position {
 
     private:
-        int row_;
-        int col_;
+        unsigned int row_;
+        unsigned int col_;
 
     public:
 
         /*!
-         * \brief Constructeur de Position à partir de sa ligne et sa colonne.
-         *
-         *
-         * \param row la ligne de la position
-         * \param col la colonne de la position
-         *
-         * \throw std::invalid_argument si un des paramètres est négatif.
+         * \brief Constructor of a Position from a row and a col
          */
-        Position(const int & row, const int & col);
+        Position(const unsigned int & row, const unsigned int & col);
 
 
         // autres méthodes
         /**
-         * @brief Donne la nouvelle position à partir d'une direction donnée.
-         *
-         * @param dir la direction
-         *
-         * @return la position déplacée
-         *
-         * @throw si une des coordonnées est négative
+         * @brief moves a position in a direction
+         * @throw if a coordinate is negative
          */
         Position next(const Direction & dir);
 
 
         // getters
-        /*!
-         * \brief Accesseur en lecture de la ligne d'une position.
-         *
-         * \return la ligne de la position
-         */
-        int row() const;
+        unsigned int row() const;
 
-        /*!
-         * \brief Accesseur en lecture de la colonne d'une position.
-         *
-         * \return la colonne de la position
-         */
-        int col() const;
+        unsigned int col() const;
 
-        /*!
-        * \brief to_string
-        * \return
-        */
+        // debug
         std::string to_string() const;
 
         bool operator==(const Position & other) const;

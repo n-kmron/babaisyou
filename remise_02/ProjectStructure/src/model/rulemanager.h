@@ -14,45 +14,46 @@ class RuleManager
         inline static std::vector<Element> material_; //left words
         inline static std::vector<Element> aspect_; //right words
 
+        /**
+         * @brief used to 'scanRules'
+         */
+        void checkRules(const std::vector<GameObject> & elements, int isIndex, Direction materialDir, Direction aspectDir);
+
     public:
 
         /**
-         * @brief Constructeur de RuleManager
-         * instancie les 2 vector static
+         * @brief Constructor of a RuleManager
+         * instantiate the two static vectors
          */
         RuleManager();
 
-        /**
-         * @brief getter of rules_ attribute
-         * @return
-         */
+        //getter
         std::map<Element,std::vector<Element>> rules();
 
         /*!
-         * \brief Permet d'ajouter une regles à la map rules en attributs.
+         * \brief add a new effective rule
          *
          *
-         * \param complement l'action/le comportement qui défini la règle.
-         * \param subject le type de l'element sur le quel s'appliquera la règle.
+         * \param aspect the behaviour that define the rule
+         * \param material the element type on what the rule will apply
          *
          */
         void addRule(const Element & aspect,const Element & material);
 
         /**
-         * @brief scanne l'ensemble du plateau de jeu pour trouver les règles actives et met à jour la liste des règles
+         * @brief scan the whole board to find the active rules
          */
-        void checkRules(const std::vector<GameObject> & elements);
+        void scanRules(const std::vector<GameObject> & elements);
 
-        void scanRules(const std::vector<GameObject> & elements, int isIndex, Direction materialDir, Direction aspectDir);
 
         /*!
-         * \brief Permet de verifier si l'element est un 'material' d'une règle, mot qui peut se placer à gauche/en haut d'un IS.
+         * \brief check if an element could be considered as a  'material', word who could be placed on the left/the top of a IS.
          *
          */
         bool isMaterial(const Element & element);
 
         /*!
-         * \brief Permet de verifier si l'element est un 'aspect' d'une règle, mot qui peut se placer à droite/en bas d'un IS.
+         * \brief check if an element could be considred as an 'aspect', word who could be placed on the right/the bottom of a IS.
          *
          */
         bool isAspect(const Element & element);

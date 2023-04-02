@@ -4,27 +4,24 @@
 
 using namespace std;
 
-//implémentation du constructeur
-Position::Position(const int & row, const int & col) : row_ { row }, col_ { col }
+Position::Position(const unsigned int & row, const unsigned int & col) : row_ { row }, col_ { col }
 {
     if(row < 0 || col < 0) {
         throw std::invalid_argument("row and col must be positive");
     }
 }
 
-//implémentation des getters
-int Position::row() const {
+unsigned int Position::row() const {
     return this->row_;
 }
 
-int Position::col() const {
+unsigned int Position::col() const {
     return this->col_;
 }
 
-//implémentation des méthodes
 Position Position::next(const Direction & dir) {
-        int row = row_;
-        int col = col_;
+        unsigned int row = row_;
+        unsigned int col = col_;
         switch (dir)
         {
             case Direction::UP:
@@ -56,8 +53,6 @@ string Position::to_string() const {
 }
 
 
-
-//implémentation des opérateurs
 std::ostream & operator<<(std::ostream & out, const Position & in) {
     return out << in.to_string();
 }

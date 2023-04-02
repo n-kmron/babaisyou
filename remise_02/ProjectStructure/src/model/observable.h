@@ -3,14 +3,17 @@
 
 #include "observer.h"
 
+/**
+ * @brief Observable interface to implements the observable-observers design pattern
+ */
 class Observable
 {
     public:
-        void registerObserver(const Observer & obs);
+        virtual void registerObserver(const Observer & obs) = 0;
 
-        void removeObserver(const Observer & obs);
+        virtual void removeObserver(const Observer & obs) = 0;
 
-        void notifyObserver();
+        virtual void notifyObserver() = 0;
 };
 
 #endif // OBSERVABLE_H

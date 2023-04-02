@@ -11,7 +11,7 @@ GameObject::GameObject(const Element & element, const Position & pos)
         element_ != Element::BABA && element_ != Element::WALL && element_ != Element::ROCK &&
         element_ != Element::LAVA && element_ != Element::GRASS && element_ != Element::METAL &&
         element_ != Element::GOOP && element_ != Element::FLAG) {
-        throw std::invalid_argument("Element non valide");
+        throw std::invalid_argument("element not existing");
     }
 }
 

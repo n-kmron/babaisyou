@@ -11,24 +11,23 @@ class LevelLoader
         std::vector<std::string> fileAllLines_;
 
         /**
-         * @brief rempli l'attribut fileAllLines_ avec le contenu du fichier (sous forme de vector<string>)
+         * @brief fill the attribute 'fileAllLines_' with the content of the file (vector<string>)
          */
-        void fileAllLines();
+        void readAllLines();
 
     public:
+
         /*!
          * \brief Constructeur de LevelLoader à partir du numero du niveau à créer.
          *
          *
-         * \param numLevel le numero du niveau
-         *
-         * \throw std::invalid_argument si le paramètre n'est pas valide.
+         * \param numLevel the number of the level to build
          */
        LevelLoader(const unsigned int & numLevel);
 
 
        /*!
-        * \brief Permet de créer un LevelMechanics à partir d'un fichier .txt.
+        * \brief translate string lines to GameObjects to implement the game
         *
         */
        std::vector<GameObject> createLevel();

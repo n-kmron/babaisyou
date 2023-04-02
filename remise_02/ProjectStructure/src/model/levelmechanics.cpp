@@ -20,6 +20,5 @@ LevelMechanics& LevelMechanics::operator=(const LevelMechanics & other) {
             this->setLevel(other.level_);
             this->setRules(other.rules_);
         }
-        // Renvoie une référence à l'objet this pour permettre les affectations en cascade
         return *this;
     }

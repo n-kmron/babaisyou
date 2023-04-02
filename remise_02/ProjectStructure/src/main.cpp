@@ -19,5 +19,5 @@ int main()
     LevelLoader level(1);
     TextView view;
     view.displayTitle();
-    view.displayMap(level.createLevel());
+    view.displayBoard(level.createLevel());
 }

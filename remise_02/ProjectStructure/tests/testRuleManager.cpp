@@ -9,7 +9,7 @@ TEST_CASE("checkRules() donne l'ensemble des règles à un moment donné de la p
         // Initialiser un level
         LevelLoader loader(1);
         RuleManager rm;
-        rm.checkRules(loader.createLevel());
+        rm.scanRules(loader.createLevel());
 
         std::map<Element, std::vector<Element>> expected;
         //ASPECT = KEY

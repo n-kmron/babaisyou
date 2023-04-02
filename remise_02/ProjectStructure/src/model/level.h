@@ -1,6 +1,11 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+/**
+ * @brief The Level class
+ *
+ * note that we did an inline class because of the small size
+ */
 class Level
 {
     private:
@@ -9,16 +14,9 @@ class Level
 
     public:
 
-        /**
-         * @brief getter de l'attribut height
-         * @return
-         */
-        inline int height() const;
 
-        /**
-         * @brief getter de l'attribut width
-         * @return
-         */
+        //getters
+        inline int height() const;
         inline int width() const;
 };
 

@@ -9,39 +9,38 @@
 using namespace std;
 
 LevelLoader::LevelLoader(const unsigned int & numLevel) : numLevel_ { numLevel-1 } {
-    fileAllLines();
+    readAllLines();
 }
 
-void LevelLoader::fileAllLines() {
-    // Ouvrir le fichier
+void LevelLoader::readAllLines() {
 
+    // open file
     stringstream ss;
     ss << "level_" << numLevel_ << ".txt";
     string filename = ss.str();
     std::ifstream level(filename);
 
-    // Vérifier si l'ouverture a réussi
+    // check the opening
     if (!level.is_open()) {
         throw std::ifstream::failure("Impossible d'ouvrir le fichier.");
     }
 
-    // Lire le contenu du fichier et placer chaque ligne dans un vector
+    // read file and add each line in a vector
     std::string fileLine;
     while (std::getline(level, fileLine)) {
         this->fileAllLines_.push_back(fileLine);
     }
 
-    // Fermer le fichier
+    // close file
     level.close();
 }
 
 
 vector<GameObject> LevelLoader::createLevel() {
-    //Vector servant pour le constructeur d'un LevelMechanics
     vector<GameObject> elements;
 
     for(int i=0; i<fileAllLines_.size(); ++i) {
-        std::vector<string> splittedElem; //vector contenant chaque mot du string
+        std::vector<string> splittedElem;
         string line { fileAllLines_.at(i) };
         stringstream ss(line);
             string elementPart;
@@ -49,13 +48,11 @@ vector<GameObject> LevelLoader::createLevel() {
                 splittedElem.push_back(elementPart);
             }
             if(splittedElem.size() != 3) {
-                throw std::invalid_argument("Le fichier n'est pas bien configuré");
+                throw std::invalid_argument("the file is not well configured");
             }
-            //récupérer le type de notre élément
             string type { splittedElem[0] };
-            // Convertir les deux derniers mots en entiers
-            int posCol = stoi(splittedElem[1]); //la colonne de la postion est le deuxième mot de la découpe
-            int posRow = stoi(splittedElem[2]); //la colonne de la postion est le troisième mot de la découpe
+            int posCol = stoi(splittedElem[1]); //row is the second part of the splitted element
+            int posRow = stoi(splittedElem[2]); //col is the third part of the splitted element
 
             Position pos(posRow, posCol);
             GameObject finalElem(conversionElementFromText(type), pos);

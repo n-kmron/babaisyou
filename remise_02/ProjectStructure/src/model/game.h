@@ -10,52 +10,33 @@ class Game
 
     public:
 
-        /*!
-        * \brief Constructeur par defaut de Game.
-        *
-        */
         Game() = default;
 
         /*!
-         * \brief Constructeur de Game à partir du numero du niveau.
+         * \brief Constructor of Game from his number
          *
          *
-         * \param numLevel le niveau
-         *
-         * \throw std::invalid_argument si le paramètre n'est pas valide.
-         */
-        Game(const int & numLevel);
+         * \param numLevel the number of the level to build
+        */
+        Game(const unsigned int & numLevel);
 
         /*!
-         * \brief Permet de lancer le jeu.
+         * \brief Start the game
          *
          */
         void start();
 
-        /*!
-         * \brief Permet de vérifier si le niveau est gagné.
-         *
-         * \return true si le niveau est gagné et false si ce n'est pas le cas.
-         */
         bool isWon();
 
-        /*!
-         * \brief Permet de sauver une partie en cours.
-         *
-         */
         void saveGame();
 
         /*!
-         * \brief Permet de jouer un coup.
+         * \brief Play a shot (move the character)
          *
-         * \param dir la direction dans la quelle on veut deplacer le/les element(s)
+         * \param dir the direction to move
          */
         void playShot(const Direction & dir);
 
-        /*!
-         * \brief Permet de recommencer le niveau.
-         *
-         */
         void restart();
 };
 

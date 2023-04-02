@@ -13,16 +13,22 @@ public:
         cout << "Welcome to Baba Is You !" << std::endl;
     }
 
-    void displayMap(const vector<GameObject>& elements) override {
+    void displayBoard(const vector<GameObject>& elements) override {
         for(int height=0; height<18; ++height) {
             cout << endl;
             for(int width=0; width<18; ++width) {
-                Position pos(height, width);
-                vector<Element> elems = findElementAtPosition(elements, pos);
-                if(!elems.empty()) {
-                    cout << elemConversionFromElement(elems.at(elems.size()-1));
-                } else {
-                    cout << " ";
+                if(height==0 || height==17)
+                    cout << "-";
+                else if(width==0 || width == 17)
+                    cout << "|";
+                else {
+                    Position pos(height, width);
+                    vector<Element> elems = findElementAtPosition(elements, pos);
+                    if(!elems.empty()) {
+                        cout << elemConversionFromElement(elems.at(elems.size()-1));
+                    } else {
+                        cout << " ";
+                    }
                 }
             }
         }

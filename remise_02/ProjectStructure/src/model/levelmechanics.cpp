@@ -1,4 +1,5 @@
 #include "levelmechanics.h"
+#include "../util.cpp"
 #include <vector>
 
 using namespace std;
@@ -6,16 +7,29 @@ using namespace std;
 LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements) : elements_ { elements }, rules_ { RuleManager() } {
 }
 
-void LevelMechanics::dropElement(const Position & pos) {
-
+void LevelMechanics::dropElement(const Position & pos, const Element & element) {
+    for(int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {
+        if(elements_.at(elementIndex).pos() == pos && elements_.at(elementIndex).element() == element) {
+            elements_.erase(elements_.begin() + elementIndex);
+        }
+    }
 }
 
 bool LevelMechanics::contains(const Position & pos) {
-    return false;
+    int row = pos.row();
+    int col = pos.col();
+    return !(row > 18 || row < 0 || col > 18 || col < 0);
+
 }
 
 vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
-    return vector<GameObject>();
+    vector<GameObject> typeElement;
+    for(int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {
+        if(elements_.at(elementIndex).element() == element) {
+            typeElement.push_back(elements_.at(elementIndex));
+        }
+    }
+    return typeElement;
 }
 
 void LevelMechanics::move(const Direction & dir) {
@@ -23,7 +37,8 @@ void LevelMechanics::move(const Direction & dir) {
 }
 
 void LevelMechanics::setElementPosition(const Element & element, const Position & pos) {
-
+    GameObject gameobject(element, pos);
+    elements_.push_back(gameobject);
 }
 
 bool LevelMechanics::isMovable(const Direction & dir, const GameObject & element) {

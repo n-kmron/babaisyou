@@ -7,6 +7,7 @@
 #include "model/observer.h"
 #include "view.h"
 #include "util.cpp"
+#include <unistd.h>
 #include <vector>
 
 using namespace std;
@@ -61,6 +62,7 @@ public:
             cout << ">>Enter a direction (ZQSD): " << endl;
             std::cin >> input;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            sleep(1);
             if (std::regex_match(input, regex)) {
                 if(input == "Z") {
                     return Direction::UP;

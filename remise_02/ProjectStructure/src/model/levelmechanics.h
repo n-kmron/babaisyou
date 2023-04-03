@@ -41,7 +41,7 @@ class LevelMechanics
         /**
          * @brief drop the last element on a position in the board
         */
-        void dropElement(const Position & pos);
+        void dropElement(const Position & pos, const Element & element);
 
         /**
          * @brief check if a position is on the board yet

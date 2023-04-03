@@ -10,7 +10,7 @@ using namespace std;
  * @param elements all the elements of the game
  * @return all the elements on this case
  */
-static vector<Element> & findElementAtPosition(const vector<GameObject> & elements, const Position & pos) {
+static vector<Element> findElementAtPosition(const vector<GameObject> & elements, const Position & pos) {
     vector<Element> elementsAtPos;
     for(int elementIndex=0; elementIndex<elements.size(); ++elementIndex) {
         if(elements.at(elementIndex).pos() == pos) {

@@ -14,7 +14,6 @@ void Game::start() {
 }
 
 bool Game::isWon() {
-    notifyObserver();
     return false;
 }
 

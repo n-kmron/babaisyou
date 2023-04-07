@@ -19,6 +19,8 @@ class Game : public Observable
 
         Game(const unsigned int numLevel);
 
+        virtual ~Game() = default;
+
         /*!
          * \brief Start the game
          *

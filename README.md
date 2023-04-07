@@ -12,7 +12,12 @@ PS : le fichier .mdj n'est pas documenté car un fichier pdf d'explications est 
 
 <p>Les avertissements que contiennent le projet : 
 <ul>
-    <li>Appel à une méthode virtuelle durant la construction d'un objet (TextView - displayTitle()) pour afficher le titre du jeu car c'est le seul moment disponible (après, le jeu sera lancé et il sera trop tard pour afficher le titre</li>
+    <li>
+        Appel à une méthode virtuelle durant la construction d'un objet (TextView - displayTitle()) pour afficher le titre du jeu car c'est le seul moment disponible (après, le jeu sera lancé et il sera trop tard pour afficher le titre
+    </li>
+    <li>
+        Fonctions non utilisées (dans util.cpp). Ces fonctions sont utilisées mais pas dans ce fichier donc un avertissement est présent.
+    </li>
 </ul>
 </p>
 

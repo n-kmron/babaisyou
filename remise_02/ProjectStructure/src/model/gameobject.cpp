@@ -24,3 +24,7 @@ Position GameObject::pos() const
 {
     return pos_;
 }
+
+void GameObject::setPosition(const Position & pos) {
+    this->pos_ = pos;
+}

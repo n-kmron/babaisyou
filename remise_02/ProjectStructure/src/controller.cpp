@@ -1,6 +1,6 @@
 #include "controller.h"
 
-Controller::Controller(Game & game) : game_ { &game } {
+Controller::Controller() : game_ { std::make_unique<Game>() } {
 };
 
 void Controller::start() {
@@ -11,6 +11,14 @@ void Controller::playShot(const Direction & dir){
     game_->playShot(dir);
 }
 
+bool Controller::isWon() {
+    return game_->isWon();
+}
+
+bool Controller::isLost() {
+    return game_->isLost();
+}
+
 void Controller::saveGame() {
     game_->saveGame();
 }
@@ -18,3 +26,21 @@ void Controller::saveGame() {
 void Controller::restart() {
     game_->restart();
 }
+
+void Controller::nextLevel() {
+    game_->restart();
+}
+
+void Controller::registerAsObserver(Observer * obs) {
+    game_->registerObserver(obs);
+}
+
+
+unsigned int Controller::level() {
+    return game_->level();
+}
+
+std::vector<GameObject> Controller::elements() {
+    return game_->elements();
+}
+

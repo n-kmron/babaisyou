@@ -15,3 +15,5 @@ int main()
 {
     TextView view;
 }
+
+// TODO : dans Game : saveGame, restart, nextLevel

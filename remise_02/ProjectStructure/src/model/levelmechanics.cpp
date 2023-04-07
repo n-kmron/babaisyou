@@ -19,15 +19,6 @@ void LevelMechanics::setElementPosition(const GameObject & element) {
     elements_.push_back(element);
 }
 
-
-void LevelMechanics::dropElement(const Position & pos, const Element & element) {
-    for(int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {
-        if(elements_.at(elementIndex).pos() == pos && elements_.at(elementIndex).element() == element) {
-            elements_.erase(elements_.begin() + elementIndex);
-        }
-    }
-}
-
 vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
     vector<GameObject> typeElement;
     for(int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {

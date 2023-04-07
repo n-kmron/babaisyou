@@ -2,7 +2,6 @@
 #include <regex>
 #include <string>
 #include "controller.h"
-#include "model/game.h"
 #include "model/gameobject.h"
 #include "model/observer.h"
 #include "view.h"
@@ -15,13 +14,13 @@ using namespace std;
 class TextView : public View, Observer {
 
 private:
-    std::unique_ptr<Game> game_;
     Controller controller_;
 
 public:
 
-    TextView() : game_ { std::make_unique<Game>() }, controller_ { Controller(*game_) }{
-        game_->registerObserver(this);
+    TextView() : controller_ { Controller() }{
+        controller_.registerAsObserver(this);
+        displayTitle();
         controller_.start();
     }
 
@@ -39,7 +38,7 @@ public:
                     cout << "|";
                 else {
                     Position pos(height, width);
-                    vector<Element> elems = findElementAtPosition(game_->elements(), pos);
+                    vector<Element> elems = findElementAtPosition(controller_.elements(), pos);
                     if(!elems.empty()) {
                         cout << elemConversionFromElement(elems.at(elems.size()-1));
                     } else {
@@ -56,7 +55,7 @@ public:
     }
 
     void displayNextLevel() override {
-        cout << "You are going now to the next level : Level " << game_->level() << endl;
+        cout << "You are going now to the next level : Level " << controller_.level() << endl;
     }
 
     void displayKilled() override{
@@ -115,21 +114,21 @@ public:
 
     void update() override {
         displayBoard();
-        if(!game_->isWon()) {
+        if(!controller_.isWon()) {
             //controller_.playShot(askDir());
-            if(game_->isLost()) {
+            if(controller_.isLost()) {
                 displayKilled();
                 if(askRestart()) {
-                    game_->restart();
+                    controller_.restart();
                 } else {
                     exit(0);
                 }
             }
         } else {
             displayWon();
-            if(game_->level() < 5) {
+            if(controller_.level() < 5) {
                 displayNextLevel();
-                game_->nextLevel();
+                controller_.nextLevel();
             } else {
                 exit(0);
             }

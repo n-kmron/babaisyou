@@ -11,7 +11,7 @@ private:
 
 public:
 
-    Controller(Game & game);
+    Controller();
 
     void start();
 
@@ -20,9 +20,21 @@ public:
      */
     void playShot(const Direction & dir);
 
+    bool isWon();
+
+    bool isLost();
+
     void saveGame();
 
     void restart();
+
+    void nextLevel();
+
+    unsigned int level();
+
+    std::vector<GameObject> elements();
+
+    void registerAsObserver(Observer * obs);
 
 };
 

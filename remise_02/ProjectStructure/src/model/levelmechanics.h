@@ -49,11 +49,6 @@ class LevelMechanics
         void dropElement(const Position & pos, const Element & element);
 
         /**
-         * @brief check if a position is on the board yet
-         */
-        bool contains(const Position & pos);
-
-        /**
          * @brief find all the GameObjects from a type of Element
          */
         std::vector<GameObject> findAllElement(const Element & element);

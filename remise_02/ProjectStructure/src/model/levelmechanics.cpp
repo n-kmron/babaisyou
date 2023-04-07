@@ -15,13 +15,6 @@ void LevelMechanics::dropElement(const Position & pos, const Element & element) 
     }
 }
 
-bool LevelMechanics::contains(const Position & pos) {
-    int row = pos.row();
-    int col = pos.col();
-    return !(row > 18 || row < 0 || col > 18 || col < 0);
-
-}
-
 vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
     vector<GameObject> typeElement;
     for(int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {

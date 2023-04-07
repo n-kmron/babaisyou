@@ -1,6 +1,6 @@
 #include "controller.h"
 
-Controller::Controller() : game_ { std::make_unique<Game>() } {
+Controller::Controller() : game_ { std::make_unique<Game>(1) } {
 };
 
 void Controller::start() {

@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Game::Game() : observers_ {}, loader_ { LevelLoader(1) }, level_ { Level(1) }, levelMechanics_ { LevelMechanics(loader_.createLevel()) } {
+Game::Game(const unsigned int numLevel) : observers_ {}, loader_ { LevelLoader(numLevel) }, levelMechanics_ { LevelMechanics(loader_.createLevel(), numLevel) } {
 }
 
 
@@ -43,7 +43,7 @@ std::vector<GameObject> & Game::elements() {
 }
 
 unsigned int Game::level() {
-    return level_.numLevel()+1;
+    return levelMechanics_.level();
 }
 
 void Game::registerObserver(Observer * obs) {

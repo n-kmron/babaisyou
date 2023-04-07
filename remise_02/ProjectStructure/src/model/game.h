@@ -2,7 +2,6 @@
 #define GAME_H
 
 #include "direction.h"
-#include "level.h"
 #include "levelloader.h"
 #include "levelmechanics.h"
 #include "observable.h"
@@ -14,12 +13,11 @@ class Game : public Observable
     private:
         std::vector<Observer*> observers_;
         LevelLoader loader_;
-        Level level_;
         LevelMechanics levelMechanics_;
 
     public:
 
-        Game();
+        Game(const unsigned int numLevel);
 
         /*!
          * \brief Start the game

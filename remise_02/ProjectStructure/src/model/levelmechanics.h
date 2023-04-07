@@ -1,6 +1,7 @@
 #ifndef LEVELMECHANICS_H
 #define LEVELMECHANICS_H
 
+#include "level.h"
 #include "rulemanager.h"
 #include "gameobject.h"
 #include <iostream>
@@ -19,6 +20,8 @@ class LevelMechanics
          */
         RuleManager rules_;
 
+        Level level_;
+
 
         /**
          * @brief change in elements_ the position in a new direction for the gameobject passed as a parameter
@@ -35,12 +38,14 @@ class LevelMechanics
         /**
          * @brief Constructor of LevelMechanics from the gameobjects
          */
-        LevelMechanics(const std::vector<GameObject> & elements);
+        LevelMechanics(const std::vector<GameObject> & elements, const unsigned int numLevel);
 
         // getters
         std::vector<GameObject> & elements();
 
         RuleManager rules() const;
+
+        unsigned int level() const;
 
         // setters
         void setElements(const std::vector<GameObject> & elements);

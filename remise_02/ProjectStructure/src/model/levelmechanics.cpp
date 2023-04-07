@@ -4,14 +4,14 @@
 
 using namespace std;
 
-LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements) : elements_ { elements }, rules_ { RuleManager() } {
+LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements, const unsigned int numLevel) : elements_ { elements }, rules_ { RuleManager() }, level_ { Level( numLevel) } {
     rules_.scanRules(elements_);
 }
 
 bool LevelMechanics::contains(const Position & pos) {
     int row = pos.row();
     int col = pos.col();
-    return !(row > 18 || row < 0 || col > 18 || col < 0);
+    return !(row > level_.height() || row < 0 || col > level_.width() || col < 0);
 
 }
 
@@ -172,6 +172,11 @@ vector<GameObject> & LevelMechanics::elements() {
 RuleManager LevelMechanics::rules() const {
     return rules_;
 }
+
+unsigned int LevelMechanics::level() const {
+    return level_.numLevel();
+}
+
 
 void LevelMechanics::setElements(const vector<GameObject>& elements) {
     elements_ = elements;

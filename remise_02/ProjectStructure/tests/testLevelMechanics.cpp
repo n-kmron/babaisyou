@@ -95,7 +95,7 @@ TEST_CASE("move()") {
         REQUIRE( result.element() == expected.element() );
         REQUIRE( result.pos() == expected.pos() );
 
-    }
+    }*/
 
     SECTION("with level 1 and is you = baba (constraint on the path -> win on the flag) : ") {
         // initialize the level
@@ -113,16 +113,10 @@ TEST_CASE("move()") {
         mechanics.move(Direction::RIGHT);
         mechanics.move(Direction::RIGHT);
 
-        GameObject result = mechanics.findAllElement(Element::BABA).at(0);
-        Position newPos (8,12);
-        GameObject expected = GameObject(Element::BABA, newPos);
-
         //REQUIRE ( check to win );
-        REQUIRE ( mechanics.rules().rules()[Element::YOU].at(0) == Element::TEXT_BABA );
-        REQUIRE( result.element() == expected.element() );
-        REQUIRE( result.pos() == expected.pos() );
-
-    }*/
+        bool result = mechanics.isWon();
+        REQUIRE(result);
+    }
 
 
 }
@@ -197,5 +191,31 @@ TEST_CASE("Constraints") {
         GameObject element(Element::BABA, pos);
         bool result = mechanics.isMovable(Direction::DOWN, element);
         REQUIRE (result);
+    }
+
+    SECTION("isWon() : flag on the same case that the player (flag is win)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(8,12);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isWon();
+        REQUIRE (result);
+    }
+
+    SECTION("isWon() : flag above the player (not a win)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(9,12);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isWon();
+        REQUIRE (!result);
     }
 }

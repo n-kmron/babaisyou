@@ -56,6 +56,11 @@ class LevelMechanics
 
 
         /**
+         * @brief add an element on the map
+         */
+        void setElementPosition(const GameObject & element);
+
+        /**
          * @brief drop the last element on a position in the board
         */
         void dropElement(const Position & pos, const Element & element);

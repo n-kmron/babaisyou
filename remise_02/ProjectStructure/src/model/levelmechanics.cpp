@@ -15,6 +15,11 @@ bool LevelMechanics::contains(const Position & pos) {
 
 }
 
+void LevelMechanics::setElementPosition(const GameObject & element) {
+    elements_.push_back(element);
+}
+
+
 void LevelMechanics::dropElement(const Position & pos, const Element & element) {
     for(int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {
         if(elements_.at(elementIndex).pos() == pos && elements_.at(elementIndex).element() == element) {
@@ -39,8 +44,10 @@ void LevelMechanics::move(const Direction & dir) {
     for(int index=0; index<isYou.size(); ++index) {
         Element isYouType = fromRuleToPlayable(isYou.at(index));
         vector<GameObject> allIsYou = findAllElement(isYouType);
-        if(isMovable(dir,allIsYou.at(index))) {
-            changePosition(dir, allIsYou.at(index));
+        for(unsigned int secondIndex=0; secondIndex<allIsYou.size(); ++secondIndex) {
+            if(isMovable(dir,allIsYou.at(secondIndex))) {
+                changePosition(dir, allIsYou.at(secondIndex));
+            }
         }
     }
 }
@@ -80,7 +87,7 @@ bool LevelMechanics::isMovable(const Direction & dir, const GameObject & element
     if(!contains(pos)) return false;
     vector<Element> elementsOnNewPosition = findElementAtPosition(elements_, pos);
 
-    //check if the element on the new pos make a stop
+    //check if the element on the new pos makes a stop
     vector<Element> isStop = rules_.rules()[Element::STOP];
     for(unsigned int index=0; index<elementsOnNewPosition.size(); ++index) {
         for(unsigned int secondIndex=0; secondIndex<isStop.size(); ++secondIndex) {
@@ -93,6 +100,24 @@ bool LevelMechanics::isMovable(const Direction & dir, const GameObject & element
 }
 
 bool LevelMechanics::isWon() {
+    //check if the element on the new pos makes a win
+    vector<Element> isWin = rules_.rules()[Element::WIN];
+    for(unsigned int isWinIndex=0; isWinIndex<isWin.size(); ++isWinIndex) {
+        Element isWinType = fromRuleToPlayable(isWin.at(isWinIndex));
+        vector<GameObject> allIsWin = findAllElement(isWinType);
+
+        vector<Element> isYou = rules_.rules()[Element::YOU];
+        for(unsigned int isYouIndex=0; isYouIndex<isWin.size(); ++isYouIndex) {
+            Element isYouType = fromRuleToPlayable(isYou.at(isYouIndex));
+            vector<GameObject> allIsYou = findAllElement(isYouType);
+
+            for(unsigned int i=0; i<allIsYou.size(); ++i) {
+                for(unsigned int j=0; j<allIsWin.size(); ++j) {
+                    if(allIsYou.at(i).pos() == allIsWin.at(j).pos()) return true;
+                }
+            }
+        }
+    }
     return false;
 }
 

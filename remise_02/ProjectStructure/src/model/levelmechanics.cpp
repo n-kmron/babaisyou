@@ -65,11 +65,6 @@ Element LevelMechanics::fromRuleToPlayable(const Element & element) {
     } throw invalid_argument("This rule type does not have a playable type");
 }
 
-void LevelMechanics::setElementPosition(const Element & element, const Position & pos) {
-    GameObject gameobject(element, pos);
-    elements_.push_back(gameobject);
-}
-
 bool LevelMechanics::isMovable(const Direction & dir, const GameObject & element) {
     return false;
 }

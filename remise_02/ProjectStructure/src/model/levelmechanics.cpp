@@ -39,7 +39,9 @@ void LevelMechanics::move(const Direction & dir) {
     for(int index=0; index<isYou.size(); ++index) {
         Element isYouType = fromRuleToPlayable(isYou.at(index));
         vector<GameObject> allIsYou = findAllElement(isYouType);
-        changePosition(dir, allIsYou.at(index));
+        if(isMovable(dir,allIsYou.at(index))) {
+            changePosition(dir, allIsYou.at(index));
+        }
     }
 }
 

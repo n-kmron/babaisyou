@@ -57,7 +57,7 @@ TEST_CASE("move()") {
         REQUIRE( result.pos() == expected.pos() );
     }
 
-    /*SECTION("with level 1 and is you = baba (constraint on the path -> blocked by a wall (is stop)) : ") {
+    SECTION("with level 1 and is you = baba (constraint on the path -> blocked by a wall (is stop)) : ") {
         // initialize the level
         LevelLoader loader(1);
         LevelMechanics mechanics(loader.createLevel());
@@ -76,7 +76,7 @@ TEST_CASE("move()") {
     }
 
 
-    SECTION("with level 1 and is you = baba (check if rock is been pushable) : ") {
+    /*SECTION("with level 1 and is you = baba (check if rock is been pushable) : ") {
         // initialize the level
         LevelLoader loader(1);
         LevelMechanics mechanics(loader.createLevel());

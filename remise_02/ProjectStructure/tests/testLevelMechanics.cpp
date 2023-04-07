@@ -76,7 +76,7 @@ TEST_CASE("move()") {
     }
 
 
-    /*SECTION("with level 1 and is you = baba (check if rock is been pushable) : ") {
+    SECTION("with level 1 and is you = baba (check if rock is been pushable) : ") {
         // initialize the level
         LevelLoader loader(1);
         LevelMechanics mechanics(loader.createLevel());
@@ -86,16 +86,20 @@ TEST_CASE("move()") {
         mechanics.move(Direction::RIGHT);
         mechanics.move(Direction::RIGHT);
 
-        GameObject result = mechanics.findAllElement(Element::BABA).at(0);
+        bool result;
+        Position pos(8,9);
+        std::vector<GameObject> rocks = mechanics.findAllElement(Element::ROCK);
+        for(unsigned int i=0; i<rocks.size(); ++i) {
+            if(rocks.at(i).pos() == pos) {
+                result = true;
+            }
+        }
         Position newPos (8,12);
         GameObject expected = GameObject(Element::BABA, newPos);
 
         //REQUIRE ( check if a rock moved );
-        REQUIRE ( mechanics.rules().rules()[Element::YOU].at(0) == Element::TEXT_BABA );
-        REQUIRE( result.element() == expected.element() );
-        REQUIRE( result.pos() == expected.pos() );
-
-    }*/
+        REQUIRE ( result );
+    }
 
     SECTION("with level 1 and is you = baba (constraint on the path -> win on the flag) : ") {
         // initialize the level

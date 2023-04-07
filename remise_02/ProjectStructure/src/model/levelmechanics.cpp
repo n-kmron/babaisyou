@@ -47,6 +47,7 @@ void LevelMechanics::move(const Direction & dir) {
         for(unsigned int secondIndex=0; secondIndex<allIsYou.size(); ++secondIndex) {
             if(isMovable(dir,allIsYou.at(secondIndex))) {
                 changePosition(dir, allIsYou.at(secondIndex));
+                pushable(dir, allIsYou.at(secondIndex).pos());
             }
         }
     }
@@ -153,8 +154,23 @@ bool LevelMechanics::isKill() {
     return false;
 }
 
-bool LevelMechanics::pushable() {
-    return false;
+void LevelMechanics::pushable(const Direction & dir, const Position & pos) {
+    Position temp = pos;
+    Position newPos = temp.next(dir);
+
+    vector<Element> isPush = rules_.rules()[Element::PUSH];
+    for(unsigned int index=0; index<isPush.size(); ++index) {
+        Element isPushType = fromRuleToPlayable(isPush.at(index));
+        vector<GameObject> allIsPush = findAllElement(isPushType);
+        for(unsigned int secondIndex=0; secondIndex<allIsPush.size(); ++secondIndex) {
+            if(allIsPush.at(secondIndex).pos() == newPos) {
+                if(isMovable(dir, allIsPush.at(secondIndex))) {
+                    pushable(dir, newPos);
+                    changePosition(dir, allIsPush.at(secondIndex));
+                }
+            }
+        }
+    }
 }
 
 

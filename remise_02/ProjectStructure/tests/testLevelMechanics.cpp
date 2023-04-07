@@ -86,15 +86,19 @@ TEST_CASE("move()") {
         mechanics.move(Direction::RIGHT);
         mechanics.move(Direction::RIGHT);
 
-        GameObject result = mechanics.findAllElement(Element::BABA).at(0);
+        bool result;
+        Position pos(8,9);
+        std::vector<GameObject> rocks = mechanics.findAllElement(Element::ROCK);
+        for(unsigned int i=0; i<rocks.size(); ++i) {
+            if(rocks.at(i).pos() == pos) {
+                result = true;
+            }
+        }
         Position newPos (8,12);
         GameObject expected = GameObject(Element::BABA, newPos);
 
         //REQUIRE ( check if a rock moved );
-        REQUIRE ( mechanics.rules().rules()[Element::YOU].at(0) == Element::TEXT_BABA );
-        REQUIRE( result.element() == expected.element() );
-        REQUIRE( result.pos() == expected.pos() );
-
+        REQUIRE ( result );
     }
 
     SECTION("with level 1 and is you = baba (constraint on the path -> win on the flag) : ") {
@@ -113,16 +117,135 @@ TEST_CASE("move()") {
         mechanics.move(Direction::RIGHT);
         mechanics.move(Direction::RIGHT);
 
-        GameObject result = mechanics.findAllElement(Element::BABA).at(0);
-        Position newPos (8,12);
-        GameObject expected = GameObject(Element::BABA, newPos);
-
         //REQUIRE ( check to win );
-        REQUIRE ( mechanics.rules().rules()[Element::YOU].at(0) == Element::TEXT_BABA );
-        REQUIRE( result.element() == expected.element() );
-        REQUIRE( result.pos() == expected.pos() );
-
+        bool result = mechanics.isWon();
+        REQUIRE(result);
     }
 
 
+}
+
+TEST_CASE("Constraints") {
+
+    SECTION("isMovable() : new pos outside the map (at the high)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(0,0);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::UP, element);
+
+        REQUIRE (!result);
+    }
+
+    SECTION("isMovable() : new pos outside the map (at the bottom)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(18,18);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::RIGHT, element);
+
+        REQUIRE (!result);
+    }
+
+    SECTION("isMovable() : new pos inside the map (at the high)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(0,0);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::DOWN, element);
+
+        REQUIRE (result);
+    }
+
+    SECTION("isMovable() : new pos inside the map (at the bottom)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(18,18);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::LEFT, element);
+
+        REQUIRE (result);
+    }
+
+    SECTION("isMovable() : wall is stop on the new pos") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(7,3);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::UP, element);
+        REQUIRE (!result);
+    }
+
+    SECTION("isMovable() : no constraint, everything is good") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(7,3);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::DOWN, element);
+        REQUIRE (result);
+    }
+
+    SECTION("isWon() : flag on the same case that the player (flag is win)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(8,12);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isWon();
+        REQUIRE (result);
+    }
+
+    SECTION("isWon() : flag above the player (not a win)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(9,12);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isWon();
+        REQUIRE (!result);
+    }
+
+    SECTION("isKill() : goop on the same case that the player (goop is sink)") {
+        // initialize the level
+        LevelLoader loader(4);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(8,7);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isKill();
+        REQUIRE (result);
+    }
+
+    SECTION("isKill() : goop above the player (not a kill)") {
+        // initialize the level
+        LevelLoader loader(4);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(7,7);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isKill();
+        REQUIRE (!result);
+    }
 }

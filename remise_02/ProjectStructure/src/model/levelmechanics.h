@@ -50,6 +50,17 @@ class LevelMechanics
         // other methods
 
         /**
+         * @brief return if the position is inside of the map
+         */
+        bool contains(const Position & pos);
+
+
+        /**
+         * @brief add an element on the map
+         */
+        void setElementPosition(const GameObject & element);
+
+        /**
          * @brief drop the last element on a position in the board
         */
         void dropElement(const Position & pos, const Element & element);
@@ -73,7 +84,7 @@ class LevelMechanics
 
         bool isKill();
 
-        bool pushable();
+        void pushable(const Direction & dir, const Position & pos);
 
         LevelMechanics & operator=(const LevelMechanics & other);
 };

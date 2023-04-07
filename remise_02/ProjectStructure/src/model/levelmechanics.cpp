@@ -5,6 +5,14 @@
 using namespace std;
 
 LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements) : elements_ { elements }, rules_ { RuleManager() } {
+    rules_.scanRules(elements_);
+}
+
+bool LevelMechanics::contains(const Position & pos) {
+    int row = pos.row();
+    int col = pos.col();
+    return !(row > 18 || row < 0 || col > 18 || col < 0);
+
 }
 
 void LevelMechanics::dropElement(const Position & pos, const Element & element) {
@@ -66,7 +74,20 @@ Element LevelMechanics::fromRuleToPlayable(const Element & element) {
 }
 
 bool LevelMechanics::isMovable(const Direction & dir, const GameObject & element) {
-    return false;
+    Position pos = element.pos().next(dir);
+    if(!contains(pos)) return false;
+    vector<Element> elementsOnNewPosition = findElementAtPosition(elements_, pos);
+
+    //check if the element on the new pos make a stop
+    vector<Element> isStop = rules_.rules()[Element::STOP];
+    for(unsigned int index=0; index<elementsOnNewPosition.size(); ++index) {
+        for(unsigned int secondIndex=0; secondIndex<isStop.size(); ++secondIndex) {
+            if(elementsOnNewPosition.at(index) == fromRuleToPlayable(isStop.at(secondIndex))) {
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 bool LevelMechanics::isWon() {

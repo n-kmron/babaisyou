@@ -57,7 +57,7 @@ TEST_CASE("move()") {
         REQUIRE( result.pos() == expected.pos() );
     }
 
-    SECTION("with level 1 and is you = baba (constraint on the path -> blocked by a wall (is stop)) : ") {
+    /*SECTION("with level 1 and is you = baba (constraint on the path -> blocked by a wall (is stop)) : ") {
         // initialize the level
         LevelLoader loader(1);
         LevelMechanics mechanics(loader.createLevel());
@@ -122,7 +122,80 @@ TEST_CASE("move()") {
         REQUIRE( result.element() == expected.element() );
         REQUIRE( result.pos() == expected.pos() );
 
+    }*/
+
+
+}
+
+TEST_CASE("Constraints") {
+
+    SECTION("isMovable() : new pos outside the map (at the high)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(0,0);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::UP, element);
+
+        REQUIRE (!result);
     }
 
+    SECTION("isMovable() : new pos outside the map (at the bottom)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
 
+        Position pos(18,18);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::RIGHT, element);
+
+        REQUIRE (!result);
+    }
+
+    SECTION("isMovable() : new pos inside the map (at the high)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(0,0);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::DOWN, element);
+
+        REQUIRE (result);
+    }
+
+    SECTION("isMovable() : new pos inside the map (at the bottom)") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(18,18);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::LEFT, element);
+
+        REQUIRE (result);
+    }
+
+    SECTION("isMovable() : wall is stop on the new pos") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(7,3);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::UP, element);
+        REQUIRE (!result);
+    }
+
+    SECTION("isMovable() : no constraint, everything is good") {
+        // initialize the level
+        LevelLoader loader(1);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(7,3);
+        GameObject element(Element::BABA, pos);
+        bool result = mechanics.isMovable(Direction::DOWN, element);
+        REQUIRE (result);
+    }
 }

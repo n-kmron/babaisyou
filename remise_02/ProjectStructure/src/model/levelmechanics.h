@@ -50,6 +50,12 @@ class LevelMechanics
         // other methods
 
         /**
+         * @brief return if the position is inside of the map
+         */
+        bool contains(const Position & pos);
+
+
+        /**
          * @brief drop the last element on a position in the board
         */
         void dropElement(const Position & pos, const Element & element);

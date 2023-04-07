@@ -85,7 +85,9 @@ public:
     void update() override {
         displayBoard();
         if(!game_->isWon()) {
-            controller_.playShot(askDir());
+            //controller_.playShot(askDir());
+        } else {
+            //displayWon();
         }
     }
 };

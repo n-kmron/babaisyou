@@ -25,13 +25,13 @@ Position Position::next(const Direction & dir) {
         switch (dir)
         {
             case Direction::UP:
-                row += 1;
+                row -= 1;
                 break;
             case Direction::RIGHT:
                 col += 1;
                 break;
             case Direction::DOWN:
-                row -= 1;
+                row += 1;
                 break;
             case Direction::LEFT:
                 col -= 1;

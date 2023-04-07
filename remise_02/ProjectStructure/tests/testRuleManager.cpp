@@ -33,24 +33,6 @@ TEST_CASE("checkRules() donne l'ensemble des règles à un moment donné de la p
         material.clear();
 
         std::map<Element, std::vector<Element>> result = rm.rules();
-        /*for (const auto& pair : result) {
-                std::cout << "Clé : " << static_cast<int>(pair.first) << std::endl;
-                std::cout << "Valeurs :";
-                for (const auto& value : pair.second) {
-                    std::cout << " " << static_cast<int>(value);
-                }
-                std::cout << std::endl;
-            }
-        std::cout << "EXP" << std::endl;
-
-        for (const auto& pair : expected) {
-                std::cout << "Clé : " << static_cast<int>(pair.first) << std::endl;
-                std::cout << "Valeurs :";
-                for (const auto& value : pair.second) {
-                    std::cout << " " << static_cast<int>(value);
-                }
-                std::cout << std::endl;
-        }*/
         REQUIRE( result == expected );
     }
 

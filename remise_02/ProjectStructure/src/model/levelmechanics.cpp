@@ -26,9 +26,11 @@ vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
 }
 
 void LevelMechanics::move(const Direction & dir) {
-    vector<Element> isYou = rules().rules()[Element::YOU];
+    rules_.scanRules(elements_);
+    vector<Element> isYou = rules_.rules()[Element::YOU];
     for(int index=0; index<isYou.size(); ++index) {
-        vector<GameObject> allIsYou = findAllElement(isYou.at(index));
+        Element isYouType = fromRuleToPlayable(isYou.at(index));
+        vector<GameObject> allIsYou = findAllElement(isYouType);
         changePosition(dir, allIsYou.at(index));
     }
 }
@@ -38,9 +40,29 @@ void LevelMechanics::changePosition(const Direction & dir, const GameObject & ob
         GameObject current = elements_.at(index);
         if(current.element() == object.element() && current.pos() == object.pos()) {
             Position pos = current.pos().next(dir);
-            current.setPosition(pos);
+            elements_.at(index).setPosition(pos);
         }
     }
+}
+
+Element LevelMechanics::fromRuleToPlayable(const Element & element) {
+    if(element == Element::TEXT_BABA) {
+        return Element::BABA;
+    } if(element == Element::TEXT_FLAG) {
+        return Element::FLAG;
+    } if(element == Element::TEXT_GOOP) {
+        return Element::SINK;
+    } if(element == Element::TEXT_GRASS) {
+        return Element::GRASS;
+    } if(element == Element::TEXT_LAVA) {
+        return Element::LAVA;
+    } if(element == Element::TEXT_METAL) {
+        return Element::METAL;
+    } if(element == Element::TEXT_ROCK) {
+        return Element::ROCK;
+    } if(element == Element::TEXT_WALL) {
+        return Element::WALL;
+    } throw invalid_argument("This rule type does not have a playable type");
 }
 
 void LevelMechanics::setElementPosition(const Element & element, const Position & pos) {

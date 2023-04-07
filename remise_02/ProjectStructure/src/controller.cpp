@@ -24,11 +24,15 @@ void Controller::saveGame() {
 }
 
 void Controller::restart() {
-    game_->restart();
+    unsigned int numLevel = game_->level();
+    game_ = std::make_unique<Game>(numLevel);
+    game_->start();
 }
 
 void Controller::nextLevel() {
-    game_->restart();
+    unsigned int numLevel = game_->level()+1;
+    game_ = std::make_unique<Game>(numLevel);
+    game_->start();
 }
 
 void Controller::registerAsObserver(Observer * obs) {

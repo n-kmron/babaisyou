@@ -19,6 +19,11 @@ class LevelMechanics
          */
         RuleManager rules_;
 
+        /**
+         * @brief change in elements_ the position in a new direction for the gameobject passed as a parameter
+         */
+        void changePosition(const Direction & dir, const GameObject & object);
+
     public:
 
         /**

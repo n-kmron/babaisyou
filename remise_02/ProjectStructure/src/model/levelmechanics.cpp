@@ -33,7 +33,21 @@ vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
 }
 
 void LevelMechanics::move(const Direction & dir) {
+    vector<Element> isYou = rules().rules()[Element::YOU];
+    for(int index=0; index<isYou.size(); ++index) {
+        vector<GameObject> allIsYou = findAllElement(isYou.at(index));
+        changePosition(dir, allIsYou.at(index));
+    }
+}
 
+void LevelMechanics::changePosition(const Direction & dir, const GameObject & object) {
+    for(unsigned int index=0; index<elements_.size(); ++index) {
+        GameObject current = elements_.at(index);
+        if(current.element() == object.element() && current.pos() == object.pos()) {
+            Position pos = current.pos().next(dir);
+            current.setPosition(pos);
+        }
+    }
 }
 
 void LevelMechanics::setElementPosition(const Element & element, const Position & pos) {

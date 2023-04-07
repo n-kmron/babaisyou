@@ -19,6 +19,17 @@ class LevelMechanics
          */
         RuleManager rules_;
 
+
+        /**
+         * @brief change in elements_ the position in a new direction for the gameobject passed as a parameter
+         */
+        void changePosition(const Direction & dir, const GameObject & object);
+
+
+        /**
+         * @brief return the type playable of the object affected by a rule
+         */
+        Element fromRuleToPlayable(const Element & element);
     public:
 
         /**
@@ -44,11 +55,6 @@ class LevelMechanics
         void dropElement(const Position & pos, const Element & element);
 
         /**
-         * @brief check if a position is on the board yet
-         */
-        bool contains(const Position & pos);
-
-        /**
          * @brief find all the GameObjects from a type of Element
          */
         std::vector<GameObject> findAllElement(const Element & element);
@@ -57,11 +63,6 @@ class LevelMechanics
          * @brief move all the 'isYou' elements in a direction
          */
         void move(const Direction & dir);
-
-        /**
-         * @brief set an element on the board to a position
-         */
-        void setElementPosition(const Element & element, const Position & pos);
 
         /**
          * @brief check if a gameobject can move in a direction

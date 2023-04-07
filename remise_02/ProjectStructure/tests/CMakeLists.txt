@@ -10,6 +10,7 @@ add_executable(ProjectStructureTests
     ../src/model/levelmechanics.cpp
     testRuleManager.cpp
     testPosition.cpp
+    testLevelMechanics.cpp
 )
 target_include_directories(ProjectStructureTests PRIVATE
     ../src

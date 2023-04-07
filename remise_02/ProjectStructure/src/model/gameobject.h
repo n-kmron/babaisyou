@@ -22,6 +22,8 @@ class GameObject
         Element element() const;
 
         Position pos() const;
+
+        void setPosition(const Position & pos);
 };
 
 

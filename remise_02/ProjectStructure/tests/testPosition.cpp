@@ -9,14 +9,14 @@ TEST_CASE("next() donne la nouvelle position à partir d'une direction donnée")
         // Vérifier la position après un déplacement vers le haut
         Position p_next = p.next(Direction::UP);
         REQUIRE(p_next.col() == 5);
-        REQUIRE(p_next.row() == 6);
+        REQUIRE(p_next.row() == 4);
     }
 
     SECTION("Direction bas") {
         // Vérifier la position après un déplacement vers le bas
         Position p_next = p.next(Direction::DOWN);
         REQUIRE(p_next.col() == 5);
-        REQUIRE(p_next.row() == 4);
+        REQUIRE(p_next.row() == 6);
     }
 
     SECTION("Direction gauche") {

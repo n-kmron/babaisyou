@@ -14,7 +14,11 @@ void Game::start() {
 }
 
 bool Game::isWon() {
-    return false;
+    return levelMechanics_.isWon();
+}
+
+bool Game::isLost() {
+    return levelMechanics_.isKill();
 }
 
 void Game::saveGame() {
@@ -22,6 +26,7 @@ void Game::saveGame() {
 }
 
 void Game::playShot(const Direction & dir) {
+    levelMechanics_.move(dir);
     notifyObserver();
 }
 
@@ -29,10 +34,17 @@ void Game::restart() {
     notifyObserver();
 }
 
+void Game::nextLevel() {
+    notifyObserver();
+}
+
 std::vector<GameObject> & Game::elements() {
     return levelMechanics_.elements();
 }
 
+unsigned int Game::level() {
+    return level_.numLevel()+1;
+}
 
 void Game::registerObserver(Observer * obs) {
     observers_.push_back(obs);

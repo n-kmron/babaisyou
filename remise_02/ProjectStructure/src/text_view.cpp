@@ -51,6 +51,18 @@ public:
         cout << endl;
     }
 
+    void displayWon() override{
+        cout << "Congratulation, You won !";
+    }
+
+    void displayNextLevel() override {
+        cout << "You are going now to the next level : Level " << game_->level() << endl;
+    }
+
+    void displayKilled() override{
+        cout << "Sorry, you are dead !";
+    }
+
     void displayError(string message) override {
         cout << "Error : " << message << " !" << endl;
     }
@@ -62,7 +74,6 @@ public:
             cout << ">>Enter a direction (ZQSD): " << endl;
             std::cin >> input;
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            sleep(1);
             if (std::regex_match(input, regex)) {
                 if(input == "Z") {
                     return Direction::UP;
@@ -82,12 +93,46 @@ public:
         }
     }
 
+    bool askRestart() override {
+        std::regex regex("^[RS]$");
+        std::string input;
+        while (true) {
+            cout << ">>PRESS R TO RESTART (OR S TO STOP): " << endl;
+            std::cin >> input;
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            if (std::regex_match(input, regex)) {
+                if(input == "R") {
+                    return true;
+                }
+                if(input == "S") {
+                    return false;
+                }
+            } else {
+                std::cout << "Invalid input. Please try again.\n";
+            }
+        }
+    }
+
     void update() override {
         displayBoard();
         if(!game_->isWon()) {
             //controller_.playShot(askDir());
+            if(game_->isLost()) {
+                displayKilled();
+                if(askRestart()) {
+                    game_->restart();
+                } else {
+                    exit(0);
+                }
+            }
         } else {
-            //displayWon();
+            displayWon();
+            if(game_->level() < 5) {
+                displayNextLevel();
+                game_->nextLevel();
+            } else {
+                exit(0);
+            }
         }
     }
 };

@@ -29,6 +29,8 @@ class Game : public Observable
 
         bool isWon();
 
+        bool isLost();
+
         void saveGame();
 
         /*!
@@ -39,6 +41,10 @@ class Game : public Observable
         void playShot(const Direction & dir);
 
         void restart();
+
+        void nextLevel();
+
+        unsigned int level();
 
         std::vector<GameObject> & elements();
 

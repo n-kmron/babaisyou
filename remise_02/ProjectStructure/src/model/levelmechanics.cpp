@@ -68,7 +68,7 @@ Element LevelMechanics::fromRuleToPlayable(const Element & element) {
     } if(element == Element::TEXT_FLAG) {
         return Element::FLAG;
     } if(element == Element::TEXT_GOOP) {
-        return Element::SINK;
+        return Element::GOOP;
     } if(element == Element::TEXT_GRASS) {
         return Element::GRASS;
     } if(element == Element::TEXT_LAVA) {
@@ -106,8 +106,9 @@ bool LevelMechanics::isWon() {
         Element isWinType = fromRuleToPlayable(isWin.at(isWinIndex));
         vector<GameObject> allIsWin = findAllElement(isWinType);
 
+        //for each winning type, find all occurences on the map and check if a isYou element is on the same position
         vector<Element> isYou = rules_.rules()[Element::YOU];
-        for(unsigned int isYouIndex=0; isYouIndex<isWin.size(); ++isYouIndex) {
+        for(unsigned int isYouIndex=0; isYouIndex<isYou.size(); ++isYouIndex) {
             Element isYouType = fromRuleToPlayable(isYou.at(isYouIndex));
             vector<GameObject> allIsYou = findAllElement(isYouType);
 
@@ -122,6 +123,33 @@ bool LevelMechanics::isWon() {
 }
 
 bool LevelMechanics::isKill() {
+    //intialize a vector with all playable elements that can kill
+    vector<Element> murdered;
+    vector<Element> isSink = rules_.rules()[Element::SINK];
+    vector<Element> isKill = rules_.rules()[Element::KILL];
+    for(unsigned int index=0; index<isSink.size(); ++index) {
+        murdered.push_back(fromRuleToPlayable(isSink.at(index)));
+    }
+    for(unsigned int index=0; index<isKill.size(); ++index) {
+        murdered.push_back(fromRuleToPlayable(isKill.at(index)));
+    }
+
+    //for each murder type, find all occurences on the map and check if a isYou element is on the same position
+    for(unsigned int index=0; index<murdered.size(); ++index) {
+        vector<GameObject> allMurderers = findAllElement(murdered.at(index));
+
+        vector<Element> isYou = rules_.rules()[Element::YOU];
+        for(unsigned int isYouIndex=0; isYouIndex<isYou.size(); ++isYouIndex) {
+            Element isYouType = fromRuleToPlayable(isYou.at(isYouIndex));
+            vector<GameObject> allIsYou = findAllElement(isYouType);
+
+            for(unsigned int i=0; i<allIsYou.size(); ++i) {
+                for(unsigned int j=0; j<allMurderers.size(); ++j) {
+                    if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) return true;
+                }
+            }
+        }
+    }
     return false;
 }
 

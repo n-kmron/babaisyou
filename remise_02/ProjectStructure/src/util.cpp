@@ -79,7 +79,7 @@ static map<Element, string> elemConversionFromElement_ = {
     {Element::WALL, "w"},
     {Element::ROCK, "r"},
     {Element::LAVA, "l"},
-    {Element::GRASS, "g"},
+    {Element::GRASS, "h"},
     {Element::METAL, "m"},
     {Element::GOOP, "g"},
     {Element::FLAG, "f"}

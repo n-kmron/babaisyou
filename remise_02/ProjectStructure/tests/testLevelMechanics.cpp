@@ -218,4 +218,30 @@ TEST_CASE("Constraints") {
         bool result = mechanics.isWon();
         REQUIRE (!result);
     }
+
+    SECTION("isKill() : goop on the same case that the player (goop is sink)") {
+        // initialize the level
+        LevelLoader loader(4);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(8,7);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isKill();
+        REQUIRE (result);
+    }
+
+    SECTION("isKill() : goop above the player (not a kill)") {
+        // initialize the level
+        LevelLoader loader(4);
+        LevelMechanics mechanics(loader.createLevel());
+
+        Position pos(7,7);
+        GameObject element(Element::BABA, pos);
+        mechanics.setElementPosition(element);
+
+        bool result = mechanics.isKill();
+        REQUIRE (!result);
+    }
 }

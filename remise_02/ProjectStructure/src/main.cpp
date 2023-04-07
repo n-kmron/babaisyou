@@ -16,4 +16,5 @@ int main()
     TextView view;
 }
 
-// TODO : dans Game : saveGame, restart, nextLevel
+// TODO : dans Game : saveGame
+// TODO : tester le jeu en console (run in terminal)

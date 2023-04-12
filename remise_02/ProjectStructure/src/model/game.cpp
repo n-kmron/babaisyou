@@ -48,6 +48,7 @@ unsigned int Game::level() {
 
 void Game::registerObserver(Observer * obs) {
     observers_.push_back(obs);
+    notifyObserver();
 }
 void Game::removeObserver(Observer * obs) {
     for (auto it = observers_.begin(); it != observers_.end(); ++it) {

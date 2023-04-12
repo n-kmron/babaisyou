@@ -28,7 +28,7 @@ public:
 
     void restart();
 
-    void nextLevel();
+    void nextLevel(Observer * obs);
 
     unsigned int level();
 

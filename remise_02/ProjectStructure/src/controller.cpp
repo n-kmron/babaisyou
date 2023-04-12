@@ -4,7 +4,7 @@ Controller::Controller() : game_ { std::make_unique<Game>(1) } {
 };
 
 void Controller::start() {
-    game_->start();
+    //game_->start();
 }
 
 void Controller::playShot(const Direction & dir){
@@ -29,10 +29,10 @@ void Controller::restart() {
     game_->start();
 }
 
-void Controller::nextLevel() {
+void Controller::nextLevel(Observer * obs) {
     unsigned int numLevel = game_->level()+1;
     game_ = std::make_unique<Game>(numLevel);
-    game_->start();
+    registerAsObserver(obs);
 }
 
 void Controller::registerAsObserver(Observer * obs) {

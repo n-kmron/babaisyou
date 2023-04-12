@@ -89,6 +89,8 @@ class LevelMechanics
 
         bool isKill();
 
+        void pushRule(const Direction & dir, const Position & pos);
+
         void pushable(const Direction & dir, const Position & pos);
 
         LevelMechanics & operator=(const LevelMechanics & other);

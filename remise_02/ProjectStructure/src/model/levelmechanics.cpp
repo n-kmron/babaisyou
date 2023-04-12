@@ -11,7 +11,7 @@ LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements, const u
 bool LevelMechanics::contains(const Position & pos) {
     int row = pos.row();
     int col = pos.col();
-    return !(row > level_.height() || row < 0 || col > level_.width() || col < 0);
+    return !(row > level_.height()-1 || row < 0 || col > level_.width()-1 || col < 0);
 
 }
 
@@ -39,6 +39,7 @@ void LevelMechanics::move(const Direction & dir) {
             if(isMovable(dir,allIsYou.at(secondIndex))) {
                 changePosition(dir, allIsYou.at(secondIndex));
                 pushable(dir, allIsYou.at(secondIndex).pos());
+                pushRule(dir, allIsYou.at(secondIndex).pos());
             }
         }
     }
@@ -164,6 +165,39 @@ void LevelMechanics::pushable(const Direction & dir, const Position & pos) {
     }
 }
 
+void LevelMechanics::pushRule(const Direction & dir, const Position & pos) {
+    Position temp = pos;
+    Position newPos = temp.next(dir);
+
+    vector<Element> rulesPush;
+    rulesPush.push_back(Element::TEXT_BABA);
+    rulesPush.push_back(Element::TEXT_FLAG);
+    rulesPush.push_back(Element::TEXT_GOOP);
+    rulesPush.push_back(Element::TEXT_GRASS);
+    rulesPush.push_back(Element::TEXT_LAVA);
+    rulesPush.push_back(Element::TEXT_METAL);
+    rulesPush.push_back(Element::TEXT_ROCK);
+    rulesPush.push_back(Element::TEXT_WALL);
+    rulesPush.push_back(Element::IS);
+    rulesPush.push_back(Element::PUSH);
+    rulesPush.push_back(Element::KILL);
+    rulesPush.push_back(Element::YOU);
+    rulesPush.push_back(Element::SINK);
+    rulesPush.push_back(Element::STOP);
+    rulesPush.push_back(Element::WIN);
+    for(unsigned int index=0; index<rulesPush.size(); ++index) {
+        Element isPushType = rulesPush.at(index);
+        vector<GameObject> allIsPush = findAllElement(isPushType);
+        for(unsigned int secondIndex=0; secondIndex<allIsPush.size(); ++secondIndex) {
+            if(allIsPush.at(secondIndex).pos() == newPos) {
+                if(isMovable(dir, allIsPush.at(secondIndex))) {
+                    pushable(dir, newPos);
+                    changePosition(dir, allIsPush.at(secondIndex));
+                }
+            }
+        }
+    }
+}
 
 vector<GameObject> & LevelMechanics::elements() {
     return elements_;

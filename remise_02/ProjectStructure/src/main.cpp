@@ -17,4 +17,5 @@ int main()
 }
 
 // TODO : dans Game : saveGame
-// TODO : tester le jeu en console (run in terminal)
+// TODO : restart in console
+// TODO : tester le jeu

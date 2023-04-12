@@ -55,7 +55,7 @@ public:
     }
 
     void displayNextLevel() override {
-        cout << "You are going now to the next level : Level " << controller_.level() << endl;
+        cout << "You are going now to the next level : Level " << controller_.level()+1 << endl;
     }
 
     void displayKilled() override{
@@ -115,7 +115,7 @@ public:
     void update() override {
         displayBoard();
         if(!controller_.isWon()) {
-            //controller_.playShot(askDir());
+            controller_.playShot(askDir());
             if(controller_.isLost()) {
                 displayKilled();
                 if(askRestart()) {
@@ -128,7 +128,7 @@ public:
             displayWon();
             if(controller_.level() < 5) {
                 displayNextLevel();
-                controller_.nextLevel();
+                controller_.nextLevel(this);
             } else {
                 exit(0);
             }

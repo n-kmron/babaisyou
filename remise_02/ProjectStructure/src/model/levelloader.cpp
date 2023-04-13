@@ -16,7 +16,7 @@ void LevelLoader::readAllLines() {
 
     // open file
     stringstream ss;
-    ss << fileLevel_ << ".txt";
+    ss << "levels/" << fileLevel_ << ".txt";
     string filename = ss.str();
     ifstream level(filename);
 

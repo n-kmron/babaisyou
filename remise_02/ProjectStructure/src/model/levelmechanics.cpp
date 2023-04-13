@@ -1,6 +1,8 @@
 #include "levelmechanics.h"
 #include "../util.cpp"
 #include <vector>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -223,6 +225,41 @@ void LevelMechanics::setElements(const vector<GameObject>& elements) {
 
 void LevelMechanics::setRules(const RuleManager& rules) {
     rules_ = rules;
+}
+
+vector<string> LevelMechanics::gameState() {
+    vector<string> levelLines;
+    for(int index=0; index<elements_.size(); ++index) {
+        stringstream ss;
+
+        string element { elemConversionFromElementToFile(elements_.at(index).element())};
+        string x { to_string(elements_.at(index).pos().col()) };
+        string y { to_string(elements_.at(index).pos().row()) };
+        ss << element << " " << x << " " << y;
+        string line = ss.str();
+        levelLines.push_back(line);
+    }
+    return levelLines;
+}
+
+void LevelMechanics::saveGame(string location) {
+    vector<string> levelLines { gameState() };
+    std::ofstream outfile(location);
+
+    if (outfile.is_open())
+    {
+        for (const auto& line : levelLines)
+        {
+            outfile << line << endl;
+        }
+        outfile.close();
+        cout << "The game has been saved !" << endl;
+        exit(0);
+    }
+    else
+    {
+        cout << "Error: could not create file for writing." << endl;
+    }
 }
 
 LevelMechanics& LevelMechanics::operator=(const LevelMechanics & other) {

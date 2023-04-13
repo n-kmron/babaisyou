@@ -13,7 +13,7 @@ class Observable
 
         virtual void removeObserver(Observer * obs) = 0;
 
-        virtual void notifyObserver() = 0;
+        virtual void notifyObservers() = 0;
 };
 
 #endif // OBSERVABLE_H

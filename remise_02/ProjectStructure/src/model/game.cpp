@@ -10,7 +10,7 @@ Game::Game(const unsigned int numLevel) : observers_ {}, loader_ { LevelLoader(n
 
 
 void Game::start() {
-    notifyObserver();
+    notifyObservers();
 }
 
 bool Game::isWon() {
@@ -21,21 +21,22 @@ bool Game::isLost() {
     return levelMechanics_.isKill() || levelMechanics_.noIsYou();
 }
 
-void Game::saveGame() {
-    notifyObserver();
+void Game::saveGame(string name) {
+    levelMechanics_.saveGame(name);
+    notifyObservers();
 }
 
 void Game::playShot(const Direction & dir) {
     levelMechanics_.move(dir);
-    notifyObserver();
+    notifyObservers();
 }
 
 void Game::restart() {
-    notifyObserver();
+    notifyObservers();
 }
 
 void Game::nextLevel() {
-    notifyObserver();
+    notifyObservers();
 }
 
 std::vector<GameObject> & Game::elements() {
@@ -48,7 +49,7 @@ unsigned int Game::level() {
 
 void Game::registerObserver(Observer * obs) {
     observers_.push_back(obs);
-    notifyObserver();
+    notifyObservers();
 }
 void Game::removeObserver(Observer * obs) {
     for (auto it = observers_.begin(); it != observers_.end(); ++it) {
@@ -58,7 +59,7 @@ void Game::removeObserver(Observer * obs) {
         }
     }
 }
-void Game::notifyObserver() {
+void Game::notifyObservers() {
     for (auto obs : observers_) {
         obs->update();
     }

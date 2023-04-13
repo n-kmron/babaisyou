@@ -21,6 +21,8 @@ public:
     virtual Direction askDir() = 0;
 
     virtual bool askRestart() = 0;
+
+    virtual void askSave() = 0;
 };
 
 #endif // VIEW_H

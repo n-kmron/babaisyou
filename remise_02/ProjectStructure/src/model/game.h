@@ -31,7 +31,7 @@ class Game : public Observable
 
         bool isLost();
 
-        void saveGame();
+        void saveGame(std::string name);
 
         /*!
          * \brief Play a shot (move the character)
@@ -50,7 +50,7 @@ class Game : public Observable
 
         void registerObserver(Observer * obs) override;
         void removeObserver(Observer * obs) override;
-        void notifyObserver() override;
+        void notifyObservers() override;
 };
 
 #endif // GAME_H

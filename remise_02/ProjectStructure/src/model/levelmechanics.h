@@ -33,6 +33,12 @@ class LevelMechanics
          * @brief return the type playable of the object affected by a rule
          */
         Element fromRuleToPlayable(const Element & element);
+
+        /**
+         * @brief remember the actual game's state and store it in a vector
+         */
+        std::vector<std::string> gameState();
+
     public:
 
         /**
@@ -94,6 +100,11 @@ class LevelMechanics
         void pushRule(const Direction & dir, const Position & pos);
 
         void pushable(const Direction & dir, const Position & pos);
+
+        /**
+         * @brief save the current state of the game
+         */
+        void saveGame(std::string location);
 
         LevelMechanics & operator=(const LevelMechanics & other);
 };

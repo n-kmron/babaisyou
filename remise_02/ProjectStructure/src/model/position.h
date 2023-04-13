@@ -35,8 +35,4 @@ class Position {
 
 };
 
-
-std::ostream & operator<<(std::ostream & out, const Position & in);
-
-
 #endif // POSITION_H

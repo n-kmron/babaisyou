@@ -11,6 +11,7 @@ add_executable(ProjectStructureTests
     testRuleManager.cpp
     testPosition.cpp
     testLevelMechanics.cpp
+    testLevelLoader.cpp
 )
 target_include_directories(ProjectStructureTests PRIVATE
     ../src

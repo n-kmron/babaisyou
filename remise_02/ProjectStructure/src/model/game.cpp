@@ -18,7 +18,7 @@ bool Game::isWon() {
 }
 
 bool Game::isLost() {
-    return levelMechanics_.isKill();
+    return levelMechanics_.isKill() || levelMechanics_.noIsYou();
 }
 
 void Game::saveGame() {

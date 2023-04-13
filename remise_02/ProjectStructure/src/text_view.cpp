@@ -59,7 +59,7 @@ public:
     }
 
     void displayKilled() override{
-        cout << "Sorry, you are dead !";
+        cout << "Sorry, you are dead !" << endl;
     }
 
     void displayError(string message) override {
@@ -114,16 +114,16 @@ public:
 
     void update() override {
         displayBoard();
+        if(controller_.isLost()) {
+            displayKilled();
+            if(askRestart()) {
+                controller_.restart();
+            } else {
+                exit(0);
+            }
+        }
         if(!controller_.isWon()) {
             controller_.playShot(askDir());
-            if(controller_.isLost()) {
-                displayKilled();
-                if(askRestart()) {
-                    controller_.restart();
-                } else {
-                    exit(0);
-                }
-            }
         } else {
             displayWon();
             if(controller_.level() < 5) {

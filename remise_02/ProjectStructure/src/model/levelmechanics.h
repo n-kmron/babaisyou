@@ -89,6 +89,8 @@ class LevelMechanics
 
         bool isKill();
 
+        bool noIsYou();
+
         void pushRule(const Direction & dir, const Position & pos);
 
         void pushable(const Direction & dir, const Position & pos);

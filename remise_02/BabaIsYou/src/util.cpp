@@ -130,3 +130,27 @@ static map<Element, string> elemConversionFromElementToFile_ = {
 string static elemConversionFromElementToFile(const Element & elem) {
     return elemConversionFromElementToFile_.at(elem);
 }
+
+
+//---------------------------------------------------------------
+static vector<Element> allRules_ = {
+    Element::TEXT_BABA,
+    Element::TEXT_FLAG,
+    Element::TEXT_GOOP,
+    Element::TEXT_GRASS,
+    Element::TEXT_LAVA,
+    Element::TEXT_METAL,
+    Element::TEXT_ROCK,
+    Element::TEXT_WALL,
+    Element::IS,
+    Element::PUSH,
+    Element::KILL,
+    Element::YOU,
+    Element::SINK,
+    Element::STOP,
+    Element::WIN
+};
+
+vector<Element> static allRules() {
+    return allRules_;
+}

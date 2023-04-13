@@ -14,7 +14,8 @@ using namespace std;
 int main()
 {
     TextView view;
+    view.launch();
 }
 
-// TODO : refractor LevelMechanics
+// TODO : remove unused warnings in util.cpp
 

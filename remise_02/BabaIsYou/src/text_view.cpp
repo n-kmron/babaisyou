@@ -18,6 +18,9 @@ class TextView : public View, Observer {
 private:
     Controller controller_;
 
+    /**
+     * @brief check if the save is safe and allows it or not
+     */
     void checkSave(string name) {
         stringstream ss;
         ss << "levels/saves/" << name << ".txt";
@@ -56,9 +59,12 @@ private:
 public:
 
     TextView() : controller_ { Controller(this) }{
+    }
+
+    void launch() override {
         controller_.registerAsObserver();
         displayTitle();
-        controller_.putLevel(askLevel());
+        controller_.putLevel(askWhichLevel());
         controller_.start();
     }
 
@@ -104,7 +110,34 @@ public:
         cout << "Error : " << message << " !" << endl;
     }
 
-    string askLevel() override {
+    unsigned int displayUserSaves() override {
+        filesystem::path path_to_saves("levels/saves");
+        unsigned int numberSaves { 0 };
+
+        cout << "Your saves : " << endl;
+        for (const auto& entry : filesystem::directory_iterator(path_to_saves))
+        {
+            if (entry.is_regular_file())
+            {
+                string filename { entry.path().filename() };
+                // Remove the double quotes if they exist.
+                if (filename.front() == '"' && filename.back() == '"') {
+                    filename = filename.substr(1, filename.size() - 2);
+                }
+
+                // Remove the file extension.
+                size_t extension_pos = filename.rfind('.');
+                if (extension_pos != std::string::npos) {
+                    filename = filename.substr(0, extension_pos);
+                }
+                cout << filename << endl;
+            }
+            numberSaves++;
+        }
+        return numberSaves;
+    }
+
+    string askWhichLevel() override {
         regex regex("^[SN]$");
         string input;
         while (true) {
@@ -113,33 +146,21 @@ public:
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (regex_match(input, regex)) {
                 if(input == "S") {
-                    cout << "Your saves : " << endl;
-                    filesystem::path path_to_saves("saves");
-                    for (const auto& entry : filesystem::directory_iterator(path_to_saves))
-                    {
-                        if (entry.is_regular_file())
-                        {
-                            string filename { entry.path().filename() };
-                            // Remove the double quotes if they exist.
-                            if (filename.front() == '"' && filename.back() == '"') {
-                                filename = filename.substr(1, filename.size() - 2);
-                            }
-
-                            // Remove the file extension.
-                            size_t extension_pos = filename.rfind('.');
-                            if (extension_pos != std::string::npos) {
-                                filename = filename.substr(0, extension_pos);
-                            }
-                            cout << filename << endl;
-                        }
+                    unsigned int nbSaves = displayUserSaves();
+                    if(nbSaves <= 1) {
+                        cout << "You don't have any saves" << endl;
+                        cout << "Level 1 loading..." << endl;
+                        return "level_1";
                     }
-                    string name;
-                    cout << ">> Please choice your save : ";
-                    cin >> name;
-                    stringstream ss;
-                    ss << "saves/" << name;
-                    string filename = ss.str();
-                    return filename;
+                    else {
+                        string name;
+                        cout << ">> Please choice your save : ";
+                        cin >> name;
+                        stringstream ss;
+                        ss << "saves/" << name;
+                        string filename = ss.str();
+                        return filename;
+                    }
                 }
                 if(input == "N") {
                     return "level_1";
@@ -211,6 +232,7 @@ public:
 
     void update() override {
         displayBoard();
+
         if(controller_.isLost()) {
             displayKilled();
             if(askRestart()) {
@@ -219,9 +241,12 @@ public:
                 exit(0);
             }
         }
+
         if(!controller_.isWon()) {
             controller_.playShot(askDir());
-        } else {
+        }
+
+        else {
             displayWon();
             if(controller_.level() < 5) {
                 displayNextLevel();

@@ -146,6 +146,11 @@ bool LevelMechanics::isKill() {
     return false;
 }
 
+bool LevelMechanics::noIsYou() {
+     vector<Element> isYou = rules_.rules()[Element::YOU];
+     return isYou.empty();
+}
+
 void LevelMechanics::pushable(const Direction & dir, const Position & pos) {
     Position temp = pos;
     Position newPos = temp.next(dir);

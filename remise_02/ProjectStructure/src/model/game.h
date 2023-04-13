@@ -17,7 +17,7 @@ class Game : public Observable
 
     public:
 
-        Game(const unsigned int numLevel);
+        Game(const std::string filename);
 
         virtual ~Game() = default;
 

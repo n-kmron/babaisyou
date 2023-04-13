@@ -58,11 +58,12 @@ public:
     TextView() : controller_ { Controller(this) }{
         controller_.registerAsObserver();
         displayTitle();
+        controller_.putLevel(askLevel());
         controller_.start();
     }
 
     void displayTitle() override {
-        cout << "Welcome to Baba Is You !" << endl;
+        cout << "==========Welcome to Baba Is You ==========" << endl << endl;
     }
 
     void displayBoard() override {
@@ -101,6 +102,52 @@ public:
 
     void displayError(string message) override {
         cout << "Error : " << message << " !" << endl;
+    }
+
+    string askLevel() override {
+        regex regex("^[SN]$");
+        string input;
+        while (true) {
+            cout << ">>Do you want to load a save (S) or start a new game (N) : ";
+            cin >> input;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (regex_match(input, regex)) {
+                if(input == "S") {
+                    cout << "Your saves : " << endl;
+                    filesystem::path path_to_saves("saves");
+                    for (const auto& entry : filesystem::directory_iterator(path_to_saves))
+                    {
+                        if (entry.is_regular_file())
+                        {
+                            string filename { entry.path().filename() };
+                            // Remove the double quotes if they exist.
+                            if (filename.front() == '"' && filename.back() == '"') {
+                                filename = filename.substr(1, filename.size() - 2);
+                            }
+
+                            // Remove the file extension.
+                            size_t extension_pos = filename.rfind('.');
+                            if (extension_pos != std::string::npos) {
+                                filename = filename.substr(0, extension_pos);
+                            }
+                            cout << filename << endl;
+                        }
+                    }
+                    string name;
+                    cout << ">> Please choice your save : ";
+                    cin >> name;
+                    stringstream ss;
+                    ss << "saves/" << name;
+                    string filename = ss.str();
+                    return filename;
+                }
+                if(input == "N") {
+                    return "level_1";
+                }
+            } else {
+                cout << "Invalid input. Please try again.\n";
+            }
+        }
     }
 
     Direction askDir() override {
@@ -176,10 +223,11 @@ public:
             controller_.playShot(askDir());
         } else {
             displayWon();
-            askSave();
             if(controller_.level() < 5) {
                 displayNextLevel();
                 controller_.nextLevel();
+                askSave();
+                controller_.registerAsObserver();
             } else {
                 exit(0);
             }

@@ -7,7 +7,7 @@ TEST_CASE("checkRules() donne l'ensemble des règles à un moment donné de la p
 
     SECTION("LEVEL 1 : ") {
         // Initialiser un level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         RuleManager rm;
         rm.scanRules(loader.createLevel());
 

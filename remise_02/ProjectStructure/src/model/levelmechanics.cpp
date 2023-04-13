@@ -6,7 +6,7 @@
 
 using namespace std;
 
-LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements, const unsigned int numLevel) : elements_ { elements }, rules_ { RuleManager() }, level_ { Level( numLevel) } {
+LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements, const unsigned int numLevel) : elements_ { elements }, rules_ { RuleManager() }, level_ { Level(numLevel) } {
     rules_.scanRules(elements_);
 }
 
@@ -248,6 +248,9 @@ void LevelMechanics::saveGame(string location) {
 
     if (outfile.is_open())
     {
+        unsigned int numLevel = level_.numLevel();
+        outfile << numLevel << endl;
+
         for (const auto& line : levelLines)
         {
             outfile << line << endl;

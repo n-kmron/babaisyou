@@ -35,9 +35,9 @@ class LevelMechanics
         Element fromRuleToPlayable(const Element & element);
 
         /**
-         * @brief remember the actual game's state and store it in a vector
+         * @brief remember the actual game's state and store it in a vector<string>
          */
-        std::vector<std::string> gameState();
+        std::vector<std::string> gameStateAsStrings();
 
     public:
 

@@ -227,7 +227,7 @@ void LevelMechanics::setRules(const RuleManager& rules) {
     rules_ = rules;
 }
 
-vector<string> LevelMechanics::gameState() {
+vector<string> LevelMechanics::gameStateAsStrings() {
     vector<string> levelLines;
     for(int index=0; index<elements_.size(); ++index) {
         stringstream ss;
@@ -243,7 +243,7 @@ vector<string> LevelMechanics::gameState() {
 }
 
 void LevelMechanics::saveGame(string location) {
-    vector<string> levelLines { gameState() };
+    vector<string> levelLines { gameStateAsStrings() };
     std::ofstream outfile(location);
 
     if (outfile.is_open())
@@ -261,7 +261,7 @@ void LevelMechanics::saveGame(string location) {
     }
     else
     {
-        cout << "Error: could not create file for writing." << endl;
+        cerr << "could not create file for writing." << endl;
     }
 }
 

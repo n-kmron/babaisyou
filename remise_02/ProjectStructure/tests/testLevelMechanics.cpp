@@ -168,7 +168,7 @@ TEST_CASE("Constraints") {
         LevelLoader loader(1);
         LevelMechanics mechanics(loader.createLevel(), 1);
 
-        Position pos(18,18);
+        Position pos(17,17);
         GameObject element(Element::BABA, pos);
         bool result = mechanics.isMovable(Direction::LEFT, element);
 

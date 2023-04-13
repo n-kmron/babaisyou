@@ -1,6 +1,6 @@
 #include "controller.h"
 
-Controller::Controller(Observer * obs) : game_ { std::make_unique<Game>(1) }, obs_ { obs }  {
+Controller::Controller(Observer * obs) : game_ { std::make_unique<Game>(3) }, obs_ { obs }  {
 };
 
 void Controller::start() {

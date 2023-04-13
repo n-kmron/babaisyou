@@ -7,8 +7,9 @@
 class LevelLoader
 {
     private:
-        unsigned int numLevel_;
+        std::string fileLevel_;
         std::vector<std::string> fileAllLines_;
+        unsigned int numLevel_;
 
         /**
          * @brief fill the attribute 'fileAllLines_' with the content of the file (vector<string>)
@@ -23,7 +24,7 @@ class LevelLoader
          *
          * \param numLevel the number of the level to build
          */
-       LevelLoader(const unsigned int & numLevel);
+       LevelLoader(const std::string & fileLevel);
 
 
        /*!
@@ -31,6 +32,8 @@ class LevelLoader
         *
         */
        std::vector<GameObject> createLevel();
+
+       unsigned int numLevel();
 
 };
 

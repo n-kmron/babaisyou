@@ -1,6 +1,7 @@
 #include "controller.h"
+#include <sstream>
 
-Controller::Controller(Observer * obs) : game_ { std::make_unique<Game>(1) }, obs_ { obs }  {
+Controller::Controller(Observer * obs) : game_ { std::make_unique<Game>("level_1") }, obs_ { obs }  {
 };
 
 void Controller::start() {
@@ -24,15 +25,18 @@ void Controller::saveGame(std::string name) {
 }
 
 void Controller::restart() {
-    unsigned int numLevel = game_->level();
-    game_ = std::make_unique<Game>(numLevel);
+    std::stringstream ss;
+    ss << "level_" << game_->level();
+    std::string filename = ss.str();
+    game_ = std::make_unique<Game>(filename);
     registerAsObserver();
 }
 
 void Controller::nextLevel() {
-    unsigned int numLevel = game_->level()+1;
-    game_ = std::make_unique<Game>(numLevel);
-    registerAsObserver();
+    std::stringstream ss;
+    ss << "level_" << game_->level()+1;
+    std::string filename = ss.str();
+    game_ = std::make_unique<Game>(filename);
 }
 
 void Controller::registerAsObserver() {
@@ -47,4 +51,11 @@ unsigned int Controller::level() {
 std::vector<GameObject> Controller::elements() {
     return game_->elements();
 }
+
+void Controller::putLevel(std::string filename) {
+    game_ = std::make_unique<Game>(filename);
+    registerAsObserver();
+    game_->start();
+}
+
 

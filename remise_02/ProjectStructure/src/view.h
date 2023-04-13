@@ -18,6 +18,8 @@ public:
 
     virtual void displayError(std::string message) = 0;
 
+    virtual std::string askLevel() = 0;
+
     virtual Direction askDir() = 0;
 
     virtual bool askRestart() = 0;

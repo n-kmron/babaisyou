@@ -3,17 +3,19 @@
 
 TEST_CASE("createLevel()") {
 
-    SECTION("Level 2") {
+    SECTION("Level 1") {
         // Initialiser un level
-        LevelLoader loader(2);
+        LevelLoader loader("level_1");
         loader.createLevel();
-        REQUIRE(1 == 1);
+        unsigned int result = loader.numLevel();
+        REQUIRE(result == 1);
     }
 
     SECTION("Level 3") {
         // Initialiser un level
-        LevelLoader loader(3);
+        LevelLoader loader("level_3");
         loader.createLevel();
-        REQUIRE(1 == 1);
+        unsigned int result = loader.numLevel();
+        REQUIRE(result == 3);
     }
 }

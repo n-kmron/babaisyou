@@ -8,7 +8,7 @@ TEST_CASE("move()") {
 
     SECTION("with level 1 and is you = baba in each direction (no constraint on the path) : ") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         //move direction : up
@@ -59,7 +59,7 @@ TEST_CASE("move()") {
 
     SECTION("with level 1 and is you = baba (constraint on the path -> blocked by a wall (is stop)) : ") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         mechanics.move(Direction::UP);
@@ -78,7 +78,7 @@ TEST_CASE("move()") {
 
     SECTION("with level 1 and is you = baba (check if rock is been pushable) : ") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         //path to rock
@@ -103,7 +103,7 @@ TEST_CASE("move()") {
 
     SECTION("with level 1 and is you = baba (constraint on the path -> win on the flag) : ") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         //path to flag
@@ -129,7 +129,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isMovable() : new pos outside the map (at the high)") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(0,0);
@@ -141,7 +141,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isMovable() : new pos outside the map (at the bottom)") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(18,18);
@@ -153,7 +153,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isMovable() : new pos inside the map (at the high)") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(0,0);
@@ -165,7 +165,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isMovable() : new pos inside the map (at the bottom)") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(17,17);
@@ -177,7 +177,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isMovable() : wall is stop on the new pos") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(7,3);
@@ -188,7 +188,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isMovable() : no constraint, everything is good") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(7,3);
@@ -199,7 +199,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isWon() : flag on the same case that the player (flag is win)") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(8,12);
@@ -212,7 +212,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isWon() : flag above the player (not a win)") {
         // initialize the level
-        LevelLoader loader(1);
+        LevelLoader loader("level_1");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(9,12);
@@ -225,9 +225,8 @@ TEST_CASE("Constraints") {
 
     SECTION("isKill() : goop on the same case that the player (goop is sink)") {
         // initialize the level
-        LevelLoader loader(4);
-        LevelMechanics mechanics(loader.createLevel(), 1);
-
+        LevelLoader loader("level_4");
+        LevelMechanics mechanics(loader.createLevel(), loader.numLevel());
         Position pos(8,7);
         GameObject element(Element::BABA, pos);
         mechanics.setElementPosition(element);
@@ -238,7 +237,7 @@ TEST_CASE("Constraints") {
 
     SECTION("isKill() : goop above the player (not a kill)") {
         // initialize the level
-        LevelLoader loader(4);
+        LevelLoader loader("level_4");
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(7,7);

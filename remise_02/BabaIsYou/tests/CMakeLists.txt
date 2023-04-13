@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-add_executable(ProjectStructureTests
+add_executable(BabaIsYouTests
 
     ../src/model/position.cpp
     ../src/model/rulemanager.cpp
@@ -13,7 +13,7 @@ add_executable(ProjectStructureTests
     testLevelMechanics.cpp
     testLevelLoader.cpp
 )
-target_include_directories(ProjectStructureTests PRIVATE
+target_include_directories(BabaIsYouTests PRIVATE
     ../src
 )
 
@@ -28,4 +28,4 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 #list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 
-target_link_libraries(ProjectStructureTests Catch2::Catch2WithMain)
+target_link_libraries(BabaIsYouTests Catch2::Catch2WithMain)

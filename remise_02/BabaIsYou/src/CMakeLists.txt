@@ -4,12 +4,8 @@ cmake_minimum_required(VERSION 3.5)
 #comment : ask for all warnings and strict compliance with the standard
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
-
-# Ajouter le fichier texte
-#set(txt_file "${CMAKE_CURRENT_SOURCE_DIR}/nom_fichier.txt")
-
 #ajouter les fichiers ici
-add_executable(ProjectStructure
+add_executable(BabaIsYou
     main.cpp
     util.cpp
     view.h
@@ -33,8 +29,7 @@ add_executable(ProjectStructure
     model/position.cpp
     model/gameobject.cpp
     model/levelmechanics.cpp
-    #${txt_file}
 )
 
-install(TARGETS ProjectStructure
+install(TARGETS BabaIsYou
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

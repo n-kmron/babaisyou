@@ -20,7 +20,7 @@ private:
 
     void checkSave(string name) {
         stringstream ss;
-        ss << "saves/" << name << ".txt";
+        ss << "levels/saves/" << name << ".txt";
         string location = ss.str();
         ifstream infile(location);
 

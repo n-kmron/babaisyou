@@ -22,28 +22,43 @@ class LevelMechanics
 
         Level level_;
 
+        /**
+         * @brief return if the position is inside of the map
+         */
+        bool contains(const Position & pos);
+
 
         /**
-         * @brief change in elements_ the position in a new direction for the gameobject passed as a parameter
+         * @brief set a new position for the gameobject in elements_ in a new direction
          */
-        void changePosition(const Direction & dir, const GameObject & object);
+        void setNewPosition(const Direction & dir, const GameObject & object);
 
 
         /**
          * @brief return the type playable of the object affected by a rule
          */
-        Element fromRuleToPlayable(const Element & element);
+        Element fromRuleTypeToPlayableType(const Element & element);
+
+        /**
+         * @brief find all occurences in the board affected by a rule
+         */
+        std::vector<GameObject> fromRuleToGameObjectOccurences(const Element & rule);
+
 
         /**
          * @brief remember the actual game's state and store it in a vector<string>
          */
         std::vector<std::string> gameStateAsStrings();
 
-    public:
 
         /**
-         * @brief Constructor of LevelMechanics from the gameobjects
+         * @brief intialize a vector with all playable elements that can kill
          */
+        std::vector<Element> findAllMurders();
+
+
+    public:
+
         LevelMechanics(const std::vector<GameObject> & elements, const unsigned int numLevel);
 
         // getters
@@ -53,33 +68,7 @@ class LevelMechanics
 
         unsigned int level() const;
 
-        // setters
-        void setElements(const std::vector<GameObject> & elements);
-
-        void setRules(const RuleManager & rules);
-
         // other methods
-
-        /**
-         * @brief return if the position is inside of the map
-         */
-        bool contains(const Position & pos);
-
-
-        /**
-         * @brief add an element on the map
-         */
-        void setElementPosition(const GameObject & element);
-
-        /**
-         * @brief drop the last element on a position in the board
-        */
-        void dropElement(const Position & pos, const Element & element);
-
-        /**
-         * @brief find all the GameObjects from a type of Element
-         */
-        std::vector<GameObject> findAllElement(const Element & element);
 
         /**
          * @brief move all the 'isYou' elements in a direction
@@ -95,18 +84,26 @@ class LevelMechanics
 
         bool isKill();
 
-        bool noIsYou();
+        bool isThereIsYou();
 
-        void pushRule(const Direction & dir, const Position & pos);
+        void checkIfRulePushed(const Direction & dir, Position pos);
 
-        void pushable(const Direction & dir, const Position & pos);
+        void checkIfGameObjectPushed(const Direction & dir, Position pos);
 
         /**
          * @brief save the current state of the game
          */
         void saveGame(std::string location);
 
-        LevelMechanics & operator=(const LevelMechanics & other);
+        /**
+         * @brief find all the GameObjects from a type of Element
+         */
+        std::vector<GameObject> findAllElement(const Element & element);
+
+        /**
+         * @brief add an element on the map
+         */
+        void setElementPosition(const GameObject & element);
 };
 
 

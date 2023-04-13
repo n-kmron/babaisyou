@@ -1,10 +1,10 @@
 #include "controller.h"
 
-Controller::Controller() : game_ { std::make_unique<Game>(1) } {
+Controller::Controller(Observer * obs) : game_ { std::make_unique<Game>(1) }, obs_ { obs }  {
 };
 
 void Controller::start() {
-    //game_->start();
+    game_->start();
 }
 
 void Controller::playShot(const Direction & dir){
@@ -26,17 +26,17 @@ void Controller::saveGame() {
 void Controller::restart() {
     unsigned int numLevel = game_->level();
     game_ = std::make_unique<Game>(numLevel);
-    game_->start();
+    registerAsObserver();
 }
 
-void Controller::nextLevel(Observer * obs) {
+void Controller::nextLevel() {
     unsigned int numLevel = game_->level()+1;
     game_ = std::make_unique<Game>(numLevel);
-    registerAsObserver(obs);
+    registerAsObserver();
 }
 
-void Controller::registerAsObserver(Observer * obs) {
-    game_->registerObserver(obs);
+void Controller::registerAsObserver() {
+    game_->registerObserver(obs_);
 }
 
 

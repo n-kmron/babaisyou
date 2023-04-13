@@ -6,12 +6,12 @@
 class Controller {
 
 private:
-
     std::unique_ptr<Game> game_;
+    Observer * obs_;
 
 public:
 
-    Controller();
+    Controller(Observer * obs);
 
     void start();
 
@@ -28,13 +28,13 @@ public:
 
     void restart();
 
-    void nextLevel(Observer * obs);
+    void nextLevel();
 
     unsigned int level();
 
     std::vector<GameObject> elements();
 
-    void registerAsObserver(Observer * obs);
+    void registerAsObserver();
 
 };
 

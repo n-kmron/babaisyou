@@ -18,8 +18,8 @@ private:
 
 public:
 
-    TextView() : controller_ { Controller() }{
-        controller_.registerAsObserver(this);
+    TextView() : controller_ { Controller(this) }{
+        controller_.registerAsObserver();
         displayTitle();
         controller_.start();
     }
@@ -128,7 +128,7 @@ public:
             displayWon();
             if(controller_.level() < 5) {
                 displayNextLevel();
-                controller_.nextLevel(this);
+                controller_.nextLevel();
             } else {
                 exit(0);
             }

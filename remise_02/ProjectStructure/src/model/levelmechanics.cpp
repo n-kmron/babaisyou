@@ -242,7 +242,7 @@ vector<string> LevelMechanics::gameState() {
     return levelLines;
 }
 
-void LevelMechanics::writeSave(string location) {
+void LevelMechanics::saveGame(string location) {
     vector<string> levelLines { gameState() };
     std::ofstream outfile(location);
 
@@ -258,41 +258,7 @@ void LevelMechanics::writeSave(string location) {
     }
     else
     {
-        std::cout << "Error: could not create file for writing." << std::endl;
-    }
-}
-void LevelMechanics::saveGame(string saveName) {
-    stringstream ss;
-    ss << "saves/" << saveName << ".txt";
-    string location = ss.str();
-    ifstream infile(location);
-
-    if(infile.good()) {
-        cout << "This save already exists, do you want to replace it ?" << endl;
-        string input;
-        bool validInput = false;
-
-        while (!validInput)
-        {
-            cout << "Enter yes or no: ";
-            cin >> input;
-
-            if (input == "yes")
-            {
-                writeSave(location);
-                validInput = true;
-            }
-            else if (input == "no")
-            {
-                validInput = true;
-            }
-            else
-            {
-                std::cout << "Invalid input. ";
-            }
-        }
-    } else {
-        writeSave(location);
+        cout << "Error: could not create file for writing." << endl;
     }
 }
 

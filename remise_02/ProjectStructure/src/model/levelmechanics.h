@@ -39,11 +39,6 @@ class LevelMechanics
          */
         std::vector<std::string> gameState();
 
-        /**
-         * @brief write the save in a new file
-         */
-        void writeSave(std::string location);
-
     public:
 
         /**
@@ -109,7 +104,7 @@ class LevelMechanics
         /**
          * @brief save the current state of the game
          */
-        void saveGame(std::string saveName);
+        void saveGame(std::string location);
 
         LevelMechanics & operator=(const LevelMechanics & other);
 };

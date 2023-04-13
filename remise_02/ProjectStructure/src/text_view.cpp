@@ -8,6 +8,8 @@
 #include "util.cpp"
 #include <unistd.h>
 #include <vector>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -15,6 +17,41 @@ class TextView : public View, Observer {
 
 private:
     Controller controller_;
+
+    void checkSave(string name) {
+        stringstream ss;
+        ss << "saves/" << name << ".txt";
+        string location = ss.str();
+        ifstream infile(location);
+
+        if(infile.good()) {
+            cout << "This save already exists, do you want to replace it ?" << endl;
+            string input;
+            bool validInput = false;
+
+            while (!validInput)
+            {
+                cout << "Enter yes or no: ";
+                cin >> input;
+
+                if (input == "yes")
+                {
+                    controller_.saveGame(location);
+                    validInput = true;
+                }
+                else if (input == "no")
+                {
+                    validInput = true;
+                }
+                else
+                {
+                    cout << "Invalid input. ";
+                }
+            }
+        } else {
+            controller_.saveGame(location);
+        }
+    }
 
 public:
 
@@ -120,9 +157,10 @@ public:
             cout << ">>GIVE A NAME FOR YOUR SAVE : ";
             string name;
             cin >> name;
-            controller_.saveGame(name);
+            checkSave(name);
         }
     }
+
 
     void update() override {
         displayBoard();

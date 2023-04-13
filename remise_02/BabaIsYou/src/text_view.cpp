@@ -62,9 +62,8 @@ public:
     }
 
     void launch() override {
-        controller_.registerAsObserver();
         displayTitle();
-        controller_.putLevel(askWhichLevel());
+        controller_.chooseLevel(askWhichLevel());
         controller_.start();
     }
 

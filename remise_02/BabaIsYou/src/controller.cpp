@@ -52,10 +52,9 @@ std::vector<GameObject> Controller::elements() {
     return game_->elements();
 }
 
-void Controller::putLevel(std::string filename) {
+void Controller::chooseLevel(std::string filename) {
     game_ = std::make_unique<Game>(filename);
     registerAsObserver();
-    game_->start();
 }
 
 

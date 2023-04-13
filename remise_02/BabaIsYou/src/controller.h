@@ -36,7 +36,7 @@ public:
 
     void registerAsObserver();
 
-    void putLevel(std::string filename);
+    void chooseLevel(std::string filename);
 
 };
 

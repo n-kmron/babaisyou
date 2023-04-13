@@ -19,8 +19,8 @@ bool Controller::isLost() {
     return game_->isLost();
 }
 
-void Controller::saveGame() {
-    game_->saveGame();
+void Controller::saveGame(std::string name) {
+    game_->saveGame(name);
 }
 
 void Controller::restart() {

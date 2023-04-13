@@ -40,10 +40,6 @@ Position Position::next(const Direction & dir) {
         return Position(row, col) ;
 }
 
-std::ostream & operator<<(std::ostream & out, const Position & in) {
-    return out << in.to_string();
-}
-
 bool Position::operator==(const Position & other) const {
     return (row_ == other.row_ && col_ == other.col_);
 }

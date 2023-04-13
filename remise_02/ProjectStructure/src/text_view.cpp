@@ -51,7 +51,7 @@ public:
     }
 
     void displayWon() override{
-        cout << "Congratulation, You won !";
+        cout << "Congratulation, You won !" << endl;
     }
 
     void displayNextLevel() override {
@@ -67,13 +67,13 @@ public:
     }
 
     Direction askDir() override {
-        std::regex regex("^[ZQSD]$");
-        std::string input;
+        regex regex("^[ZQSD]$");
+        string input;
         while (true) {
             cout << ">>Enter a direction (ZQSD): " << endl;
-            std::cin >> input;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            if (std::regex_match(input, regex)) {
+            cin >> input;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (regex_match(input, regex)) {
                 if(input == "Z") {
                     return Direction::UP;
                 }
@@ -87,19 +87,19 @@ public:
                     return Direction::RIGHT;
                 }
             } else {
-                std::cout << "Invalid direction. Please try again.\n";
+                cout << "Invalid direction. Please try again.\n";
             }
         }
     }
 
     bool askRestart() override {
-        std::regex regex("^[RS]$");
-        std::string input;
+        regex regex("^[RS]$");
+        string input;
         while (true) {
             cout << ">>PRESS R TO RESTART (OR S TO STOP): " << endl;
-            std::cin >> input;
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            if (std::regex_match(input, regex)) {
+            cin >> input;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            if (regex_match(input, regex)) {
                 if(input == "R") {
                     return true;
                 }
@@ -107,8 +107,20 @@ public:
                     return false;
                 }
             } else {
-                std::cout << "Invalid input. Please try again.\n";
+                cout << "Invalid input. Please try again.\n";
             }
+        }
+    }
+
+    void askSave() override {
+        string input;
+        cout << ">>PRESS S TO SAVE THE GAME AND QUIT (OR ENTER TO CONTINUE) : " << endl;
+        getline(cin, input);
+        if(input == "S") {
+            cout << ">>GIVE A NAME FOR YOUR SAVE : ";
+            string name;
+            cin >> name;
+            controller_.saveGame(name);
         }
     }
 
@@ -126,6 +138,7 @@ public:
             controller_.playShot(askDir());
         } else {
             displayWon();
+            askSave();
             if(controller_.level() < 5) {
                 displayNextLevel();
                 controller_.nextLevel();

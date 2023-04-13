@@ -24,7 +24,7 @@ public:
 
     bool isLost();
 
-    void saveGame();
+    void saveGame(std::string name);
 
     void restart();
 

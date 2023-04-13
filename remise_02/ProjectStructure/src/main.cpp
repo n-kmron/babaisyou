@@ -16,5 +16,9 @@ int main()
     TextView view;
 }
 
-// TODO : dans Game : saveGame
 // TODO : refractor LevelMechanics
+// TODO : levels dans -> levels/default & levels/saves
+
+//par soucis de pratique, en version console, on demande pour save uniquement lorsqu'un niveau est gagné
+
+// askSave doit prendre en compte toutes les e/s consoles

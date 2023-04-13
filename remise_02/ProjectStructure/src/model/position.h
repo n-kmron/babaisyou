@@ -31,9 +31,6 @@ class Position {
 
         unsigned int col() const;
 
-        // debug
-        std::string to_string() const;
-
         bool operator==(const Position & other) const;
 
 };

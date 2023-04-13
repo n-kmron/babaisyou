@@ -17,5 +17,4 @@ int main()
 }
 
 // TODO : dans Game : saveGame
-// TODO : restart in console
-// TODO : tester le jeu
+// TODO : refractor LevelMechanics

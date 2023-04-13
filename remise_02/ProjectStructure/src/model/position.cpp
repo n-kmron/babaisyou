@@ -40,19 +40,6 @@ Position Position::next(const Direction & dir) {
         return Position(row, col) ;
 }
 
-string Position::to_string() const {
-    string result;
-    result
-    .append("[")
-    .append(std::to_string(this->col()))
-    .append(";")
-    .append(std::to_string(this->row()))
-    .append("]");
-
-    return result;
-}
-
-
 std::ostream & operator<<(std::ostream & out, const Position & in) {
     return out << in.to_string();
 }

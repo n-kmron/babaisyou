@@ -46,6 +46,10 @@ unsigned int Game::level() {
     return levelMechanics_.level();
 }
 
+std::pair<unsigned int, unsigned int> Game::levelSize() {
+    return levelMechanics_.levelSize();
+}
+
 void Game::registerObserver(Observer * obs) {
     observers_.push_back(obs);
 }

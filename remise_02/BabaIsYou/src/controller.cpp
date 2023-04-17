@@ -48,6 +48,10 @@ unsigned int Controller::level() {
     return game_->level();
 }
 
+std::pair<unsigned int, unsigned int> Controller::levelSize() {
+    return game_->levelSize();
+}
+
 std::vector<GameObject> Controller::elements() {
     return game_->elements();
 }

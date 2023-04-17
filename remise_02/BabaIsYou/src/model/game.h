@@ -46,6 +46,11 @@ class Game : public Observable
 
         unsigned int level();
 
+        /**
+         * @brief the row is the first member of the pair and col is the second one
+         */
+        std::pair<unsigned int, unsigned int> levelSize();
+
         std::vector<GameObject> & elements();
 
         void registerObserver(Observer * obs) override;

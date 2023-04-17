@@ -68,6 +68,11 @@ class LevelMechanics
 
         unsigned int level() const;
 
+        /**
+         * @brief the row is the first member of the pair and col is the second one
+         */
+        std::pair<unsigned int, unsigned int> levelSize();
+
         // other methods
 
         /**

@@ -87,7 +87,7 @@ static map<Element, string> elemConversionFromElement_ = {
 
 
 /**
- * @brief elemConversionFromElement return a string corresponding to the enum Element we given
+ * @brief elemConversionFromElement return a one-char string corresponding to the enum Element we given
  */
 string static elemConversionFromElement(const Element & elem) {
     return elemConversionFromElement_.at(elem);
@@ -151,6 +151,9 @@ static vector<Element> allRules_ = {
     Element::WIN
 };
 
+/**
+ * @brief give all elements are a piece to build a rule
+ */
 vector<Element> static allRules() {
     return allRules_;
 }

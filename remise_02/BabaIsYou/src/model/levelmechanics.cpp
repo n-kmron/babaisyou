@@ -26,7 +26,7 @@ void LevelMechanics::setElementPosition(const GameObject & element) {
 
 vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
     vector<GameObject> typeElement;
-    for(int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {
+    for(unsigned int elementIndex=0; elementIndex<elements_.size(); ++elementIndex) {
         if(elements_.at(elementIndex).element() == element) {
             typeElement.push_back(elements_.at(elementIndex));
         }
@@ -89,7 +89,7 @@ vector<Element> LevelMechanics::findAllMurders() {
 
 vector<string> LevelMechanics::gameStateAsStrings() {
     vector<string> levelLines;
-    for(int index=0; index<elements_.size(); ++index) {
+    for(unsigned int index=0; index<elements_.size(); ++index) {
         stringstream ss;
 
         string element { elemConversionFromElementToFile(elements_.at(index).element())};
@@ -107,7 +107,7 @@ vector<string> LevelMechanics::gameStateAsStrings() {
 void LevelMechanics::move(const Direction & dir) {
     rules_.scanRules(elements_);
     vector<Element> isYou = rules_.rules()[Element::YOU];
-    for(int index=0; index<isYou.size(); ++index) {
+    for(unsigned int index=0; index<isYou.size(); ++index) {
         Element isYouType = fromRuleTypeToPlayableType(isYou.at(index));
         vector<GameObject> allIsYou = findAllElement(isYouType);
         for(unsigned int secondIndex=0; secondIndex<allIsYou.size(); ++secondIndex) {

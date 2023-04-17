@@ -12,7 +12,7 @@ using namespace std;
  */
 static vector<Element> findElementAtPosition(const vector<GameObject> & elements, const Position & pos) {
     vector<Element> elementsAtPos;
-    for(int elementIndex=0; elementIndex<elements.size(); ++elementIndex) {
+    for(unsigned int elementIndex=0; elementIndex<elements.size(); ++elementIndex) {
         if(elements.at(elementIndex).pos() == pos) {
             elementsAtPos.push_back(elements.at(elementIndex).element());
         }

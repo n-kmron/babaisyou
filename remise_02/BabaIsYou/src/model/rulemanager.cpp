@@ -57,13 +57,13 @@ void RuleManager::checkRules(const vector<GameObject> & elements, int isIndex, D
             int materialIndex = -1;
             int aspectIndex = - 1;
 
-             for(int vectorIndex=0; vectorIndex<materialElements.size(); ++vectorIndex) {
+             for(unsigned int vectorIndex=0; vectorIndex<materialElements.size(); ++vectorIndex) {
                 if(isMaterial(materialElements.at(vectorIndex))) {
                     materialIndex = vectorIndex;
                 }
              }
 
-             for(int vectorIndex=0; vectorIndex<aspectElements.size(); ++vectorIndex) {
+             for(unsigned int vectorIndex=0; vectorIndex<aspectElements.size(); ++vectorIndex) {
                 if(isAspect(aspectElements.at(vectorIndex))) {
                     aspectIndex = vectorIndex;
                 }
@@ -80,7 +80,7 @@ void RuleManager::scanRules(const vector<GameObject> & elements) {
     //empty it before complete it
     rules_.clear();
 
-    for(int i=0; i<elements.size(); ++i) {
+    for(unsigned int i=0; i<elements.size(); ++i) {
         if(elements.at(i).element() == Element::IS) { //chercher les is
             checkRules(elements, i, Direction::LEFT, Direction::RIGHT);
             checkRules(elements, i, Direction::UP, Direction::DOWN);
@@ -89,7 +89,7 @@ void RuleManager::scanRules(const vector<GameObject> & elements) {
 }
 
 bool RuleManager::isMaterial(const Element & element) {
-    for(int i=0; i<material_.size(); ++i) {
+    for(unsigned int i=0; i<material_.size(); ++i) {
         if(element == material_.at(i)) {
             return true;
         }
@@ -98,7 +98,7 @@ bool RuleManager::isMaterial(const Element & element) {
 }
 
 bool RuleManager::isAspect(const Element & element) {
-    for(int i=0; i<aspect_.size(); ++i) {
+    for(unsigned int i=0; i<aspect_.size(); ++i) {
         if(element == aspect_.at(i)) {
             return true;
         }

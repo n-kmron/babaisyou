@@ -2,6 +2,8 @@
 #define CONTROLLER_H
 
 #include "model/game.h"
+#include <memory>
+
 
 class Controller {
 

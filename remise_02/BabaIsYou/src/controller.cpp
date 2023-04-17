@@ -1,6 +1,5 @@
 #include "controller.h"
 #include <sstream>
-#include <memory>
 
 Controller::Controller(Observer * obs) : game_ { std::make_unique<Game>("level_1") }, obs_ { obs }  {
 };

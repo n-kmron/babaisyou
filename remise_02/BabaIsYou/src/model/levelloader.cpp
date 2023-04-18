@@ -48,9 +48,9 @@ void LevelLoader::readAllLines() {
 vector<GameObject> LevelLoader::createLevel() {
     vector<GameObject> elements;
 
-    for(int i=0; i<fileAllLines_.size(); ++i) {
+    for(unsigned int lineIndex=0; lineIndex<fileAllLines_.size(); ++lineIndex) {
         vector<string> splittedElem;
-        string line { fileAllLines_.at(i) };
+        string line { fileAllLines_.at(lineIndex) };
         stringstream ss(line);
             string elementPart;
             while (ss >> elementPart) {

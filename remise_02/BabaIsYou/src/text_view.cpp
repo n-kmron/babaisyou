@@ -10,6 +10,7 @@
 #include <vector>
 #include <sstream>
 #include <fstream>
+#include <filesystem>
 
 using namespace std;
 
@@ -72,9 +73,9 @@ public:
     }
 
     void displayBoard() override {
-        for(int height=0; height<controller_.levelSize().first; ++height) {
+        for(unsigned int height=0; height<controller_.levelSize().first; ++height) {
             cout << endl;
-            for(int width=0; width<controller_.levelSize().second; ++width) {
+            for(unsigned int width=0; width<controller_.levelSize().second; ++width) {
                 if(height==0 || height== (controller_.levelSize().first) -1)
                     cout << "-";
                 else if(width==0 || width == (controller_.levelSize().second) -1)
@@ -118,7 +119,7 @@ public:
         {
             if (entry.is_regular_file())
             {
-                string filename { entry.path().filename() };
+                string filename { entry.path().filename().string() };
                 // Remove the double quotes if they exist.
                 if (filename.front() == '"' && filename.back() == '"') {
                     filename = filename.substr(1, filename.size() - 2);
@@ -142,7 +143,6 @@ public:
         while (true) {
             cout << ">>Do you want to load a save (S) or start a new game (N) : ";
             cin >> input;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (regex_match(input, regex)) {
                 if(input == "S") {
                     unsigned int nbSaves = displayUserSaves();
@@ -176,7 +176,6 @@ public:
         while (true) {
             cout << ">>Enter a direction (ZQSD): " << endl;
             cin >> input;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (regex_match(input, regex)) {
                 if(input == "Z") {
                     return Direction::UP;
@@ -202,7 +201,6 @@ public:
         while (true) {
             cout << ">>PRESS R TO RESTART (OR S TO STOP): " << endl;
             cin >> input;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             if (regex_match(input, regex)) {
                 if(input == "R") {
                     return true;

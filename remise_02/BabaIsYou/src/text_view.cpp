@@ -11,6 +11,7 @@
 #include <sstream>
 #include <fstream>
 #include <filesystem>
+#include <limits>
 
 using namespace std;
 
@@ -217,12 +218,15 @@ public:
     void askSave() override {
         string input;
         cout << ">>PRESS S TO SAVE THE GAME AND QUIT (OR ENTER TO CONTINUE) : " << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, input);
         if(input == "S") {
             cout << ">>GIVE A NAME FOR YOUR SAVE : ";
             string name;
             cin >> name;
             checkSave(name);
+        } else {
+            cout << "stop";
         }
     }
 

@@ -1,6 +1,9 @@
 # pas de dossier build-*
 build-*/
 
+# pas de saves 
+saves/
+
 # pas de fichier .user
 *.user
 
@@ -9,3 +12,6 @@ build-*/
 
 # pas de DS Store
 .DS_Store
+
+# pas de DS Store 
+*/.DS_Store

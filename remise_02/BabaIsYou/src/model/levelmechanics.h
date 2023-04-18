@@ -56,7 +56,6 @@ class LevelMechanics
          */
         std::vector<Element> findAllMurders();
 
-
     public:
 
         LevelMechanics(const std::vector<GameObject> & elements, const unsigned int numLevel);
@@ -84,6 +83,11 @@ class LevelMechanics
          * @brief check if a gameobject can move in a direction
          */
         bool isMovable(const Direction & dir, const GameObject & element);
+
+        /**
+         * @brief check if elements on a position can move in a direction
+         */
+        bool isMovable(const Direction & dir, Position pos);
 
         bool isWon();
 

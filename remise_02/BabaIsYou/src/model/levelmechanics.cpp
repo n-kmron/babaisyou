@@ -137,6 +137,22 @@ bool LevelMechanics::isMovable(const Direction & dir, const GameObject & element
     return true;
 }
 
+bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
+    if(!contains(pos)) return false;
+    vector<Element> elementsOnNewPosition = findElementAtPosition(elements_, pos);
+
+    //check if the element on the new pos makes a stop
+    vector<Element> isStop = rules_.rules()[Element::STOP];
+    for(unsigned int index=0; index<elementsOnNewPosition.size(); ++index) {
+        for(unsigned int secondIndex=0; secondIndex<isStop.size(); ++secondIndex) {
+            if(elementsOnNewPosition.at(index) == fromRuleTypeToPlayableType(isStop.at(secondIndex))) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool LevelMechanics::isWon() {
     //check if the element on the new pos makes a win
     vector<GameObject> allIsWin = fromRuleToGameObjectOccurences(Element::WIN);
@@ -198,7 +214,10 @@ void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
         for(unsigned int occurencesIndex=0; occurencesIndex<occurences.size(); ++occurencesIndex) {
             if(occurences.at(occurencesIndex).pos() == posToCheck) {
                 if(isMovable(dir, occurences.at(occurencesIndex))) {
-                    setNewPosition(dir, occurences.at(occurencesIndex));
+                    checkIfRulePushed(dir, posToCheck);
+                    if(isMovable(dir, posToCheck)) {
+                        setNewPosition(dir, occurences.at(occurencesIndex));
+                    }
                 }
             }
         }

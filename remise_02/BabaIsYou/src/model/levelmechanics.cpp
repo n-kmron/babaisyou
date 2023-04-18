@@ -207,7 +207,7 @@ void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
 
 void LevelMechanics::saveGame(string location) {
     vector<string> levelLines { gameStateAsStrings() };
-    std::ofstream outfile(location);
+    ofstream outfile(location);
 
     if (outfile.is_open())
     {
@@ -224,7 +224,7 @@ void LevelMechanics::saveGame(string location) {
     }
     else
     {
-        cerr << "could not create file for writing." << endl;
+        cerr << "could not open 'saves' folder to create the save." << endl;
     }
 }
 

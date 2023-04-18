@@ -37,6 +37,7 @@ void Controller::nextLevel() {
     ss << "level_" << game_->level()+1;
     std::string filename = ss.str();
     game_ = std::make_unique<Game>(filename);
+    registerAsObserver();
 }
 
 void Controller::registerAsObserver() {

@@ -131,9 +131,12 @@ public:
                 if (extension_pos != std::string::npos) {
                     filename = filename.substr(0, extension_pos);
                 }
-                cout << filename << endl;
+
+                if(filename.size() != 0) {
+                    cout << filename << endl;
+                    numberSaves++;
+                }
             }
-            numberSaves++;
         }
         return numberSaves;
     }
@@ -147,7 +150,7 @@ public:
             if (regex_match(input, regex)) {
                 if(input == "S") {
                     unsigned int nbSaves = displayUserSaves();
-                    if(nbSaves <= 1) {
+                    if(nbSaves < 1) {
                         cout << "You don't have any saves" << endl;
                         cout << "Level 1 loading..." << endl;
                         return "level_1";
@@ -221,12 +224,10 @@ public:
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, input);
         if(input == "S") {
-            cout << ">>GIVE A NAME FOR YOUR SAVE : ";
             string name;
+            cout << ">>GIVE A NAME FOR YOUR SAVE : ";
             cin >> name;
             checkSave(name);
-        } else {
-            cout << "stop";
         }
     }
 
@@ -253,7 +254,7 @@ public:
                 displayNextLevel();
                 controller_.nextLevel();
                 askSave();
-                controller_.registerAsObserver();
+                controller_.start();
             } else {
                 exit(0);
             }

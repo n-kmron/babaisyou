@@ -11,10 +11,21 @@ PS : le fichier .mdj n'est pas documenté car un fichier pdf d'explications est 
 <p>le <code>working directory</code> de ce projet doit être (à partir de la racine 'BabaIsYou'): <code>/BabaIsYou/src</code></p>
 <p><b>Brève description du projet : </b> Nous avons décidé de représenter l'état du jeu via un vector de GameObject (un GameObject comprend un type et une position). Nous avons opté pour une architecture 'MVC', la vue n'intéragissant qu'avec son controller n'a donc pas d'accès direct au model. La  vue est également Observer du model, elle se met donc automatiquement à jour lorsque le model modifie ses données. Un fichier 'util.cpp' contient des méthodes statiques qui doivent être partagées dans plusieurs classes du model. Le role de chaque méthode est explicitement expliqué via son nom ou sa documentation. Une série de tests jugés pertinents sont implémentés via la librairie Catch2. Le jeu est construit à partir d'une TextView qui se charge d'instancier un controller et de lancer le jeu. Par soucis de pratique, la feature 'sauvegarder la partie' n'est disponible uniquement lorsqu'on gagne un niveau.</p>
 
-<p>Les avertissements que contiennent le projet : 
+<p><b>Les avertissements que contiennent le projet :</b> 
 <ul>
     <li>
         Fonctions non utilisées (dans util.cpp). Ces fonctions sont utilisées mais pas dans ce fichier donc un avertissement est présent.
+    </li>
+</ul>
+</p>
+
+<p><b>Les bugs identifiés :</b> 
+<ul>
+    <li>
+        Au niveau 4, le metal est affiché par desus Baba. <i>Piste d'amélioration : établir un ordre de priorité d'affichage par rapport aux éléments.</i>
+    </li>
+    <li>
+        Quand isYou est d'un type concernant plusieurs éléments, on peut rencontrer des problèmes lorsque l'on croise un obstacle. <i>Piste d'amélioration : revoir la méthode.</i>
     </li>
 </ul>
 </p>

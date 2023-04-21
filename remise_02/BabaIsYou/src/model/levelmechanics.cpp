@@ -45,13 +45,13 @@ void LevelMechanics::setNewPosition(const Direction & dir, const GameObject & ob
 }
 
 vector<GameObject> LevelMechanics::fromRuleToGameObjectOccurences(const Element & rule) {
-    vector<GameObject> allRules;
+    vector<GameObject> allThisRule;
     vector<Element> isRule = rules_.rules()[rule];
     for(unsigned int isYouIndex=0; isYouIndex<isRule.size(); ++isYouIndex) {
         Element isRuleType = fromRuleTypeToPlayableType(isRule.at(isYouIndex));
-        allRules = findAllElement(isRuleType);
+        allThisRule = findAllElement(isRuleType);
     }
-    return allRules;
+    return allThisRule;
 }
 
 Element LevelMechanics::fromRuleTypeToPlayableType(const Element & element) {
@@ -76,8 +76,11 @@ Element LevelMechanics::fromRuleTypeToPlayableType(const Element & element) {
 
 vector<Element> LevelMechanics::findAllMurders() {
     vector<Element> murdered;
+
+    //each element is SINK or KILL is murdered
     vector<Element> isSink = rules_.rules()[Element::SINK];
     vector<Element> isKill = rules_.rules()[Element::KILL];
+
     for(unsigned int index=0; index<isSink.size(); ++index) {
         murdered.push_back(fromRuleTypeToPlayableType(isSink.at(index)));
     }
@@ -102,54 +105,58 @@ vector<string> LevelMechanics::gameStateAsStrings() {
     return levelLines;
 }
 
+bool LevelMechanics::isElementOnPos(const std::vector<Element> & elementsOnPos, const Element & elementToFind, bool reverseElement) {
+    for(unsigned int index=0; index<elementsOnPos.size(); ++index) {
+        if(reverseElement) {
+            if(elementsOnPos.at(index) == fromRuleTypeToPlayableType(elementToFind)) {
+                return true;
+            }
+        }
+        else if(elementsOnPos.at(index) == elementToFind) {
+                return true;
+        }
+    }
+    return false;
+}
+
 //-------------BREAK LINE -> game functions (public)
 
 void LevelMechanics::move(const Direction & dir) {
+    //refresh active rules
     rules_.scanRules(elements_);
-    vector<Element> isYou = rules_.rules()[Element::YOU];
-    for(unsigned int index=0; index<isYou.size(); ++index) {
-        Element isYouType = fromRuleTypeToPlayableType(isYou.at(index));
-        vector<GameObject> allIsYou = findAllElement(isYouType);
-        for(unsigned int secondIndex=0; secondIndex<allIsYou.size(); ++secondIndex) {
-            if(isMovable(dir,allIsYou.at(secondIndex))) {
-                setNewPosition(dir, allIsYou.at(secondIndex));
-                checkIfGameObjectPushed(dir, allIsYou.at(secondIndex).pos());
-                checkIfRulePushed(dir, allIsYou.at(secondIndex).pos());
-            }
+
+    vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
+    for(unsigned int index=0; index<allIsYou.size(); ++index) {
+        if(isMovable(dir,allIsYou.at(index).pos())) {
+
+            setNewPosition(dir, allIsYou.at(index));
+            checkIfGameObjectPushed(dir, allIsYou.at(index).pos());
+            checkIfRulePushed(dir, allIsYou.at(index).pos());
+
         }
     }
-}
-
-bool LevelMechanics::isMovable(const Direction & dir, const GameObject & element) {
-    Position pos = element.pos().next(dir);
-    if(!contains(pos)) return false;
-    vector<Element> elementsOnNewPosition = findElementAtPosition(elements_, pos);
-
-    //check if the element on the new pos makes a stop
-    vector<Element> isStop = rules_.rules()[Element::STOP];
-    for(unsigned int index=0; index<elementsOnNewPosition.size(); ++index) {
-        for(unsigned int secondIndex=0; secondIndex<isStop.size(); ++secondIndex) {
-            if(elementsOnNewPosition.at(index) == fromRuleTypeToPlayableType(isStop.at(secondIndex))) {
-                return false;
-            }
-        }
-    }
-    return true;
 }
 
 bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
-    if(!contains(pos)) return false;
-    vector<Element> elementsOnNewPosition = findElementAtPosition(elements_, pos);
+    Position posToCheck = pos.next(dir);
+    if(!contains(posToCheck)) return false;
 
-    //check if the element on the new pos makes a stop
+    vector<Element> elementsOnNewPosition = findElementAtPosition(elements_, posToCheck);
+
+    //if there is a stop on the position to check, return false
     vector<Element> isStop = rules_.rules()[Element::STOP];
-    for(unsigned int index=0; index<elementsOnNewPosition.size(); ++index) {
-        for(unsigned int secondIndex=0; secondIndex<isStop.size(); ++secondIndex) {
-            if(elementsOnNewPosition.at(index) == fromRuleTypeToPlayableType(isStop.at(secondIndex))) {
-                return false;
-            }
+    for(unsigned int index=0; index<isStop.size(); ++index) {
+       if(isElementOnPos(elementsOnNewPosition, isStop.at(index), true)) return false;
+    }
+
+    //if there is a rule on the position to check, first we must check if this last one is movable
+    vector<Element> rules = allRules();
+    for(int index=0; index<rules.size(); ++index) {
+        if(isElementOnPos(findElementAtPosition(elements_, posToCheck.next(dir)), rules.at(index), false)) {
+            return isMovable(dir, posToCheck.next(dir));
         }
     }
+
     return true;
 }
 
@@ -195,7 +202,7 @@ void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos
 
     for(unsigned int secondIndex=0; secondIndex<allIsPush.size(); ++secondIndex) {
         if(allIsPush.at(secondIndex).pos() == newPos) {
-            if(isMovable(dir, allIsPush.at(secondIndex))) {
+            if(isMovable(dir, allIsPush.at(secondIndex).pos())) {
                 checkIfGameObjectPushed(dir, newPos);
                 setNewPosition(dir, allIsPush.at(secondIndex));
             }
@@ -208,14 +215,13 @@ void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
     vector<Element> allRulesElement = allRules();
 
     for(unsigned int index=0; index<allRulesElement.size(); ++index) {
-        Element ruleType = allRulesElement.at(index);
-        vector<GameObject> occurences = findAllElement(ruleType);
+        vector<GameObject> occurences = findAllElement(allRulesElement.at(index));
 
         for(unsigned int occurencesIndex=0; occurencesIndex<occurences.size(); ++occurencesIndex) {
             if(occurences.at(occurencesIndex).pos() == posToCheck) {
-                if(isMovable(dir, occurences.at(occurencesIndex))) {
+                if(isMovable(dir, occurences.at(occurencesIndex).pos())) {
                     checkIfRulePushed(dir, posToCheck);
-                    if(isMovable(dir, posToCheck)) {
+                    if(isMovable(dir, pos)) {
                         setNewPosition(dir, occurences.at(occurencesIndex));
                     }
                 }

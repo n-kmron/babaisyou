@@ -30,6 +30,7 @@ void Controller::restart() {
     std::string filename = ss.str();
     game_ = std::make_unique<Game>(filename);
     registerAsObserver();
+    start();
 }
 
 void Controller::nextLevel() {

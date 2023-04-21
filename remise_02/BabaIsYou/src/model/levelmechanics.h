@@ -23,7 +23,7 @@ class LevelMechanics
         Level level_;
 
         /**
-         * @brief return if the position is inside of the map
+         * @brief return if the position is inside of the board
          */
         bool contains(const Position & pos);
 
@@ -46,7 +46,7 @@ class LevelMechanics
 
 
         /**
-         * @brief remember the actual game's state and store it in a vector<string>
+         * @brief remember the actual game's state and store it as a vector<string>
          */
         std::vector<std::string> gameStateAsStrings();
 
@@ -55,6 +55,15 @@ class LevelMechanics
          * @brief intialize a vector with all playable elements that can kill
          */
         std::vector<Element> findAllMurders();
+
+        /**
+         * @brief return if there is a certain element on a position
+         * @param elementsOnPos elements on the position to check
+         * @param elementToFind element to find on this position
+         * @param reverseElement say if the element has to be revert from rule to playable type
+         * @return
+         */
+        bool isElementOnPos(const std::vector<Element> & elementsOnPos, const Element & elementToFind, bool reverseElement);
 
     public:
 
@@ -78,11 +87,6 @@ class LevelMechanics
          * @brief move all the 'isYou' elements in a direction
          */
         void move(const Direction & dir);
-
-        /**
-         * @brief check if a gameobject can move in a direction
-         */
-        bool isMovable(const Direction & dir, const GameObject & element);
 
         /**
          * @brief check if elements on a position can move in a direction

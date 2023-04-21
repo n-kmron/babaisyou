@@ -16,7 +16,7 @@ LevelMechanics::LevelMechanics(const std::vector<GameObject> & elements, const u
 bool LevelMechanics::contains(const Position & pos) {
     int row = pos.row();
     int col = pos.col();
-    return !(row > level_.height()-2 || row < 1 || col > level_.width()-2 || col < 1);
+    return !(row > level_.height()-1 || row < 0 || col > level_.width()-1 || col < 0);
 
 }
 

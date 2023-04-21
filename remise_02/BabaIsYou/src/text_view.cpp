@@ -74,12 +74,12 @@ public:
     }
 
     void displayBoard() override {
-        for(unsigned int height=0; height<controller_.levelSize().first; ++height) {
+        for(unsigned int height=0; height<controller_.levelSize().first+1; ++height) {
             cout << endl;
-            for(unsigned int width=0; width<controller_.levelSize().second; ++width) {
-                if(height==0 || height== (controller_.levelSize().first) -1)
+            for(unsigned int width=0; width<controller_.levelSize().second+1; ++width) {
+                if(height==0 || height== (controller_.levelSize().first))
                     cout << "-";
-                else if(width==0 || width == (controller_.levelSize().second) -1)
+                else if(width==0 || width == (controller_.levelSize().second))
                     cout << "|";
                 else {
                     Position pos(height, width);

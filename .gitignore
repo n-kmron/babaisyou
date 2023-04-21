@@ -1,9 +1,6 @@
 # pas de dossier build-*
 build-*/
 
-# pas de saves 
-saves/
-
 # pas de fichier .user
 *.user
 

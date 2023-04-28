@@ -9,3 +9,6 @@ build-*/
 
 # pas de DS Store
 .DS_Store
+
+# pas de DS Store 
+*/.DS_Store

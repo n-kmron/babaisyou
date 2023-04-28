@@ -19,10 +19,7 @@ class LevelLoader
     public:
 
         /*!
-         * \brief Constructeur de LevelLoader à partir du numero du niveau à créer.
-         *
-         *
-         * \param numLevel the number of the level to build
+         * \brief construct a level from his filename
          */
        LevelLoader(const std::string & fileLevel);
 

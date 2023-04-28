@@ -11,6 +11,7 @@
 #include <sstream>
 #include <fstream>
 #include <filesystem>
+#include <limits>
 
 using namespace std;
 
@@ -73,12 +74,12 @@ public:
     }
 
     void displayBoard() override {
-        for(unsigned int height=0; height<controller_.levelSize().first; ++height) {
+        for(unsigned int height=0; height<controller_.levelSize().first+1; ++height) {
             cout << endl;
-            for(unsigned int width=0; width<controller_.levelSize().second; ++width) {
-                if(height==0 || height== (controller_.levelSize().first) -1)
+            for(unsigned int width=0; width<controller_.levelSize().second+1; ++width) {
+                if(height==0 || height== (controller_.levelSize().first))
                     cout << "-";
-                else if(width==0 || width == (controller_.levelSize().second) -1)
+                else if(width==0 || width == (controller_.levelSize().second))
                     cout << "|";
                 else {
                     Position pos(height, width);
@@ -130,9 +131,12 @@ public:
                 if (extension_pos != std::string::npos) {
                     filename = filename.substr(0, extension_pos);
                 }
-                cout << filename << endl;
+
+                if(filename.size() != 0) {
+                    cout << filename << endl;
+                    numberSaves++;
+                }
             }
-            numberSaves++;
         }
         return numberSaves;
     }
@@ -146,7 +150,7 @@ public:
             if (regex_match(input, regex)) {
                 if(input == "S") {
                     unsigned int nbSaves = displayUserSaves();
-                    if(nbSaves <= 1) {
+                    if(nbSaves < 1) {
                         cout << "You don't have any saves" << endl;
                         cout << "Level 1 loading..." << endl;
                         return "level_1";
@@ -217,10 +221,11 @@ public:
     void askSave() override {
         string input;
         cout << ">>PRESS S TO SAVE THE GAME AND QUIT (OR ENTER TO CONTINUE) : " << endl;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         getline(cin, input);
         if(input == "S") {
-            cout << ">>GIVE A NAME FOR YOUR SAVE : ";
             string name;
+            cout << ">>GIVE A NAME FOR YOUR SAVE : ";
             cin >> name;
             checkSave(name);
         }
@@ -249,7 +254,7 @@ public:
                 displayNextLevel();
                 controller_.nextLevel();
                 askSave();
-                controller_.registerAsObserver();
+                controller_.start();
             } else {
                 exit(0);
             }

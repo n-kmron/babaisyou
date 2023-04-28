@@ -134,7 +134,7 @@ TEST_CASE("Constraints") {
 
         Position pos(0,0);
         GameObject element(Element::BABA, pos);
-        bool result = mechanics.isMovable(Direction::UP, element);
+        bool result = mechanics.isMovable(Direction::UP, pos);
 
         REQUIRE (!result);
     }
@@ -145,8 +145,7 @@ TEST_CASE("Constraints") {
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(18,18);
-        GameObject element(Element::BABA, pos);
-        bool result = mechanics.isMovable(Direction::RIGHT, element);
+        bool result = mechanics.isMovable(Direction::RIGHT, pos);
 
         REQUIRE (!result);
     }
@@ -157,8 +156,7 @@ TEST_CASE("Constraints") {
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(0,0);
-        GameObject element(Element::BABA, pos);
-        bool result = mechanics.isMovable(Direction::DOWN, element);
+        bool result = mechanics.isMovable(Direction::DOWN, pos);
 
         REQUIRE (result);
     }
@@ -169,8 +167,7 @@ TEST_CASE("Constraints") {
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(17,17);
-        GameObject element(Element::BABA, pos);
-        bool result = mechanics.isMovable(Direction::LEFT, element);
+        bool result = mechanics.isMovable(Direction::LEFT, pos);
 
         REQUIRE (result);
     }
@@ -181,8 +178,7 @@ TEST_CASE("Constraints") {
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(7,3);
-        GameObject element(Element::BABA, pos);
-        bool result = mechanics.isMovable(Direction::UP, element);
+        bool result = mechanics.isMovable(Direction::UP, pos);
         REQUIRE (!result);
     }
 
@@ -192,8 +188,7 @@ TEST_CASE("Constraints") {
         LevelMechanics mechanics(loader.createLevel(), 1);
 
         Position pos(7,3);
-        GameObject element(Element::BABA, pos);
-        bool result = mechanics.isMovable(Direction::DOWN, element);
+        bool result = mechanics.isMovable(Direction::DOWN, pos);
         REQUIRE (result);
     }
 

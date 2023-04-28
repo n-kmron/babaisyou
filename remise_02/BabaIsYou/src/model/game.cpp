@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Game::Game(const string fileName) : observers_ {}, loader_ { LevelLoader(fileName) }, levelMechanics_ { LevelMechanics(loader_.createLevel(), loader_.numLevel()) } {
+Game::Game(const string fileName) : loader_ { LevelLoader(fileName) }, levelMechanics_ { LevelMechanics(loader_.createLevel(), loader_.numLevel()) } {
 }
 
 
@@ -50,19 +50,3 @@ std::pair<unsigned int, unsigned int> Game::levelSize() {
     return levelMechanics_.levelSize();
 }
 
-void Game::registerObserver(Observer * obs) {
-    observers_.push_back(obs);
-}
-void Game::removeObserver(Observer * obs) {
-    for (auto it = observers_.begin(); it != observers_.end(); ++it) {
-        if (*it == obs) {
-            observers_.erase(it);
-            break;
-        }
-    }
-}
-void Game::notifyObservers() {
-    for (auto obs : observers_) {
-        obs->update();
-    }
-}

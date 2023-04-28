@@ -8,8 +8,22 @@ void Controller::start() {
     game_->start();
 }
 
-void Controller::playShot(const Direction & dir){
-    game_->playShot(dir);
+void Controller::playShot(const std::string & input){
+    if(input == "Z") {
+        game_->playShot(Direction::UP);
+    }
+    if(input == "Q") {
+        game_->playShot(Direction::LEFT);
+    }
+    if(input == "S") {
+        game_->playShot(Direction::DOWN);
+    }
+    if(input == "D") {
+        game_->playShot(Direction::RIGHT);
+    }
+    if(input == "R") {
+        restart();
+    }
 }
 
 bool Controller::isWon() {

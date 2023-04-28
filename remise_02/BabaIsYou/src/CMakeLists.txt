@@ -11,6 +11,7 @@ add_executable(BabaIsYou
     view.h
     controller.h
     controller.cpp
+    text_view.h
     text_view.cpp
     model/observer.h
     model/observable.h

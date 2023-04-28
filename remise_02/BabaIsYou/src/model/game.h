@@ -5,13 +5,11 @@
 #include "levelloader.h"
 #include "levelmechanics.h"
 #include "observable.h"
-#include "observer.h"
 #include <vector>
 
 class Game : public Observable
 {
     private:
-        std::vector<Observer*> observers_;
         LevelLoader loader_;
         LevelMechanics levelMechanics_;
 
@@ -52,10 +50,6 @@ class Game : public Observable
         std::pair<unsigned int, unsigned int> levelSize();
 
         std::vector<GameObject> & elements();
-
-        void registerObserver(Observer * obs) override;
-        void removeObserver(Observer * obs) override;
-        void notifyObservers() override;
 };
 
 #endif // GAME_H

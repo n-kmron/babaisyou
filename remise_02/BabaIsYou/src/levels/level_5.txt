@@ -30,6 +30,7 @@ text_wall 17 3
 is 17 4
 stop 17 5
 text_baba 2 12
+baba 3 7
 is 3 12
 you 4 12
 text_rock 9 14

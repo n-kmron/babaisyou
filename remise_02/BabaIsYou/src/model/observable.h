@@ -2,18 +2,35 @@
 #define OBSERVABLE_H
 
 #include "observer.h"
+#include <vector>
 
 /**
  * @brief Observable interface to implements the observable-observers design pattern
  */
 class Observable
 {
-    public:
-        virtual void registerObserver(Observer * obs) = 0;
+private:
+    std::vector<Observer*> observers_;
 
-        virtual void removeObserver(Observer * obs) = 0;
+public:
+    virtual void registerObserver(Observer * obs) {
+        observers_.push_back(obs);
+    }
 
-        virtual void notifyObservers() = 0;
+    virtual void removeObserver(Observer * obs) {
+        for (auto it = observers_.begin(); it != observers_.end(); ++it) {
+            if (*it == obs) {
+                observers_.erase(it);
+                break;
+            }
+        }
+    }
+
+    virtual void notifyObservers() {
+        for (auto obs : observers_) {
+            obs->update();
+        }
+    }
 };
 
 #endif // OBSERVABLE_H

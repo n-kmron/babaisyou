@@ -20,7 +20,7 @@ public:
     /**
      * @brief ask the model to play a shot
      */
-    void playShot(const Direction & dir);
+    void playShot(const std::string & input);
 
     bool isWon();
 

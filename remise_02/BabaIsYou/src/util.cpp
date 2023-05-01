@@ -162,3 +162,39 @@ vector<Element> static allRules() {
 
     return allRules;
 }
+
+
+//-----------------------------------------------------------------
+
+/**
+ * @brief return a z-index corresponding to the enum Element we given
+ */
+unsigned int static getZIndexOfElement(const Element & elem) {
+    static map<Element, unsigned int> zIndexOfElement = {
+        {Element::TEXT_BABA, 1},
+        {Element::TEXT_WALL, 1},
+        {Element::TEXT_ROCK, 1},
+        {Element::TEXT_LAVA, 1},
+        {Element::TEXT_GRASS, 1},
+        {Element::TEXT_METAL, 1},
+        {Element::TEXT_GOOP, 1},
+        {Element::TEXT_FLAG, 1},
+        {Element::IS, 1},
+        {Element::YOU, 1},
+        {Element::WIN, 1},
+        {Element::STOP, 1},
+        {Element::SINK, 1},
+        {Element::PUSH, 1},
+        {Element::KILL, 1},
+        {Element::BABA, 2},
+        {Element::WALL, 1},
+        {Element::ROCK, 1},
+        {Element::LAVA, 1},
+        {Element::GRASS, 1},
+        {Element::METAL, 1},
+        {Element::GOOP, 1},
+        {Element::FLAG, 1}
+    };
+
+    return zIndexOfElement.at(elem);
+}

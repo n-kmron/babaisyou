@@ -9,7 +9,7 @@ Game::Game(const string fileName) : loader_ { LevelLoader(fileName) }, levelMech
 
 
 void Game::start() {
-    notifyObservers();
+    notifyObservers(levelSize(), elements());
 }
 
 bool Game::isWon() {
@@ -22,20 +22,20 @@ bool Game::isLost() {
 
 void Game::saveGame(string name) {
     levelMechanics_.saveGame(name);
-    notifyObservers();
+    notifyObservers(levelSize(), elements());
 }
 
-void Game::playShot(const Direction & dir) {
+void Game::move(const Direction & dir) {
     levelMechanics_.move(dir);
-    notifyObservers();
+    notifyObservers(levelSize(), elements());
 }
 
 void Game::restart() {
-    notifyObservers();
+    notifyObservers(levelSize(), elements());
 }
 
 void Game::nextLevel() {
-    notifyObservers();
+    notifyObservers(levelSize(), elements());
 }
 
 std::vector<GameObject> & Game::elements() {

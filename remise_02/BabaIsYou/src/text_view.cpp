@@ -10,50 +10,15 @@
 #include <filesystem>
 #include <limits>
 
+
 using namespace std;
 
-/**
- * @brief check if the save is safe and allows it or not
- */
-void TextView::checkSave(string name) {
-    stringstream ss;
-    ss << "levels/saves/" << name << ".txt";
-    string location = ss.str();
-    ifstream infile(location);
 
-    if(infile.good()) {
-        cout << "This save already exists, do you want to replace it ?" << endl;
-        string input;
-        bool validInput = false;
 
-        while (!validInput)
-        {
-            cout << "Enter yes or no: ";
-            cin >> input;
-
-            if (input == "yes")
-            {
-                controller_.saveGame(location);
-                validInput = true;
-            }
-            else if (input == "no")
-            {
-                validInput = true;
-            }
-            else
-            {
-                cout << "Invalid input. ";
-            }
-        }
-    } else {
-        controller_.saveGame(location);
-    }
-}
-
-vector<vector<Element>> TextView::getPositionsMap() {
-    vector<vector<Element>> positionsMap(controller_.levelSize().first, vector<Element>(controller_.levelSize().second));
-    for(unsigned int i=0; i<controller_.elements().size(); ++i) {
-        GameObject current = controller_.elements().at(i);
+vector<vector<Element>> TextView::getPositionsMap(const pair<unsigned int, unsigned int> & sizes, const vector<GameObject> & elements) {
+    vector<vector<Element>> positionsMap(sizes.first, vector<Element>(sizes.second));
+    for(unsigned int i=0; i<elements.size(); ++i) {
+        GameObject current = elements.at(i);
         unsigned int row = current.pos().row();
         unsigned int col = current.pos().col();
         Element elem = current.element();
@@ -64,25 +29,19 @@ vector<vector<Element>> TextView::getPositionsMap() {
 }
 
 
-TextView::TextView() : controller_ { Controller(this) }{
-}
-
-void TextView::launch() {
-    displayTitle();
-    controller_.chooseLevel(askWhichLevel());
-    controller_.start();
+TextView::TextView() {
 }
 
 void TextView::displayTitle() {
     cout << "==========Welcome to Baba Is You ==========" << endl << endl;
 }
 
-void TextView::displayBoard() {
-    vector<vector<Element>> positionsMap = getPositionsMap();
+void TextView::displayBoard(const pair<unsigned int, unsigned int> & sizes, const vector<GameObject> & elements) {
+    vector<vector<Element>> positionsMap = getPositionsMap(sizes, elements);
 
-    for(unsigned int height=0; height<controller_.levelSize().first; ++height) {
+    for(unsigned int height=0; height<sizes.first; ++height) {
         cout << endl;
-        for(unsigned int width=0; width<controller_.levelSize().second; ++width) {
+        for(unsigned int width=0; width<sizes.second; ++width) {
             if(positionsMap.size() >= height && positionsMap.at(height).size() >= width) {
                 //check z index
                 cout << elemConversionFromElement(positionsMap.at(height).at(width));
@@ -96,16 +55,16 @@ void TextView::displayWon(){
     cout << "Congratulation, You won !" << endl;
 }
 
-void TextView::displayNextLevel() {
-    cout << "You are going now to the next level : Level " << controller_.level()+1 << endl;
+void TextView::displayNextLevel(unsigned int actualLevel) {
+    cout << "You are going now to the next level : Level " << actualLevel+1 << endl;
 }
 
 void TextView::displayKilled() {
     cout << "Sorry, you are dead !" << endl;
 }
 
-void TextView::displayError(string message) {
-    cout << "Error : " << message << " !" << endl;
+void TextView::displayError(std::string message) {
+    cerr << message << endl;
 }
 
 unsigned int TextView::displayUserSaves() {
@@ -138,6 +97,29 @@ unsigned int TextView::displayUserSaves() {
     return numberSaves;
 }
 
+bool TextView::overwriteSave() {
+    displayError("This save already exists, do you want to replace it ?");
+    string input;
+    while (true)
+    {
+        cout << "Enter yes or no: ";
+        cin >> input;
+
+        if (input == "yes")
+        {
+            return true;
+        }
+        else if (input == "no")
+        {
+            return false;
+        }
+        else
+        {
+            cout << "Invalid input. ";
+        }
+    }
+}
+
 string TextView::askWhichLevel() {
     regex regex("^[SN]$");
     string input;
@@ -166,7 +148,7 @@ string TextView::askWhichLevel() {
                 return "level_1";
             }
         } else {
-            cout << "Invalid input. Please try again.\n";
+            displayError("Invalid input. Please try again");
         }
     }
 }
@@ -180,7 +162,7 @@ string TextView::askDir() {
         if (regex_match(input, regex)) {
             return input;
         } else {
-            cout << "Invalid direction. Please try again.\n";
+            displayError("Invalid input. Please try again");
         }
     }
 }
@@ -199,7 +181,7 @@ bool TextView::askRestart() {
                 return false;
             }
         } else {
-            cout << "Invalid input. Please try again.\n";
+            displayError("Invalid input. Please try again");
         }
     }
 }
@@ -213,37 +195,11 @@ void TextView::askSave() {
         string name;
         cout << ">>GIVE A NAME FOR YOUR SAVE : ";
         cin >> name;
-        checkSave(name);
     }
 }
 
 
-void TextView::update() {
-    displayBoard();
-
-    if(controller_.isLost()) {
-        displayKilled();
-        if(askRestart()) {
-            controller_.restart();
-        } else {
-            exit(0);
-        }
-    }
-
-    if(!controller_.isWon()) {
-        controller_.playShot(askDir());
-    }
-
-    else {
-        displayWon();
-        if(controller_.level() < 5) {
-            displayNextLevel();
-            controller_.nextLevel();
-            askSave();
-            controller_.start();
-        } else {
-            exit(0);
-        }
-    }
+void TextView::update(pair<unsigned int, unsigned int> sizes, vector<GameObject> elements) {
+    displayBoard(sizes, elements);
 }
 

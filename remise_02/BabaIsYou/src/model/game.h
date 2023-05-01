@@ -36,7 +36,7 @@ class Game : public Observable
          *
          * \param dir the direction to move
          */
-        void playShot(const Direction & dir);
+        void move(const Direction & dir);
 
         void restart();
 

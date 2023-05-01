@@ -1,8 +1,8 @@
 #ifndef OBSERVABLE_H
 #define OBSERVABLE_H
 
+#include <set>
 #include "observer.h"
-#include <vector>
 
 /**
  * @brief Observable interface to implements the observable-observers design pattern
@@ -10,25 +10,21 @@
 class Observable
 {
 private:
-    std::vector<Observer*> observers_;
+    std::set<Observer *> observers_;
 
 public:
+
     virtual void registerObserver(Observer * obs) {
-        observers_.push_back(obs);
+        observers_.insert(obs);
     }
 
     virtual void removeObserver(Observer * obs) {
-        for (auto it = observers_.begin(); it != observers_.end(); ++it) {
-            if (*it == obs) {
-                observers_.erase(it);
-                break;
-            }
-        }
+        observers_.erase(obs);
     }
 
-    virtual void notifyObservers() {
+    void notifyObservers(std::pair<unsigned int, unsigned int> sizes, std::vector<GameObject> elements) const {
         for (auto obs : observers_) {
-            obs->update();
+            obs->update(sizes, elements);
         }
     }
 };

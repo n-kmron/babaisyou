@@ -226,7 +226,7 @@ TEST_CASE("Constraints") {
         GameObject element(Element::BABA, pos);
         mechanics.setElementPosition(element);
 
-        bool result = mechanics.isKill();
+        bool result = mechanics.checkToKill();
         REQUIRE (result);
     }
 
@@ -239,7 +239,7 @@ TEST_CASE("Constraints") {
         GameObject element(Element::BABA, pos);
         mechanics.setElementPosition(element);
 
-        bool result = mechanics.isKill();
+        bool result = mechanics.checkToKill();
         REQUIRE (!result);
     }
 }

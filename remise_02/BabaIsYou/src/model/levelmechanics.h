@@ -65,6 +65,8 @@ class LevelMechanics
          */
         bool isElementOnPos(const std::vector<Element> & elementsOnPos, const Element & elementToFind, bool reverseElement);
 
+        void dropElement(const GameObject & object);
+
     public:
 
         LevelMechanics(const std::vector<GameObject> & elements, const unsigned int numLevel);
@@ -95,7 +97,7 @@ class LevelMechanics
 
         bool isWon();
 
-        bool isKill();
+        bool checkToKill();
 
         bool isThereIsYou();
 

@@ -119,6 +119,15 @@ bool LevelMechanics::isElementOnPos(const std::vector<Element> & elementsOnPos, 
     return false;
 }
 
+void LevelMechanics::dropElement(const GameObject & object) {
+    for(unsigned int index=0; index<elements_.size(); ++index) {
+        GameObject current = elements_.at(index);
+        if(current.element() == object.element() && current.pos() == object.pos()) {
+            elements_.erase(elements_.begin()+index);
+        }
+    }
+}
+
 //-------------BREAK LINE -> game functions (public)
 
 void LevelMechanics::move(const Direction & dir) {
@@ -131,7 +140,7 @@ void LevelMechanics::move(const Direction & dir) {
             setNewPosition(dir, allIsYou.at(index));
             checkIfGameObjectPushed(dir, allIsYou.at(index).pos());
             checkIfRulePushed(dir, allIsYou.at(index).pos());
-            //isKill();
+            checkToKill();
         }
     }
 }
@@ -173,7 +182,7 @@ bool LevelMechanics::isWon() {
     return false;
 }
 
-bool LevelMechanics::isKill() {
+bool LevelMechanics::checkToKill() {
     vector<Element> murdered = findAllMurders();
 
     //for each murder type, find all occurences on the map and check if a isYou element is on the same position
@@ -183,7 +192,13 @@ bool LevelMechanics::isKill() {
 
         for(unsigned int i=0; i<allIsYou.size(); ++i) {
             for(unsigned int j=0; j<allMurderers.size(); ++j) {
-                if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) return true; //drop element in elements_;
+                if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) {
+                    dropElement(allIsYou.at(i));
+                    if(allMurderers.at(j).element() == fromRuleTypeToPlayableType(Element::SINK)) {
+                        dropElement(allMurderers.at(j));
+                    }
+                    return true;
+                }
             }
         }
     }

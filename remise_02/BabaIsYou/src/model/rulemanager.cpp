@@ -39,9 +39,6 @@ map<Element, vector<Element>> RuleManager::rules() {
 
 
 void RuleManager::addRule(const Element & aspect,const Element & material) {
-    if (rules_.find(aspect) == rules_.end()) {
-        rules_[aspect] = vector<Element>();
-    }
     rules_[aspect].push_back(material);
 }
 
@@ -71,7 +68,6 @@ void RuleManager::checkRules(const vector<GameObject> & elements, int isIndex, D
              if(materialIndex != -1 && aspectIndex != -1) {
                  addRule(aspectElements.at(aspectIndex), materialElements.at(materialIndex));
              }
-
         }
     }
 }
@@ -81,7 +77,7 @@ void RuleManager::scanRules(const vector<GameObject> & elements) {
     rules_.clear();
 
     for(unsigned int i=0; i<elements.size(); ++i) {
-        if(elements.at(i).element() == Element::IS) { //chercher les is
+        if(elements.at(i).element() == Element::IS) { //find is
             checkRules(elements, i, Direction::LEFT, Direction::RIGHT);
             checkRules(elements, i, Direction::UP, Direction::DOWN);
         }

@@ -44,17 +44,11 @@ class LevelMechanics
          */
         std::vector<GameObject> fromRuleToGameObjectOccurences(const Element & rule);
 
-
         /**
          * @brief remember the actual game's state and store it as a vector<string>
          */
         std::vector<std::string> gameStateAsStrings();
 
-
-        /**
-         * @brief intialize a vector with all playable elements that can kill
-         */
-        std::vector<Element> findAllMurders();
 
         /**
          * @brief return if there is a certain element on a position
@@ -65,7 +59,7 @@ class LevelMechanics
          */
         bool isElementOnPos(const std::vector<Element> & elementsOnPos, const Element & elementToFind, bool reverseElement);
 
-        void dropElement(const GameObject & object);
+        void dropElement(const GameObject & elem);
 
     public:
 
@@ -98,6 +92,8 @@ class LevelMechanics
         bool isWon();
 
         bool checkToKill();
+
+        bool checkToSink(const Direction & dir, Position pos);
 
         bool isThereIsYou();
 

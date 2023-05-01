@@ -47,9 +47,10 @@ void LevelMechanics::setNewPosition(const Direction & dir, const GameObject & ob
 vector<GameObject> LevelMechanics::fromRuleToGameObjectOccurences(const Element & rule) {
     vector<GameObject> allThisRule;
     vector<Element> isRule = rules_.rules()[rule];
-    for(unsigned int isYouIndex=0; isYouIndex<isRule.size(); ++isYouIndex) {
-        Element isRuleType = fromRuleTypeToPlayableType(isRule.at(isYouIndex));
-        allThisRule = findAllElement(isRuleType);
+    for(unsigned int index=0; index<isRule.size(); ++index) {
+        Element isRuleType = fromRuleTypeToPlayableType(isRule.at(index));
+        vector<GameObject> occurences = findAllElement(isRuleType);
+        allThisRule.insert(allThisRule.end(), occurences.begin(), occurences.end());
     }
     return allThisRule;
 }
@@ -72,22 +73,6 @@ Element LevelMechanics::fromRuleTypeToPlayableType(const Element & element) {
     } if(element == Element::TEXT_WALL) {
         return Element::WALL;
     } throw invalid_argument("This rule type does not have a playable type");
-}
-
-vector<Element> LevelMechanics::findAllMurders() {
-    vector<Element> murdered;
-
-    //each element is SINK or KILL is murdered
-    vector<Element> isSink = rules_.rules()[Element::SINK];
-    vector<Element> isKill = rules_.rules()[Element::KILL];
-
-    for(unsigned int index=0; index<isSink.size(); ++index) {
-        murdered.push_back(fromRuleTypeToPlayableType(isSink.at(index)));
-    }
-    for(unsigned int index=0; index<isKill.size(); ++index) {
-        murdered.push_back(fromRuleTypeToPlayableType(isKill.at(index)));
-    }
-    return murdered;
 }
 
 vector<string> LevelMechanics::gameStateAsStrings() {
@@ -119,10 +104,10 @@ bool LevelMechanics::isElementOnPos(const std::vector<Element> & elementsOnPos, 
     return false;
 }
 
-void LevelMechanics::dropElement(const GameObject & object) {
+void LevelMechanics::dropElement(const GameObject & elem) {
     for(unsigned int index=0; index<elements_.size(); ++index) {
         GameObject current = elements_.at(index);
-        if(current.element() == object.element() && current.pos() == object.pos()) {
+        if(current.element() == elem.element() && current.pos() == elem.pos()) {
             elements_.erase(elements_.begin()+index);
         }
     }
@@ -138,9 +123,10 @@ void LevelMechanics::move(const Direction & dir) {
     for(unsigned int index=0; index<allIsYou.size(); ++index) {
         if(isMovable(dir,allIsYou.at(index).pos())) {
             setNewPosition(dir, allIsYou.at(index));
+            checkToKill();
             checkIfGameObjectPushed(dir, allIsYou.at(index).pos());
             checkIfRulePushed(dir, allIsYou.at(index).pos());
-            checkToKill();
+            //checkToSink(dir, allIsYou.at(index).pos());
         }
     }
 }
@@ -183,42 +169,56 @@ bool LevelMechanics::isWon() {
 }
 
 bool LevelMechanics::checkToKill() {
-    vector<Element> murdered = findAllMurders();
+    vector<GameObject> allMurderers;
 
-    //for each murder type, find all occurences on the map and check if a isYou element is on the same position
-    for(unsigned int index=0; index<murdered.size(); ++index) {
-        vector<GameObject> allMurderers = findAllElement(murdered.at(index));
-        vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
+    vector<GameObject> allKill = fromRuleToGameObjectOccurences(Element::KILL);
+    vector<GameObject> allSink = fromRuleToGameObjectOccurences(Element::SINK);
+    allMurderers.insert(allMurderers.end(), allKill.begin(), allKill.end());
+    allMurderers.insert(allMurderers.end(), allSink.begin(), allSink.end());
 
-        for(unsigned int i=0; i<allIsYou.size(); ++i) {
-            for(unsigned int j=0; j<allMurderers.size(); ++j) {
-                if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) {
-                    dropElement(allIsYou.at(i));
-                    if(allMurderers.at(j).element() == fromRuleTypeToPlayableType(Element::SINK)) {
-                        dropElement(allMurderers.at(j));
-                    }
-                    return true;
-                }
+    vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
+
+    for(unsigned int i=0; i<allIsYou.size(); ++i) {
+        for(unsigned int j=0; j<allMurderers.size(); ++j) {
+            if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) {
+                dropElement(allIsYou.at(i));
+                if(isThereIsYou())
+                return true;
             }
         }
     }
     return false;
 }
 
+bool LevelMechanics::checkToSink(const Direction & dir, Position pos) {
+    Position posToCheck = pos.next(dir);
+    vector<GameObject> allIsSink = fromRuleToGameObjectOccurences(Element::SINK);
+
+    for(unsigned int i=0; i<allIsSink.size(); ++i) {
+        if(posToCheck == allIsSink.at(i).pos()) {
+            dropElement(allIsSink.at(i));
+            return true;
+        }
+    }
+    return false;
+}
+
 bool LevelMechanics::isThereIsYou() {
-     vector<Element> isYou = rules_.rules()[Element::YOU];
-     return !isYou.empty();
+    vector<Element> isYou = rules_.rules()[Element::YOU];
+    vector<GameObject> isYouOccurences = findAllElement(fromRuleTypeToPlayableType(isYou.at(0)));
+    return !isYou.empty() && !isYouOccurences.empty();
 }
 
 void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos) {
-    Position newPos = pos.next(dir);
+    Position posToCheck = pos.next(dir);
     vector<GameObject> allIsPush = fromRuleToGameObjectOccurences(Element::PUSH);
 
-    for(unsigned int secondIndex=0; secondIndex<allIsPush.size(); ++secondIndex) {
-        if(allIsPush.at(secondIndex).pos() == newPos) {
-            if(isMovable(dir, allIsPush.at(secondIndex).pos())) {
-                checkIfGameObjectPushed(dir, newPos);
-                setNewPosition(dir, allIsPush.at(secondIndex));
+    for(unsigned int index=0; index<allIsPush.size(); ++index) {
+        if(allIsPush.at(index).pos() == posToCheck) {
+            if(isMovable(dir, allIsPush.at(index).pos())) {
+                checkIfGameObjectPushed(dir, posToCheck);
+                checkToSink(dir, posToCheck);
+                setNewPosition(dir, allIsPush.at(index));
             }
         }
     }
@@ -236,6 +236,7 @@ void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
                 if(isMovable(dir, occurences.at(occurencesIndex).pos())) {
                     checkIfRulePushed(dir, posToCheck);
                     if(isMovable(dir, pos)) {
+                        checkToSink(dir, posToCheck);
                         setNewPosition(dir, occurences.at(occurencesIndex));
                     }
                 }

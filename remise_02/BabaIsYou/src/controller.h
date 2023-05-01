@@ -39,7 +39,7 @@ public:
      */
     std::pair<unsigned int, unsigned int> levelSize();
 
-    std::vector<GameObject> elements();
+    std::vector<GameObject> & elements();
 
     void registerAsObserver();
 

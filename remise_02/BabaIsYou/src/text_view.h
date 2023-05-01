@@ -15,6 +15,8 @@ private:
      */
     void checkSave(std::string name);
 
+    std::vector<std::vector<Element>> getPositionsMap();
+
 public:
 
     TextView();

@@ -66,6 +66,7 @@ Element static conversionElementFromText(const string & elem) {
  */
 string static elemConversionFromElement(const Element & elem) {
     static map<Element, string> elemConversionFromElement = {
+        {Element::NULLELEMENT, " "},
         {Element::TEXT_BABA, "B"},
         {Element::TEXT_WALL, "W"},
         {Element::TEXT_ROCK, "R"},

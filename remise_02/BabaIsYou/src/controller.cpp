@@ -68,7 +68,7 @@ std::pair<unsigned int, unsigned int> Controller::levelSize() {
     return game_->levelSize();
 }
 
-std::vector<GameObject> Controller::elements() {
+std::vector<GameObject> & Controller::elements() {
     return game_->elements();
 }
 

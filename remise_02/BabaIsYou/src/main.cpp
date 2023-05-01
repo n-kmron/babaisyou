@@ -1,4 +1,4 @@
-#include "text_view.cpp"
+#include "text_view.h"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -16,6 +16,4 @@ int main()
     TextView view;
     view.launch();
 }
-
-// TODO : remove unused warnings in util.cpp
 

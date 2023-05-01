@@ -15,19 +15,19 @@ TEST_CASE("checkRules() donne l'ensemble des règles à un moment donné de la p
         //ASPECT = KEY
         //remplir expected
         std::vector<Element> material;
-        //1ère règle
+        //1st rule
         material.push_back(Element::TEXT_WALL);
         expected.insert(std::make_pair(Element::STOP, material));
         material.clear();
-        //2è règle
+        //2nd rule
         material.push_back(Element::TEXT_ROCK);
         expected.insert(std::make_pair(Element::PUSH, material));
         material.clear();
-        //3è règle
+        //3tr rule
         material.push_back(Element::TEXT_BABA);
         expected.insert(std::make_pair(Element::YOU, material));
         material.clear();
-        //4è règle
+        //4th rule
         material.push_back(Element::TEXT_FLAG);
         expected.insert(std::make_pair(Element::WIN, material));
         material.clear();

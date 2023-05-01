@@ -128,11 +128,10 @@ void LevelMechanics::move(const Direction & dir) {
     vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
     for(unsigned int index=0; index<allIsYou.size(); ++index) {
         if(isMovable(dir,allIsYou.at(index).pos())) {
-
             setNewPosition(dir, allIsYou.at(index));
             checkIfGameObjectPushed(dir, allIsYou.at(index).pos());
             checkIfRulePushed(dir, allIsYou.at(index).pos());
-
+            //isKill();
         }
     }
 }
@@ -184,7 +183,7 @@ bool LevelMechanics::isKill() {
 
         for(unsigned int i=0; i<allIsYou.size(); ++i) {
             for(unsigned int j=0; j<allMurderers.size(); ++j) {
-                if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) return true;
+                if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) return true; //drop element in elements_;
             }
         }
     }

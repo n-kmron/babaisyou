@@ -4,7 +4,6 @@
 TEST_CASE("createLevel()") {
 
     SECTION("Level 1") {
-        // Initialiser un level
         LevelLoader loader("level_1");
         loader.createLevel();
         unsigned int result = loader.numLevel();
@@ -12,7 +11,6 @@ TEST_CASE("createLevel()") {
     }
 
     SECTION("Level 3") {
-        // Initialiser un level
         LevelLoader loader("level_3");
         loader.createLevel();
         unsigned int result = loader.numLevel();

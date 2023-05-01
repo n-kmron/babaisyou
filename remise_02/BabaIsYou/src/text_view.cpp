@@ -50,6 +50,19 @@ void TextView::checkSave(string name) {
     }
 }
 
+vector<vector<Element>> TextView::getPositionsMap() {
+    vector<vector<Element>> positionsMap(controller_.levelSize().first, vector<Element>(controller_.levelSize().second));
+    for(unsigned int i=0; i<controller_.elements().size(); ++i) {
+        GameObject current = controller_.elements().at(i);
+        unsigned int row = current.pos().row();
+        unsigned int col = current.pos().col();
+        Element elem = current.element();
+        positionsMap.at(row).at(col) = elem;
+    }
+
+    return positionsMap;
+}
+
 
 TextView::TextView() : controller_ { Controller(this) }{
 }
@@ -65,21 +78,14 @@ void TextView::displayTitle() {
 }
 
 void TextView::displayBoard() {
-    for(unsigned int height=0; height<controller_.levelSize().first+1; ++height) {
+    vector<vector<Element>> positionsMap = getPositionsMap();
+
+    for(unsigned int height=0; height<controller_.levelSize().first; ++height) {
         cout << endl;
-        for(unsigned int width=0; width<controller_.levelSize().second+1; ++width) {
-            if(height==0 || height== (controller_.levelSize().first))
-                cout << "-";
-            else if(width==0 || width == (controller_.levelSize().second))
-                cout << "|";
-            else {
-                Position pos(height, width);
-                vector<Element> elems = findElementAtPosition(controller_.elements(), pos);
-                if(!elems.empty()) {
-                    cout << elemConversionFromElement(elems.at(elems.size()-1));
-                } else {
-                    cout << " ";
-                }
+        for(unsigned int width=0; width<controller_.levelSize().second; ++width) {
+            if(positionsMap.size() >= height && positionsMap.at(height).size() >= width) {
+                //check z index
+                cout << elemConversionFromElement(positionsMap.at(height).at(width));
             }
         }
     }

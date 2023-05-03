@@ -55,7 +55,6 @@ class LevelMechanics
          * @param elementsOnPos elements on the position to check
          * @param elementToFind element to find on this position
          * @param reverseElement say if the element has to be revert from rule to playable type
-         * @return
          */
         bool isElementOnPos(const std::vector<Element> & elementsOnPos, const Element & elementToFind, bool reverseElement);
 

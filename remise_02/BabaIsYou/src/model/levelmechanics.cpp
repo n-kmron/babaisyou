@@ -217,7 +217,7 @@ void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos
         if(allIsPush.at(index).pos() == posToCheck) {
             if(isMovable(dir, allIsPush.at(index).pos())) {
                 checkIfGameObjectPushed(dir, posToCheck);
-                checkToSink(dir, posToCheck);
+                if(checkToSink(dir, posToCheck)) dropElement(allIsPush.at(index));
                 setNewPosition(dir, allIsPush.at(index));
             }
         }
@@ -236,7 +236,6 @@ void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
                 if(isMovable(dir, occurences.at(occurencesIndex).pos())) {
                     checkIfRulePushed(dir, posToCheck);
                     if(isMovable(dir, pos)) {
-                        checkToSink(dir, posToCheck);
                         setNewPosition(dir, occurences.at(occurencesIndex));
                     }
                 }

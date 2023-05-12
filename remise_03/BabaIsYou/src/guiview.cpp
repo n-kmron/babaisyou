@@ -17,6 +17,13 @@ GuiView::GuiView(QWidget *parent) :
     ui->setupUi(this);
     ui->myGraphicsView->setScene(&scene_);
     ui->myGraphicsView->installEventFilter(this);
+    connect(ui->actionExit, &QAction::triggered, &QCoreApplication::quit);
+    connect(ui->actionLoad_game, &QAction::triggered, this, &GuiView::loadASave);
+    connect(ui->actionSave_game, &QAction::triggered, this, &GuiView::save);
+    connect(ui->actionRestart, &QAction::triggered, this, &GuiView::restart);
+    connect(ui->actionDisplay_help, &QAction::triggered, this, &GuiView::displayhelp);
+    connect(ui->btnSave, &QPushButton::clicked, this, &GuiView::save);
+    connect(ui->btnRestart, &QPushButton::clicked, this, &GuiView::restart);
 }
 
 map<Element, QPixmap> GuiView::generateImages() {

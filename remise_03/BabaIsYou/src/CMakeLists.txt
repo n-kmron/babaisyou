@@ -3,7 +3,9 @@ cmake_minimum_required(VERSION 3.5)
 set (CMAKE_AUTOUIC ON)
 set (CMAKE_AUTOMOC ON)
 set (CMAKE_AUTORCC ON)
+
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})  # Adjust the path if necessary
+
 #comment : ask for all warnings and strict compliance with the standard
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 

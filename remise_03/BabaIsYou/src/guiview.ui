@@ -23,6 +23,9 @@
       <height>800</height>
      </rect>
     </property>
+    <property name="autoFillBackground">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

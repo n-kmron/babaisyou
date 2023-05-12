@@ -2,6 +2,7 @@
 #include "model/gameobject.h"
 #include <map>
 #include <vector>
+#include <QPixmap>
 
 using namespace std;
 
@@ -196,7 +197,8 @@ unsigned int static getZIndexOfElement(const Element & elem) {
 //-------------------------------------------------------------------
 
 
-string static displayAsImage(const Element& elem) {
+QPixmap static displayAsImage(const Element& elem) {
+
     static map<Element, string> imageFromElement = {
         {Element::NULLELEMENT, "sprites/void.png"},
         {Element::TEXT_BABA, "sprites/text_baba.png"},
@@ -222,7 +224,11 @@ string static displayAsImage(const Element& elem) {
         {Element::FLAG, "sprites/flag.png"}
     };
 
-    return imageFromElement.at(elem);
+    QString imagePath = QString::fromStdString(imageFromElement.at(elem));
+    QPixmap originalPixmap(imagePath);
+    QPixmap pixmap = originalPixmap.scaled(QSize(40, 40), Qt::KeepAspectRatio);
+
+    return pixmap;
 }
 
 };

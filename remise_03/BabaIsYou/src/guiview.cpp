@@ -3,26 +3,55 @@
 #include "util.cpp"
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
+#include "QtGui/qpixmap.h"
+#include <map>
 
 using namespace std;
 
 GuiView::GuiView(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GuiView),
-    scene_ (this)
+    scene_ (this),
+    images_ { generateImages() }
 {
     ui->setupUi(this);
     ui->myGraphicsView->setScene(&scene_);
     ui->myGraphicsView->installEventFilter(this);
 }
 
+map<Element, QPixmap> GuiView::generateImages() {
+    map<Element, QPixmap> elementImageMap;
+
+    elementImageMap[Element::NULLELEMENT] = Util::displayAsImage(Element::NULLELEMENT);
+    elementImageMap[Element::TEXT_BABA] = Util::displayAsImage(Element::TEXT_BABA);
+    elementImageMap[Element::TEXT_WALL] = Util::displayAsImage(Element::TEXT_WALL);
+    elementImageMap[Element::TEXT_ROCK] = Util::displayAsImage(Element::TEXT_ROCK);
+    elementImageMap[Element::TEXT_LAVA] = Util::displayAsImage(Element::TEXT_LAVA);
+    elementImageMap[Element::TEXT_GOOP] = Util::displayAsImage(Element::TEXT_GOOP);
+    elementImageMap[Element::TEXT_FLAG] = Util::displayAsImage(Element::TEXT_FLAG);
+    elementImageMap[Element::IS] = Util::displayAsImage(Element::IS);
+    elementImageMap[Element::YOU] = Util::displayAsImage(Element::YOU);
+    elementImageMap[Element::WIN] = Util::displayAsImage(Element::WIN);
+    elementImageMap[Element::STOP] = Util::displayAsImage(Element::STOP);
+    elementImageMap[Element::SINK] = Util::displayAsImage(Element::SINK);
+    elementImageMap[Element::PUSH] = Util::displayAsImage(Element::PUSH);
+    elementImageMap[Element::KILL] = Util::displayAsImage(Element::KILL);
+    elementImageMap[Element::BABA] = Util::displayAsImage(Element::BABA);
+    elementImageMap[Element::WALL] = Util::displayAsImage(Element::WALL);
+    elementImageMap[Element::ROCK] = Util::displayAsImage(Element::ROCK);
+    elementImageMap[Element::LAVA] = Util::displayAsImage(Element::LAVA);
+    elementImageMap[Element::GRASS] = Util::displayAsImage(Element::GRASS);
+    elementImageMap[Element::METAL] = Util::displayAsImage(Element::METAL);
+    elementImageMap[Element::GOOP] = Util::displayAsImage(Element::GOOP);
+    elementImageMap[Element::METAL] = Util::displayAsImage(Element::METAL);
+    elementImageMap[Element::FLAG] = Util::displayAsImage(Element::FLAG);
+
+    return elementImageMap;
+}
+
 GuiView::~GuiView()
 {
     delete ui;
-}
-
-void GuiView::displayTitle() {
-
 }
 
 void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements) {
@@ -31,8 +60,7 @@ void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, 
     for(unsigned int height=0; height<sizes.first; ++height) {
         for(unsigned int width=0; width<sizes.second; ++width) {
             if(positionsMap.size() >= height && positionsMap.at(height).size() >= width) {
-                QString pathToSprite = QString::fromStdString(Util::displayAsImage(positionsMap.at(height).at(width)));
-                displayImage(pathToSprite, height, width);
+                displayImage(positionsMap.at(height).at(width), height, width);
             }
         }
     }
@@ -42,15 +70,7 @@ void GuiView::displayWon() {
 
 }
 
-void GuiView::displayNextLevel(unsigned int actualLevel) {
-
-}
-
 void GuiView::displayKilled() {
-
-}
-
-void GuiView::displayError(std::string message) {
 
 }
 
@@ -59,22 +79,6 @@ bool GuiView::overwriteSave() {
 }
 
 unsigned int GuiView::displayUserSaves() {
-
-}
-
-std::string GuiView::askWhichLevel() {
-
-}
-
-std::string GuiView::askDir() {
-
-}
-
-bool GuiView::askRestart() {
-
-}
-
-void GuiView::askSave() {
 
 }
 
@@ -102,10 +106,9 @@ vector<vector<Element>> GuiView::getPositionsMap(const pair<unsigned int, unsign
     return positionsMap;
 }
 
-void GuiView::displayImage(const QString& path, int height, int width) {
-    QPixmap originalPixmap(path);
-    QPixmap pixmap = originalPixmap.scaled(QSize(40, 40), Qt::KeepAspectRatio);
+void GuiView::displayImage(const Element & elem, int height, int width) {
     QGraphicsPixmapItem* item = new QGraphicsPixmapItem();
+    QPixmap pixmap = images_[elem];
     item->setPixmap(pixmap);
     qreal x = width * pixmap.width();
     qreal y = height * pixmap.height();
@@ -115,49 +118,19 @@ void GuiView::displayImage(const QString& path, int height, int width) {
 
 bool GuiView::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::KeyPress)
+    {
+        //manageEvent controller
+        return true;
+    }
+    else if (event->type() == QEvent::ShortcutOverride)
+    {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_S && keyEvent->modifiers() == Qt::ShiftModifier)
         {
-            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-            if (keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Z)
-            {
-                cout << "UP" << endl;
-                return true; // Event handled
-            }
-            else if (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_S)
-            {
-                cout << "DOWN" << endl;
-                return true;
-            }
-            else if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Q)
-            {
-                cout << "LEFT" << endl;
-                return true;
-            }
-            else if (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_D)
-            {
-                cout << "RIGHT" << endl;
-                return true;
-            }
-            else if (keyEvent->key() == Qt::Key_R)
-            {
-                cout << "RESTART" << endl;
-                return true;
-            }
-            else if (keyEvent->key() == Qt::Key_S && keyEvent->modifiers() == Qt::ShiftModifier)
-            {
-                cout << "SAVE" << endl;
-                return true;
-            }
+            //callSave controller
+            return true;
         }
-        else if (event->type() == QEvent::ShortcutOverride)
-        {
-            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
-
-            if (keyEvent->key() == Qt::Key_S && keyEvent->modifiers() == Qt::ShiftModifier)
-            {
-                cout << "SAVE" << endl;
-                return true;
-            }
-        }
+    }
 
         // Call the base class implementation to handle other events
         return QMainWindow::eventFilter(obj, event);

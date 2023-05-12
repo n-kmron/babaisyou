@@ -2,7 +2,7 @@
 #define CONTROLLER_H
 
 #include "model/game.h"
-#include "textview.h"
+#include "views/textview.h"
 #include <memory>
 
 

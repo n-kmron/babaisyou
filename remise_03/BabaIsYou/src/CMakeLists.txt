@@ -12,16 +12,16 @@ set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 #ajouter les fichiers ici
 add_executable(BabaIsYou
     main.cpp
+    guiview.ui
     util.cpp
     consolecontroller.h
     consolecontroller.cpp
     guicontroller.h
     guicontroller.cpp
-    textview.h
-    textview.cpp
-    guiview.h
-    guiview.cpp
-    guiview.ui
+    views/textview.h
+    views/textview.cpp
+    views/guiview.h
+    views/guiview.cpp
     model/observer.h
     model/observable.h
     model/rulemanager.h

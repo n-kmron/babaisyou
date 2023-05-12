@@ -2,7 +2,7 @@
 #include <regex>
 #include <string>
 #include "textview.h"
-#include "util.cpp"
+#include "../util.cpp"
 #include <unistd.h>
 #include <vector>
 #include <sstream>

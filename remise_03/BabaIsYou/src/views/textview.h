@@ -1,8 +1,8 @@
 #ifndef TEXT_VIEW_H
 #define TEXT_VIEW_H
 
-#include "model/gameobject.h"
-#include "model/observer.h"
+#include "../model/gameobject.h"
+#include "../model/observer.h"
 
 
 class TextView : public Observer {

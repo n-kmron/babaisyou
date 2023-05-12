@@ -1,7 +1,7 @@
 #ifndef GUIVIEW_H
 #define GUIVIEW_H
 
-#include "model/observer.h"
+#include "../model/observer.h"
 #include <QMainWindow>
 #include <QtWidgets/qgraphicsscene.h>
 #include <QString>
@@ -15,7 +15,7 @@ class GuiView : public QMainWindow, public Observer
     Q_OBJECT
 
 private slots:
-    void displayhelp();
+    void displayHelp();
     void save();
     void loadASave();
     void restart();

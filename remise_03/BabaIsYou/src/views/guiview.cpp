@@ -1,6 +1,6 @@
 #include "guiview.h"
 #include "ui_guiview.h"
-#include "util.cpp"
+#include "../util.cpp"
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 #include "QtGui/qpixmap.h"
@@ -21,7 +21,7 @@ GuiView::GuiView(QWidget *parent) :
     connect(ui->actionLoad_game, &QAction::triggered, this, &GuiView::loadASave);
     connect(ui->actionSave_game, &QAction::triggered, this, &GuiView::save);
     connect(ui->actionRestart, &QAction::triggered, this, &GuiView::restart);
-    connect(ui->actionDisplay_help, &QAction::triggered, this, &GuiView::displayhelp);
+    connect(ui->actionDisplay_help, &QAction::triggered, this, &GuiView::displayHelp);
     connect(ui->btnSave, &QPushButton::clicked, this, &GuiView::save);
     connect(ui->btnRestart, &QPushButton::clicked, this, &GuiView::restart);
 }
@@ -61,6 +61,19 @@ GuiView::~GuiView()
     delete ui;
 }
 
+void GuiView::displayHelp() {
+
+}
+void GuiView::save() {
+
+}
+void GuiView::loadASave() {
+
+}
+void GuiView::restart() {
+
+}
+
 void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements) {
     vector<vector<Element>> positionsMap = getPositionsMap(sizes, elements);
 
@@ -90,6 +103,7 @@ unsigned int GuiView::displayUserSaves() {
 }
 
 void GuiView::update(std::pair<unsigned int, unsigned int> sizes, std::vector<GameObject> elements){
+    scene_.clear();
     displayBoard(sizes, elements);
 }
 

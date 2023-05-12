@@ -2,7 +2,7 @@
 #define GUICONTROLLER_H
 
 #include "model/game.h"
-#include "guiview.h"
+#include "views/guiview.h"
 #include <memory>
 
 

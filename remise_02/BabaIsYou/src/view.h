@@ -1,21 +1,19 @@
 #ifndef VIEW_H
 #define VIEW_H
 
-#include "model/direction.h"
 #include <string>
+#include "model/gameobject.h"
 
 class View {
 public:
 
-    virtual void launch() = 0;
-
     virtual void displayTitle() = 0;
 
-    virtual void displayBoard() = 0;
+    virtual void displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements) = 0;
 
     virtual void displayWon() = 0;
 
-    virtual void displayNextLevel() = 0;
+    virtual void displayNextLevel(unsigned int actualLevel) = 0;
 
     virtual void displayKilled() = 0;
 
@@ -36,7 +34,7 @@ public:
     /**
      * @brief ask to the user a direction to move
      */
-    virtual Direction askDir() = 0;
+    virtual std::string askDir() = 0;
 
     /**
      * @brief ask to the user if he wants to restart the game

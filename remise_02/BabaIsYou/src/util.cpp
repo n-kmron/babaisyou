@@ -66,6 +66,7 @@ Element static conversionElementFromText(const string & elem) {
  */
 string static elemConversionFromElement(const Element & elem) {
     static map<Element, string> elemConversionFromElement = {
+        {Element::NULLELEMENT, " "},
         {Element::TEXT_BABA, "B"},
         {Element::TEXT_WALL, "W"},
         {Element::TEXT_ROCK, "R"},
@@ -160,4 +161,40 @@ vector<Element> static allRules() {
     };
 
     return allRules;
+}
+
+
+//-----------------------------------------------------------------
+
+/**
+ * @brief return a z-index corresponding to the enum Element we given
+ */
+unsigned int static getZIndexOfElement(const Element & elem) {
+    static map<Element, unsigned int> zIndexOfElement = {
+        {Element::TEXT_BABA, 7},
+        {Element::TEXT_WALL, 7},
+        {Element::TEXT_ROCK, 7},
+        {Element::TEXT_LAVA, 7},
+        {Element::TEXT_GRASS, 7},
+        {Element::TEXT_METAL, 7},
+        {Element::TEXT_GOOP, 7},
+        {Element::TEXT_FLAG, 7},
+        {Element::IS, 7},
+        {Element::YOU, 7},
+        {Element::WIN, 7},
+        {Element::STOP, 7},
+        {Element::SINK, 7},
+        {Element::PUSH, 7},
+        {Element::KILL, 7},
+        {Element::BABA, 6},
+        {Element::WALL, 2},
+        {Element::ROCK, 3},
+        {Element::LAVA, 4},
+        {Element::GRASS, 1},
+        {Element::METAL, 1},
+        {Element::GOOP, 4},
+        {Element::FLAG, 5}
+    };
+
+    return zIndexOfElement.at(elem);
 }

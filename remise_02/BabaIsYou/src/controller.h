@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include "model/game.h"
+#include "text_view.h"
 #include <memory>
 
 
@@ -9,18 +10,19 @@ class Controller {
 
 private:
     std::unique_ptr<Game> game_;
-    Observer * obs_;
+    TextView view_;
 
 public:
 
-    Controller(Observer * obs);
+    Controller();
+
+    void launch();
 
     void start();
 
-    /**
-     * @brief ask the model to play a shot
-     */
-    void playShot(const Direction & dir);
+    void move(const std::string & dir);
+
+    void playShot();
 
     bool isWon();
 
@@ -28,18 +30,18 @@ public:
 
     void saveGame(std::string name);
 
+    void checkSave(std::string name);
+
     void restart();
 
     void nextLevel();
-
-    unsigned int level();
 
     /**
      * @brief the row is the first member of the pair and col is the second one
      */
     std::pair<unsigned int, unsigned int> levelSize();
 
-    std::vector<GameObject> elements();
+    std::vector<GameObject> & elements();
 
     void registerAsObserver();
 

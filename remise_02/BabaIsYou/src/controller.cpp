@@ -1,15 +1,72 @@
 #include "controller.h"
 #include <sstream>
+#include <fstream>
+#include <filesystem>
+#include <limits>
 
-Controller::Controller(Observer * obs) : game_ { std::make_unique<Game>("level_1") }, obs_ { obs }  {
+using namespace std;
+
+
+Controller::Controller() : game_ { make_unique<Game>("level_1") }, view_ { TextView() }  {
 };
+
+void Controller::launch() {
+    view_.displayTitle();
+    chooseLevel(view_.askWhichLevel());
+    registerAsObserver();
+    start();
+    while(1) playShot();
+}
 
 void Controller::start() {
     game_->start();
 }
 
-void Controller::playShot(const Direction & dir){
-    game_->playShot(dir);
+void Controller::move(const string & dir) {
+    if(dir == "Z") {
+        game_->move(Direction::UP);
+    }
+    if(dir == "Q") {
+        game_->move(Direction::LEFT);
+    }
+    if(dir == "S") {
+        game_->move(Direction::DOWN);
+    }
+    if(dir == "D") {
+        game_->move(Direction::RIGHT);
+    }
+}
+
+void Controller::playShot(){
+    if(isLost()) {
+        view_.displayKilled();
+        if(view_.askRestart()) {
+            restart();
+        } else {
+            exit(0);
+        }
+    }
+
+    if(!isWon()) {
+        string input = view_.askDir();
+        if(input == "R") {
+            restart();
+        } else {
+            move(input);
+        }
+    }
+
+    else {
+        view_.displayWon();
+        if(game_->level() < 5) {
+            view_.displayNextLevel(game_->level());
+            nextLevel();
+            view_.askSave();
+            start();
+        } else {
+            exit(0);
+        }
+    }
 }
 
 bool Controller::isWon() {
@@ -20,47 +77,58 @@ bool Controller::isLost() {
     return game_->isLost();
 }
 
-void Controller::saveGame(std::string name) {
+void Controller::saveGame(string name) {
     game_->saveGame(name);
 }
 
 void Controller::restart() {
-    std::stringstream ss;
+    stringstream ss;
     ss << "level_" << game_->level();
-    std::string filename = ss.str();
-    game_ = std::make_unique<Game>(filename);
+    string filename = ss.str();
+    game_ = make_unique<Game>(filename);
     registerAsObserver();
     start();
 }
 
 void Controller::nextLevel() {
-    std::stringstream ss;
+    stringstream ss;
     ss << "level_" << game_->level()+1;
-    std::string filename = ss.str();
-    game_ = std::make_unique<Game>(filename);
+    string filename = ss.str();
+    game_ = make_unique<Game>(filename);
     registerAsObserver();
 }
 
 void Controller::registerAsObserver() {
-    game_->registerObserver(obs_);
+    game_->registerObserver(&view_);
 }
 
 
-unsigned int Controller::level() {
-    return game_->level();
-}
-
-std::pair<unsigned int, unsigned int> Controller::levelSize() {
+pair<unsigned int, unsigned int> Controller::levelSize() {
     return game_->levelSize();
 }
 
-std::vector<GameObject> Controller::elements() {
+vector<GameObject> & Controller::elements() {
     return game_->elements();
 }
 
-void Controller::chooseLevel(std::string filename) {
-    game_ = std::make_unique<Game>(filename);
+void Controller::chooseLevel(string filename) {
+    game_ = make_unique<Game>(filename);
     registerAsObserver();
 }
 
+
+void Controller::checkSave(string name) {
+    stringstream ss;
+    ss << "levels/saves/" << name << ".txt";
+    string location = ss.str();
+    ifstream infile(location);
+
+    if(infile.good()) {
+        if(view_.overwriteSave()) {
+            saveGame(location);
+        }
+    } else {
+        saveGame(location);
+    }
+}
 

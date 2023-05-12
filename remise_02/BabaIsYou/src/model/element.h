@@ -2,6 +2,7 @@
 #define ELEMENT_H
 
 enum class Element {
+    NULLELEMENT,
     TEXT_BABA,
     TEXT_WALL,
     TEXT_ROCK,

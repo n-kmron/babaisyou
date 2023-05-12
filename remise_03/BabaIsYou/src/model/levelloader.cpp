@@ -64,7 +64,7 @@ vector<GameObject> LevelLoader::createLevel() {
             int posRow = stoi(splittedElem[2]); //col is the third part of the splitted element
 
             Position pos(posRow, posCol);
-            GameObject finalElem(conversionElementFromText(type), pos);
+            GameObject finalElem(Util::conversionElementFromText(type), pos);
             elements.push_back(finalElem);
     }
     return elements;

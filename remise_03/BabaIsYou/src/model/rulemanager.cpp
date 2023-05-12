@@ -11,8 +11,6 @@ RuleManager::RuleManager() {
     material_.push_back(Element::TEXT_WALL);
     material_.push_back(Element::TEXT_ROCK);
     material_.push_back(Element::TEXT_LAVA);
-    material_.push_back(Element::TEXT_GRASS);
-    material_.push_back(Element::TEXT_METAL);
     material_.push_back(Element::TEXT_GOOP);
     material_.push_back(Element::TEXT_FLAG);
 
@@ -27,8 +25,6 @@ RuleManager::RuleManager() {
     aspect_.push_back(Element::TEXT_WALL);
     aspect_.push_back(Element::TEXT_ROCK);
     aspect_.push_back(Element::TEXT_LAVA);
-    aspect_.push_back(Element::TEXT_GRASS);
-    aspect_.push_back(Element::TEXT_METAL);
     aspect_.push_back(Element::TEXT_GOOP);
     aspect_.push_back(Element::TEXT_FLAG);
 }
@@ -44,11 +40,11 @@ void RuleManager::addRule(const Element & aspect,const Element & material) {
 
 void RuleManager::checkRules(const vector<GameObject> & elements, int isIndex, Direction materialDir, Direction aspectDir) {
     Position materialPos = elements.at(isIndex).pos().next(materialDir);
-    vector<Element> materialElements = findElementAtPosition(elements, materialPos);
+    vector<Element> materialElements = Util::findElementAtPosition(elements, materialPos);
 
     if(!materialElements.empty()) {
         Position aspectPos = elements.at(isIndex).pos().next(aspectDir);
-        vector<Element> aspectElements = findElementAtPosition(elements, aspectPos);
+        vector<Element> aspectElements = Util::findElementAtPosition(elements, aspectPos);
 
         if(!aspectElements.empty()) {
             int materialIndex = -1;

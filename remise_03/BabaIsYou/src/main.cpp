@@ -1,21 +1,20 @@
 #include "consolecontroller.h"
+#include "guicontroller.h"
+#include "QtWidgets/qapplication.h"
 #include <iostream>
-#include <QApplication>
-#include "guiview.h"
 
 using namespace std;
 
 
 int main(int argc, char *argv[])
 {
-    //activate console launcher
-    ConsoleController controller;
-    controller.launch();
+    QApplication application(argc, argv);
 
-    //activate gui launcher
-    /*QApplication application(argc, argv);
-    GuiView window;
-    window.show();
-    return application.exec();*/
+    //activate gui or console launcher
+    //ConsoleController controller;
+    GuiController controller;
+
+    controller.launch();
+    return application.exec();
 }
 

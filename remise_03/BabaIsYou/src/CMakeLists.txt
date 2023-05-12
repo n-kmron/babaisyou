@@ -14,6 +14,8 @@ add_executable(BabaIsYou
     view.h
     consolecontroller.h
     consolecontroller.cpp
+    guicontroller.h
+    guicontroller.cpp
     textview.h
     textview.cpp
     guiview.h

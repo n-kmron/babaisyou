@@ -23,7 +23,7 @@ vector<vector<Element>> TextView::getPositionsMap(const pair<unsigned int, unsig
         unsigned int col = current.pos().col();
         Element elem = current.element();
         if(positionsMap.at(row).at(col) != Element::NULLELEMENT) {
-            if(getZIndexOfElement(elem) > getZIndexOfElement(positionsMap.at(row).at(col))) {
+            if(Util::getZIndexOfElement(elem) > Util::getZIndexOfElement(positionsMap.at(row).at(col))) {
                 positionsMap.at(row).at(col) = elem;
             }
         } else {
@@ -49,7 +49,7 @@ void TextView::displayBoard(const pair<unsigned int, unsigned int> & sizes, cons
         cout << endl;
         for(unsigned int width=0; width<sizes.second; ++width) {
             if(positionsMap.size() >= height && positionsMap.at(height).size() >= width) {
-                cout << elemConversionFromElement(positionsMap.at(height).at(width));
+                cout << Util::elemConversionFromElement(positionsMap.at(height).at(width));
             }
         }
     }

@@ -5,6 +5,10 @@
 
 using namespace std;
 
+class Util {
+
+public:
+
 /**
  * @brief findElementAtPosition allows to find which elements are on the map from their position
  * @param elements all the elements of the game
@@ -33,8 +37,6 @@ Element static conversionElementFromText(const string & elem) {
         {"text_wall", Element::TEXT_WALL},
         {"text_rock", Element::TEXT_ROCK},
         {"text_lava", Element::TEXT_LAVA},
-        {"text_grass", Element::TEXT_GRASS},
-        {"text_metal", Element::TEXT_METAL},
         {"text_goop", Element::TEXT_GOOP},
         {"text_flag", Element::TEXT_FLAG},
         {"is", Element::IS},
@@ -71,8 +73,6 @@ string static elemConversionFromElement(const Element & elem) {
         {Element::TEXT_WALL, "W"},
         {Element::TEXT_ROCK, "R"},
         {Element::TEXT_LAVA, "L"},
-        {Element::TEXT_GRASS, "G"},
-        {Element::TEXT_METAL, "M"},
         {Element::TEXT_GOOP, "G"},
         {Element::TEXT_FLAG, "F"},
         {Element::IS, "I"},
@@ -110,8 +110,6 @@ string static elemConversionFromElementToFile(const Element & elem) {
         {Element::TEXT_WALL, "text_wall"},
         {Element::TEXT_ROCK, "text_rock"},
         {Element::TEXT_LAVA, "text_lava"},
-        {Element::TEXT_GRASS, "text_grass"},
-        {Element::TEXT_METAL, "text_metal"},
         {Element::TEXT_GOOP, "text_goop"},
         {Element::TEXT_FLAG, "text_flag"},
         {Element::IS, "is"},
@@ -146,9 +144,7 @@ vector<Element> static allRules() {
         Element::TEXT_BABA,
         Element::TEXT_FLAG,
         Element::TEXT_GOOP,
-        Element::TEXT_GRASS,
         Element::TEXT_LAVA,
-        Element::TEXT_METAL,
         Element::TEXT_ROCK,
         Element::TEXT_WALL,
         Element::IS,
@@ -175,8 +171,6 @@ unsigned int static getZIndexOfElement(const Element & elem) {
         {Element::TEXT_WALL, 7},
         {Element::TEXT_ROCK, 7},
         {Element::TEXT_LAVA, 7},
-        {Element::TEXT_GRASS, 7},
-        {Element::TEXT_METAL, 7},
         {Element::TEXT_GOOP, 7},
         {Element::TEXT_FLAG, 7},
         {Element::IS, 7},
@@ -198,3 +192,37 @@ unsigned int static getZIndexOfElement(const Element & elem) {
 
     return zIndexOfElement.at(elem);
 }
+
+//-------------------------------------------------------------------
+
+
+string static displayAsImage(const Element& elem) {
+    static map<Element, string> imageFromElement = {
+        {Element::NULLELEMENT, "sprites/void.png"},
+        {Element::TEXT_BABA, "sprites/text_baba.png"},
+        {Element::TEXT_WALL, "sprites/text_wall.png"},
+        {Element::TEXT_ROCK, "sprites/text_rock.png"},
+        {Element::TEXT_LAVA, "sprites/text_lava.png"},
+        {Element::TEXT_GOOP, "sprites/text_goop.png"},
+        {Element::TEXT_FLAG, "sprites/text_flag.png"},
+        {Element::IS, "sprites/is.png"},
+        {Element::YOU, "sprites/you.png"},
+        {Element::WIN, "sprites/win.png"},
+        {Element::STOP, "sprites/stop.png"},
+        {Element::SINK, "sprites/sink.png"},
+        {Element::PUSH, "sprites/push.png"},
+        {Element::KILL, "sprites/kill.png"},
+        {Element::BABA, "sprites/baba.png"},
+        {Element::WALL, "sprites/wall.png"},
+        {Element::ROCK, "sprites/rock.png"},
+        {Element::LAVA, "sprites/lava.png"},
+        {Element::GRASS, "sprites/grass.png"},
+        {Element::METAL, "sprites/void.png"},
+        {Element::GOOP, "sprites/goop.png"},
+        {Element::FLAG, "sprites/flag.png"}
+    };
+
+    return imageFromElement.at(elem);
+}
+
+};

@@ -62,12 +62,8 @@ Element LevelMechanics::fromRuleTypeToPlayableType(const Element & element) {
         return Element::FLAG;
     } if(element == Element::TEXT_GOOP) {
         return Element::GOOP;
-    } if(element == Element::TEXT_GRASS) {
-        return Element::GRASS;
     } if(element == Element::TEXT_LAVA) {
         return Element::LAVA;
-    } if(element == Element::TEXT_METAL) {
-        return Element::METAL;
     } if(element == Element::TEXT_ROCK) {
         return Element::ROCK;
     } if(element == Element::TEXT_WALL) {
@@ -80,7 +76,7 @@ vector<string> LevelMechanics::gameStateAsStrings() {
     for(unsigned int index=0; index<elements_.size(); ++index) {
         stringstream ss;
 
-        string element { elemConversionFromElementToFile(elements_.at(index).element())};
+        string element { Util::elemConversionFromElementToFile(elements_.at(index).element())};
         string x { to_string(elements_.at(index).pos().col()) };
         string y { to_string(elements_.at(index).pos().row()) };
         ss << element << " " << x << " " << y;
@@ -135,7 +131,7 @@ bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
     Position posToCheck = pos.next(dir);
     if(!contains(posToCheck)) return false;
 
-    vector<Element> elementsOnNewPosition = findElementAtPosition(elements_, posToCheck);
+    vector<Element> elementsOnNewPosition = Util::findElementAtPosition(elements_, posToCheck);
 
     //if there is a stop on the position to check, return false
     vector<Element> isStop = rules_.rules()[Element::STOP];
@@ -144,9 +140,9 @@ bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
     }
 
     //if there is a rule on the position to check, first we must check if this last one is movable
-    vector<Element> rules = allRules();
+    vector<Element> rules = Util::allRules();
     for(int index=0; index<rules.size(); ++index) {
-        if(isElementOnPos(findElementAtPosition(elements_, posToCheck.next(dir)), rules.at(index), false)) {
+        if(isElementOnPos(Util::findElementAtPosition(elements_, posToCheck.next(dir)), rules.at(index), false)) {
             return isMovable(dir, posToCheck.next(dir));
         }
     }
@@ -226,7 +222,7 @@ void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos
 
 void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
     Position posToCheck = pos.next(dir);
-    vector<Element> allRulesElement = allRules();
+    vector<Element> allRulesElement = Util::allRules();
 
     for(unsigned int index=0; index<allRulesElement.size(); ++index) {
         vector<GameObject> occurences = findAllElement(allRulesElement.at(index));

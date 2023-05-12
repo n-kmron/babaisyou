@@ -124,15 +124,16 @@
     <property name="title">
      <string>Game</string>
     </property>
-    <addaction name="actionSave_game"/>
-    <addaction name="actionLoad_game"/>
+    <addaction name="actionSaveGame"/>
+    <addaction name="actionLoadGame"/>
     <addaction name="actionRestart"/>
+    <addaction name="actionBackToMenu_2"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionDisplay_help"/>
+    <addaction name="actionDisplayHelp"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGame"/>
@@ -141,18 +142,19 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="icon">
-    <iconset theme="application-exit"/>
+    <iconset theme="application-exit">
+     <normaloff>.</normaloff>.</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionSave_game">
+  <action name="actionSaveGame">
    <property name="text">
     <string>Save game</string>
    </property>
   </action>
-  <action name="actionLoad_game">
+  <action name="actionLoadGame">
    <property name="text">
     <string>Load game</string>
    </property>
@@ -162,9 +164,19 @@
     <string>Restart</string>
    </property>
   </action>
-  <action name="actionDisplay_help">
+  <action name="actionDisplayHelp">
    <property name="text">
     <string>Display help</string>
+   </property>
+  </action>
+  <action name="actionBackToMenu">
+   <property name="text">
+    <string>Back to menu</string>
+   </property>
+  </action>
+  <action name="actionBackToMenu_2">
+   <property name="text">
+    <string>Back to menu</string>
    </property>
   </action>
  </widget>

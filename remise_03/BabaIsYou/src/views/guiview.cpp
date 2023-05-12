@@ -18,12 +18,17 @@ GuiView::GuiView(QWidget *parent) :
     ui->myGraphicsView->setScene(&scene_);
     ui->myGraphicsView->installEventFilter(this);
     connect(ui->actionExit, &QAction::triggered, &QCoreApplication::quit);
-    connect(ui->actionLoad_game, &QAction::triggered, this, &GuiView::loadASave);
-    connect(ui->actionSave_game, &QAction::triggered, this, &GuiView::save);
+    connect(ui->actionLoadGame, &QAction::triggered, this, &GuiView::loadSave);
+    connect(ui->actionSaveGame, &QAction::triggered, this, &GuiView::save);
     connect(ui->actionRestart, &QAction::triggered, this, &GuiView::restart);
-    connect(ui->actionDisplay_help, &QAction::triggered, this, &GuiView::displayHelp);
+    connect(ui->actionBackToMenu, &QAction::triggered, this, &GuiView::displayMenu);
+    connect(ui->actionDisplayHelp, &QAction::triggered, this, &GuiView::displayHelp);
     connect(ui->btnSave, &QPushButton::clicked, this, &GuiView::save);
     connect(ui->btnRestart, &QPushButton::clicked, this, &GuiView::restart);
+}
+
+void GuiView::displayMenu() {
+    //display main menu and close this window
 }
 
 void GuiView::displayHelp() {
@@ -33,11 +38,11 @@ void GuiView::displayHelp() {
 
 void GuiView::save() {
     //display save view
-    //dans cette nouvelle vue, afficher toutes les sauvegardes et demander laquelle charger en cliquant dessus
-}
-void GuiView::loadASave() {
-    //display load view
     //dans cette nouvelle vue, demander à l'utilisateur un nom pour sa sauvegarde et faire le check : si elle exite, demander si il veut écraser
+    }
+void GuiView::loadSave() {
+    //display load view`
+    //dans cette nouvelle vue, afficher toutes les sauvegardes et demander laquelle charger en cliquant dessus
 }
 void GuiView::restart() {
     //appeler controller_.restart()

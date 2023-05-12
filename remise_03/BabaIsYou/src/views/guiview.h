@@ -15,9 +15,10 @@ class GuiView : public QMainWindow, public Observer
     Q_OBJECT
 
 private slots:
+    void displayMenu();
     void displayHelp();
     void save();
-    void loadASave();
+    void loadSave();
     void restart();
 
 private:

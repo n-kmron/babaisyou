@@ -13,7 +13,6 @@ set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 add_executable(BabaIsYou
     main.cpp
     util.cpp
-    view.h
     consolecontroller.h
     consolecontroller.cpp
     guicontroller.h

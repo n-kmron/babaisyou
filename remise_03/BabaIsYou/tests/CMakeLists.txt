@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
 
+set (CMAKE_AUTOUIC ON)
+set (CMAKE_AUTOMOC ON)
+set (CMAKE_AUTORCC ON)
+
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})  # Adjust the path if necessary
+
 add_executable(BabaIsYouTests
 
     ../src/model/position.cpp
@@ -13,6 +19,13 @@ add_executable(BabaIsYouTests
     testLevelMechanics.cpp
     testLevelLoader.cpp
 )
+
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+
+target_link_libraries(BabaIsYouTests PRIVATE Qt${QT_VERSION_MAJOR}::Widgets
+Catch2::Catch2WithMain)
+
 target_include_directories(BabaIsYouTests PRIVATE
     ../src
 )
@@ -28,4 +41,3 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Catch2)
 #list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
 
-target_link_libraries(BabaIsYouTests Catch2::Catch2WithMain)

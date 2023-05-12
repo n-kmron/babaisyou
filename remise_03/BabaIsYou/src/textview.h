@@ -1,12 +1,11 @@
 #ifndef TEXT_VIEW_H
 #define TEXT_VIEW_H
 
-#include "view.h"
 #include "model/gameobject.h"
 #include "model/observer.h"
 
 
-class TextView : public View, public Observer {
+class TextView : public Observer {
 
 private:
 
@@ -16,34 +15,34 @@ public:
 
     TextView();
 
-    void displayTitle() override;
+    void displayTitle();
 
-    void displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements) override;
+    void displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements);
 
-    void displayWon() override;
+    void displayWon();
 
-    void displayNextLevel(unsigned int actualLevel) override;
+    void displayNextLevel(unsigned int actualLevel);
 
-    void displayKilled() override;
+    void displayKilled();
 
-    void displayError(std::string message) override;
+    void displayError(std::string message);
 
     /**
      * @brief asks user if he wants to overwrite a save
      */
     bool overwriteSave();
 
-    unsigned int displayUserSaves() override;
+    unsigned int displayUserSaves();
 
-    std::string askWhichLevel() override;
+    std::string askWhichLevel();
 
-    std::string askDir() override;
+    std::string askDir();
 
-    bool askRestart() override;
+    bool askRestart();
 
-    void askSave() override;
+    void askSave();
 
-    void update(std::pair<unsigned int, unsigned int> sizes, std::vector<GameObject> elements) override;
+    void update(std::pair<unsigned int, unsigned int> sizes, std::vector<GameObject> elements);
 
 };
 

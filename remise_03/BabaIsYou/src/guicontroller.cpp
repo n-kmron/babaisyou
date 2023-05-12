@@ -1,13 +1,14 @@
 #include "guicontroller.h"
+#include "views/guiview.h"
 #include "QtGui/qevent.h"
 
 using namespace std;
 
-GuiController::GuiController() : game_ { make_unique<Game>("level_1") }, view_ { GuiView() } {
+GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_1") }, view_ { std::move(view) } {
 }
 
 void GuiController::launch() {
-    view_.show();
+    view_->show();
     //chooseLevel(view_.askWhichLevel());
     registerAsObserver();
     start();
@@ -19,7 +20,7 @@ void GuiController::start() {
 }
 
 void GuiController::registerAsObserver() {
-    game_->registerObserver(&view_);
+    game_->registerObserver(view_);
 }
 
 

@@ -1,4 +1,5 @@
 #include "guiview.h"
+#include "../guicontroller.h"
 #include "ui_guiview.h"
 #include "../util.cpp"
 #include <QGraphicsPixmapItem>
@@ -152,6 +153,10 @@ map<Element, QPixmap> GuiView::generateImages() {
     elementImageMap[Element::FLAG] = Util::displayAsImage(Element::FLAG);
 
     return elementImageMap;
+}
+
+void GuiView::setController(GuiController* controller) {
+    this->controller_ = controller;
 }
 
 GuiView::~GuiView()

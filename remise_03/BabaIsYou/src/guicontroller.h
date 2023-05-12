@@ -2,19 +2,20 @@
 #define GUICONTROLLER_H
 
 #include "model/game.h"
-#include "views/guiview.h"
 #include <memory>
 
+
+class GuiView;
 
 class GuiController {
 
 private:
     std::unique_ptr<Game> game_;
-    GuiView view_;
+    GuiView* view_;
 
 public:
 
-    GuiController();
+    GuiController(GuiView* view);
 
     void launch();
 

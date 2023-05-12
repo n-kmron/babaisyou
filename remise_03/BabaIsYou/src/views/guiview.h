@@ -10,6 +10,8 @@ namespace Ui {
     class GuiView;
 }
 
+class GuiController;
+
 class GuiView : public QMainWindow, public Observer
 {
     Q_OBJECT
@@ -25,6 +27,8 @@ private:
     Ui::GuiView *ui;
 
     QGraphicsScene scene_;
+
+    GuiController* controller_;
 
     std::map<Element, QPixmap> images_;
 
@@ -46,7 +50,10 @@ protected:
 
 public:
     explicit GuiView(QWidget *parent = nullptr);
+
     ~GuiView();
+
+    void setController(GuiController* controller);
 
     void displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements);
 

@@ -20,6 +20,8 @@ GuiView::GuiView(QWidget *parent) :
     connect(ui->actionSave_game, &QAction::triggered, this, &GuiView::save);
     connect(ui->actionRestart, &QAction::triggered, this, &GuiView::restart);
     connect(ui->actionDisplay_help, &QAction::triggered, this, &GuiView::displayhelp);
+    connect(ui->btnSave, &QPushButton::clicked, this, &GuiView::save);
+    connect(ui->btnRestart, &QPushButton::clicked, this, &GuiView::restart);
 }
 
 GuiView::~GuiView()

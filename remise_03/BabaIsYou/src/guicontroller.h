@@ -3,7 +3,7 @@
 
 #include "model/game.h"
 #include <memory>
-
+#include "QtGui/qevent.h"
 
 class GuiView;
 
@@ -23,8 +23,6 @@ public:
 
     void move(const std::string & dir);
 
-    void playShot();
-
     bool isWon();
 
     bool isLost();
@@ -36,6 +34,11 @@ public:
     void restart();
 
     void nextLevel();
+
+    void manageEvents(QKeyEvent *keyEvent);
+
+    void checkGameState();
+
 
     /**
      * @brief the row is the first member of the pair and col is the second one

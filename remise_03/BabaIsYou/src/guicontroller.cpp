@@ -1,6 +1,6 @@
 #include "guicontroller.h"
 #include "views/guiview.h"
-#include "QtGui/qevent.h"
+#include <sstream>
 
 using namespace std;
 
@@ -9,10 +9,8 @@ GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_1
 
 void GuiController::launch() {
     view_->show();
-    //chooseLevel(view_.askWhichLevel());
     registerAsObserver();
     start();
-    //while(1) playShot();
 }
 
 void GuiController::start() {
@@ -24,29 +22,65 @@ void GuiController::registerAsObserver() {
 }
 
 
-void manageEvents(QKeyEvent *keyEvent) {
+void GuiController::manageEvents(QKeyEvent *keyEvent) {
     if (keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Z)
     {
-        cout << "UP" << endl;
+        game_->move(Direction::UP);
     }
     else if (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_S)
     {
-        cout << "DOWN" << endl;
+        game_->move(Direction::DOWN);
     }
     else if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Q)
     {
-        cout << "LEFT" << endl;
+        game_->move(Direction::LEFT);
     }
     else if (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_D)
     {
-        cout << "RIGHT" << endl;
+        game_->move(Direction::RIGHT);
     }
     else if (keyEvent->key() == Qt::Key_R)
     {
-        cout << "RESTART" << endl;
+        restart();
     }
-    else if (keyEvent->key() == Qt::Key_S && keyEvent->modifiers() == Qt::ShiftModifier)
-    {
-        cout << "SAVE" << endl;
+    checkGameState();
+}
+
+void GuiController::checkGameState() {
+    if(isLost()) {
+        view_->displayKilled();
+        restart();
     }
+    if(isWon()) {
+        view_->displayWon();
+        if(game_->level() < 5) {
+            nextLevel();
+            start();
+        }
+    }
+}
+
+bool GuiController::isWon() {
+    return game_->isWon();
+}
+
+bool GuiController::isLost() {
+    return game_->isLost();
+}
+
+void GuiController::nextLevel() {
+    stringstream ss;
+    ss << "level_" << game_->level()+1;
+    string filename = ss.str();
+    game_ = make_unique<Game>(filename);
+    registerAsObserver();
+}
+
+void GuiController::restart() {
+    stringstream ss;
+    ss << "level_" << game_->level();
+    string filename = ss.str();
+    game_ = make_unique<Game>(filename);
+    registerAsObserver();
+    start();
 }

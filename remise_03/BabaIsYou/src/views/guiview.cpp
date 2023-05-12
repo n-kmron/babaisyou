@@ -46,7 +46,7 @@ void GuiView::loadSave() {
     //dans cette nouvelle vue, afficher toutes les sauvegardes et demander laquelle charger en cliquant dessus
 }
 void GuiView::restart() {
-    //appeler controller_.restart()
+    controller_->restart();
 }
 
 void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements) {
@@ -108,7 +108,8 @@ void GuiView::displayImage(const Element & elem, int height, int width) {
 bool GuiView::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::KeyPress)
     {
-        //manageEvent controller
+        QKeyEvent* keyEvent = static_cast<QKeyEvent*>(event);
+        controller_->manageEvents(keyEvent);
         return true;
     }
     else if (event->type() == QEvent::ShortcutOverride)

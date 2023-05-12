@@ -122,7 +122,6 @@ void LevelMechanics::move(const Direction & dir) {
             checkToKill();
             checkIfGameObjectPushed(dir, allIsYou.at(index).pos());
             checkIfRulePushed(dir, allIsYou.at(index).pos());
-            //checkToSink(dir, allIsYou.at(index).pos());
         }
     }
 }
@@ -177,6 +176,7 @@ bool LevelMechanics::checkToKill() {
     for(unsigned int i=0; i<allIsYou.size(); ++i) {
         for(unsigned int j=0; j<allMurderers.size(); ++j) {
             if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) {
+                cout << "dropped" << endl;
                 dropElement(allIsYou.at(i));
                 if(isThereIsYou())
                 return true;
@@ -214,7 +214,9 @@ void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos
             if(isMovable(dir, allIsPush.at(index).pos())) {
                 checkIfGameObjectPushed(dir, posToCheck);
                 if(checkToSink(dir, posToCheck)) dropElement(allIsPush.at(index));
-                setNewPosition(dir, allIsPush.at(index));
+                if(isMovable(dir, pos)) {
+                    setNewPosition(dir, allIsPush.at(index));
+                }
             }
         }
     }
@@ -255,7 +257,6 @@ void LevelMechanics::saveGame(string location) {
         }
         outfile.close();
         cout << "The game has been saved !" << endl;
-        exit(0);
     }
     else
     {

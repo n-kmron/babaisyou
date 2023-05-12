@@ -2,7 +2,7 @@
 #include "ui_guiview.h"
 #include "util.cpp"
 #include <QGraphicsPixmapItem>
-#include <QGraphicsRectItem>
+#include <QKeyEvent>
 
 using namespace std;
 
@@ -13,6 +13,7 @@ GuiView::GuiView(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->myGraphicsView->setScene(&scene_);
+    ui->myGraphicsView->installEventFilter(this);
 }
 
 GuiView::~GuiView()
@@ -110,4 +111,54 @@ void GuiView::displayImage(const QString& path, int height, int width) {
     qreal y = height * pixmap.height();
     item->setPos(x, y);
     scene_.addItem(item);
+}
+
+bool GuiView::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+            if (keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Z)
+            {
+                cout << "UP" << endl;
+                return true; // Event handled
+            }
+            else if (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_S)
+            {
+                cout << "DOWN" << endl;
+                return true;
+            }
+            else if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Q)
+            {
+                cout << "LEFT" << endl;
+                return true;
+            }
+            else if (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_D)
+            {
+                cout << "RIGHT" << endl;
+                return true;
+            }
+            else if (keyEvent->key() == Qt::Key_R)
+            {
+                cout << "RESTART" << endl;
+                return true;
+            }
+            else if (keyEvent->key() == Qt::Key_S && keyEvent->modifiers() == Qt::ShiftModifier)
+            {
+                cout << "SAVE" << endl;
+                return true;
+            }
+        }
+        else if (event->type() == QEvent::ShortcutOverride)
+        {
+            QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+
+            if (keyEvent->key() == Qt::Key_S && keyEvent->modifiers() == Qt::ShiftModifier)
+            {
+                cout << "SAVE" << endl;
+                return true;
+            }
+        }
+
+        // Call the base class implementation to handle other events
+        return QMainWindow::eventFilter(obj, event);
 }

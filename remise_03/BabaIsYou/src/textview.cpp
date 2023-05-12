@@ -150,7 +150,7 @@ string TextView::askWhichLevel() {
                 }
             }
             if(input == "N") {
-                return "level_1";
+                return "level_5";
             }
         } else {
             displayError("Invalid input. Please try again");

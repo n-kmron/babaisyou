@@ -8,7 +8,7 @@
 #include <QString>
 
 namespace Ui {
-class GuiView;
+    class GuiView;
 }
 
 class GuiView : public QMainWindow, public View, public Observer
@@ -23,6 +23,10 @@ private:
     std::vector<std::vector<Element>> getPositionsMap(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements);
 
     void displayImage(const QString& path, int height, int width);
+
+protected:
+
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 public:
     explicit GuiView(QWidget *parent = nullptr);

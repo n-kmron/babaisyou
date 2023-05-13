@@ -1,10 +1,13 @@
 #include "guicontroller.h"
 #include "views/guiview.h"
 #include <sstream>
+#include <fstream>
+#include <filesystem>
+#include <limits>
 
 using namespace std;
 
-GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_4") }, view_ { std::move(view) } {
+GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_5") }, view_ { std::move(view) } {
 }
 
 void GuiController::launch() {
@@ -83,4 +86,23 @@ void GuiController::restart() {
     game_ = make_unique<Game>(filename);
     registerAsObserver();
     start();
+}
+
+void GuiController::checkSave(string name) {
+    stringstream ss;
+    ss << "levels/saves/" << name << ".txt";
+    string location = ss.str();
+    ifstream infile(location);
+
+    if(infile.good()) {
+        if(view_->overwriteSave()) {
+            saveGame(location);
+        }
+    } else {
+        saveGame(location);
+    }
+}
+
+void GuiController::saveGame(string name) {
+    game_->saveGame(name);
 }

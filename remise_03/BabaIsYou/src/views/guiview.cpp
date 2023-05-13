@@ -5,6 +5,8 @@
 #include <QGraphicsPixmapItem>
 #include <QKeyEvent>
 #include "QtGui/qpixmap.h"
+#include <QMessageBox>
+#include <QInputDialog>
 #include <map>
 
 using namespace std;
@@ -18,6 +20,9 @@ GuiView::GuiView(QWidget *parent) :
     ui->setupUi(this);
     ui->myGraphicsView->setScene(&scene_);
     ui->myGraphicsView->installEventFilter(this);
+    ui->myGraphicsView->setAlignment(Qt::AlignCenter);
+    ui->myGraphicsView->fitInView(ui->myGraphicsView->sceneRect(), Qt::KeepAspectRatio);
+    ui->myGraphicsView->setContentsMargins(0, 0, 0, 0);
     connect(ui->actionExit, &QAction::triggered, &QCoreApplication::quit);
     connect(ui->actionLoadGame, &QAction::triggered, this, &GuiView::loadSave);
     connect(ui->actionSaveGame, &QAction::triggered, this, &GuiView::save);
@@ -38,9 +43,28 @@ void GuiView::displayHelp() {
 }
 
 void GuiView::save() {
-    //display save view
-    //dans cette nouvelle vue, demander à l'utilisateur un nom pour sa sauvegarde et faire le check : si elle exite, demander si il veut écraser
+    bool ok;
+    string text = QInputDialog::getText(nullptr, "Save your game", "Enter a name for your save :", QLineEdit::Normal, "", &ok).toStdString();
+    controller_->checkSave(text);
+}
+
+bool GuiView::overwriteSave() {
+    QMessageBox messageBox;
+    messageBox.setWindowTitle("Save already exists");
+    messageBox.setText("Do you want to overwrite your save ?");
+
+    QPushButton *acceptButton = messageBox.addButton("Yes, I'm sure", QMessageBox::AcceptRole);
+    QPushButton *declineButton = messageBox.addButton("No", QMessageBox::RejectRole);
+
+    messageBox.setDefaultButton(declineButton);
+    messageBox.exec();
+
+    if (messageBox.clickedButton() == acceptButton) {
+        return true;
     }
+    return false;
+}
+
 void GuiView::loadSave() {
     //display load view`
     //dans cette nouvelle vue, afficher toutes les sauvegardes et demander laquelle charger en cliquant dessus
@@ -59,6 +83,8 @@ void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, 
             }
         }
     }
+    QRect viewContentRect = ui->myGraphicsView->contentsRect();
+    scene_.setSceneRect(viewContentRect);
 }
 
 void GuiView::displayWon() {

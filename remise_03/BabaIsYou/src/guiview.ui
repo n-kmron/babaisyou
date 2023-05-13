@@ -18,9 +18,9 @@
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>90</y>
-      <width>671</width>
-      <height>581</height>
+      <y>160</y>
+      <width>576</width>
+      <height>576</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
@@ -36,8 +36,8 @@
    <widget class="QPushButton" name="btnSave">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>680</y>
+      <x>480</x>
+      <y>770</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -63,8 +63,8 @@
    <widget class="QPushButton" name="btnRestart">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>680</y>
+      <x>810</x>
+      <y>770</y>
       <width>191</width>
       <height>51</height>
      </rect>
@@ -81,24 +81,144 @@
      <string>Restart</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="lbTitleBaba">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>30</y>
-      <width>801</width>
+      <x>620</x>
+      <y>40</y>
+      <width>111</width>
       <height>51</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Segoe UI Black</family>
+      <family>Marker Felt</family>
       <pointsize>36</pointsize>
+      <italic>false</italic>
       <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #de396b;</string>
+    </property>
+    <property name="text">
+     <string>BABA</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbTitleYou">
+    <property name="geometry">
+     <rect>
+      <x>770</x>
+      <y>40</y>
+      <width>71</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Marker Felt</family>
+      <pointsize>36</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #de396b;</string>
+    </property>
+    <property name="text">
+     <string>YOU</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbTitleIs">
+    <property name="geometry">
+     <rect>
+      <x>710</x>
+      <y>40</y>
+      <width>71</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Marker Felt</family>
+      <pointsize>36</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
      </font>
     </property>
     <property name="text">
-     <string>BABA IS YOU</string>
+     <string>IS</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbLevel">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>90</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Marker Felt</family>
+      <pointsize>20</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>LEVEL</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lbLevelCounter">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>100</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Marker Felt</family>
+      <pointsize>20</pointsize>
+      <italic>false</italic>
+      <bold>true</bold>
+      <strikeout>false</strikeout>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: #de396b;
+background-color: white;</string>
+    </property>
+    <property name="text">
+     <string>1</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

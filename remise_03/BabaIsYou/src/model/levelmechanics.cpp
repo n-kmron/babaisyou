@@ -124,6 +124,7 @@ void LevelMechanics::move(const Direction & dir) {
             checkIfRulePushed(dir, allIsYou.at(index).pos());
         }
     }
+    rules_.scanRules(elements_);
 }
 
 bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
@@ -176,7 +177,6 @@ bool LevelMechanics::checkToKill() {
     for(unsigned int i=0; i<allIsYou.size(); ++i) {
         for(unsigned int j=0; j<allMurderers.size(); ++j) {
             if(allIsYou.at(i).pos() == allMurderers.at(j).pos()) {
-                cout << "dropped" << endl;
                 dropElement(allIsYou.at(i));
                 if(isThereIsYou())
                 return true;
@@ -201,8 +201,12 @@ bool LevelMechanics::checkToSink(const Direction & dir, Position pos) {
 
 bool LevelMechanics::isThereIsYou() {
     vector<Element> isYou = rules_.rules()[Element::YOU];
-    vector<GameObject> isYouOccurences = findAllElement(fromRuleTypeToPlayableType(isYou.at(0)));
+    vector<GameObject> isYouOccurences;
+    if(!isYou.empty()) {
+        isYouOccurences = findAllElement(fromRuleTypeToPlayableType(isYou.at(0)));
+    }
     return !isYou.empty() && !isYouOccurences.empty();
+
 }
 
 void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos) {
@@ -212,6 +216,7 @@ void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos
     for(unsigned int index=0; index<allIsPush.size(); ++index) {
         if(allIsPush.at(index).pos() == posToCheck) {
             if(isMovable(dir, allIsPush.at(index).pos())) {
+                checkIfRulePushed(dir, posToCheck);
                 checkIfGameObjectPushed(dir, posToCheck);
                 if(checkToSink(dir, posToCheck)) dropElement(allIsPush.at(index));
                 if(isMovable(dir, pos)) {
@@ -233,6 +238,7 @@ void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
             if(occurences.at(occurencesIndex).pos() == posToCheck) {
                 if(isMovable(dir, occurences.at(occurencesIndex).pos())) {
                     checkIfRulePushed(dir, posToCheck);
+                    checkIfGameObjectPushed(dir, posToCheck);
                     if(isMovable(dir, pos)) {
                         setNewPosition(dir, occurences.at(occurencesIndex));
                     }

@@ -23,27 +23,27 @@ void GuiController::registerAsObserver() {
 
 
 void GuiController::manageEvents(QKeyEvent *keyEvent) {
-    if (keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Z)
-    {
-        game_->move(Direction::UP);
-    }
-    else if (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_S)
-    {
-        game_->move(Direction::DOWN);
-    }
-    else if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Q)
-    {
-        game_->move(Direction::LEFT);
-    }
-    else if (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_D)
-    {
-        game_->move(Direction::RIGHT);
-    }
-    else if (keyEvent->key() == Qt::Key_R)
-    {
-        restart();
-    }
-    checkGameState();
+        if (keyEvent->key() == Qt::Key_Up || keyEvent->key() == Qt::Key_Z)
+        {
+            game_->move(Direction::UP);
+        }
+        else if (keyEvent->key() == Qt::Key_Down || keyEvent->key() == Qt::Key_S)
+        {
+            game_->move(Direction::DOWN);
+        }
+        else if (keyEvent->key() == Qt::Key_Left || keyEvent->key() == Qt::Key_Q)
+        {
+            game_->move(Direction::LEFT);
+        }
+        else if (keyEvent->key() == Qt::Key_Right || keyEvent->key() == Qt::Key_D)
+        {
+            game_->move(Direction::RIGHT);
+        }
+        else if (keyEvent->key() == Qt::Key_R)
+        {
+            restart();
+        }
+        checkGameState();
 }
 
 void GuiController::checkGameState() {

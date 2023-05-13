@@ -58,6 +58,11 @@ class LevelMechanics
          */
         bool isElementOnPos(const std::vector<Element> & elementsOnPos, const Element & elementToFind, bool reverseElement);
 
+        /**
+         * @brief check if there is something that could block a move
+         */
+        bool isBlockerOnPos(const std::vector<Element> & elementsOnPos);
+
         void dropElement(const GameObject & elem);
 
     public:

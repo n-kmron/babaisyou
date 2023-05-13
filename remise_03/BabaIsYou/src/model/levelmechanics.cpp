@@ -100,6 +100,19 @@ bool LevelMechanics::isElementOnPos(const std::vector<Element> & elementsOnPos, 
     return false;
 }
 
+bool LevelMechanics::isBlockerOnPos(const std::vector<Element> & elementsOnPos) {
+    if(!elementsOnPos.empty()) {
+        for(unsigned int index=0; index<elementsOnPos.size(); ++index) {
+            if(elementsOnPos.at(index) == Element::BABA
+                    || elementsOnPos.at(index) == Element::FLAG
+                    || elementsOnPos.at(index) == Element::ROCK
+                    || elementsOnPos.at(index) == Element::WALL)
+                return true;
+            }
+        }
+    return false;
+}
+
 void LevelMechanics::dropElement(const GameObject & elem) {
     for(unsigned int index=0; index<elements_.size(); ++index) {
         GameObject current = elements_.at(index);
@@ -137,6 +150,11 @@ bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
     vector<Element> isStop = rules_.rules()[Element::STOP];
     for(unsigned int index=0; index<isStop.size(); ++index) {
        if(isElementOnPos(elementsOnNewPosition, isStop.at(index), true)) return false;
+    }
+
+    //if there is anything on the position to check
+    if(isBlockerOnPos(elementsOnNewPosition)) {
+        return isMovable(dir, posToCheck);
     }
 
     //if there is a rule on the position to check, first we must check if this last one is movable
@@ -216,8 +234,8 @@ void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos
     for(unsigned int index=0; index<allIsPush.size(); ++index) {
         if(allIsPush.at(index).pos() == posToCheck) {
             if(isMovable(dir, allIsPush.at(index).pos())) {
-                checkIfRulePushed(dir, posToCheck);
                 checkIfGameObjectPushed(dir, posToCheck);
+                checkIfRulePushed(dir, posToCheck);
                 if(checkToSink(dir, posToCheck)) dropElement(allIsPush.at(index));
                 if(isMovable(dir, pos)) {
                     setNewPosition(dir, allIsPush.at(index));

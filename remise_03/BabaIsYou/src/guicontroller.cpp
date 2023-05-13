@@ -4,7 +4,7 @@
 
 using namespace std;
 
-GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_1") }, view_ { std::move(view) } {
+GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_4") }, view_ { std::move(view) } {
 }
 
 void GuiController::launch() {

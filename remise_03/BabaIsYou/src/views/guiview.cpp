@@ -1,5 +1,6 @@
 #include "guiview.h"
 #include "../guicontroller.h"
+#include "QtWidgets/qboxlayout.h"
 #include "ui_guiview.h"
 #include "../util.cpp"
 #include <QGraphicsPixmapItem>
@@ -7,6 +8,11 @@
 #include "QtGui/qpixmap.h"
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QString>
+#include <sstream>
+#include <fstream>
+#include <filesystem>
+#include <limits>
 #include <map>
 
 using namespace std;
@@ -24,7 +30,7 @@ GuiView::GuiView(QWidget *parent) :
     ui->myGraphicsView->fitInView(ui->myGraphicsView->sceneRect(), Qt::KeepAspectRatio);
     ui->myGraphicsView->setContentsMargins(0, 0, 0, 0);
     connect(ui->actionExit, &QAction::triggered, &QCoreApplication::quit);
-    connect(ui->actionLoadGame, &QAction::triggered, this, &GuiView::loadSave);
+    connect(ui->actionLoadGame, &QAction::triggered, this, &GuiView::displayUserSaves);
     connect(ui->actionSaveGame, &QAction::triggered, this, &GuiView::save);
     connect(ui->actionRestart, &QAction::triggered, this, &GuiView::restart);
     connect(ui->actionBackToMenu, &QAction::triggered, this, &GuiView::displayMenu);
@@ -48,6 +54,17 @@ void GuiView::save() {
     controller_->checkSave(text);
 }
 
+void GuiView::savedSuccessful() {
+    QMessageBox::information(nullptr, "Saved successfuly", "The game has been saved.");
+}
+
+void GuiView::savedFailed(std::string message) {
+    stringstream ss;
+    ss << "The game was not saved : " << message;
+    QString errorMessage = QString::fromStdString(ss.str());
+    QMessageBox::information(nullptr, "Save failed" , errorMessage);
+}
+
 bool GuiView::overwriteSave() {
     QMessageBox messageBox;
     messageBox.setWindowTitle("Save already exists");
@@ -65,10 +82,6 @@ bool GuiView::overwriteSave() {
     return false;
 }
 
-void GuiView::loadSave() {
-    //display load view`
-    //dans cette nouvelle vue, afficher toutes les sauvegardes et demander laquelle charger en cliquant dessus
-}
 void GuiView::restart() {
     controller_->restart();
 }
@@ -87,12 +100,72 @@ void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, 
     scene_.setSceneRect(viewContentRect);
 }
 
-void GuiView::displayWon() {
-    //juste une pop up pour dire vous avez gagné, si niveau<5 on continue, sinon on retourne au menu principal (ANGLAIS)
+void GuiView::displayFinalWon() {
+    //close this window
+    //new view for the final win
+}
+
+void GuiView::displayNextLevel(unsigned int actualLevel) {
+    QMessageBox messageBox;
+    messageBox.setWindowTitle("Congratulations!");
+    messageBox.setText("You won the level! You go to the next level");
+    messageBox.setIcon(QMessageBox::Information);
+    messageBox.exec();
+    editLevelLabel(actualLevel+1);
 }
 
 void GuiView::displayKilled() {
-    //juste une pop up pour dire vous avez perdu, voulez-vous recommencer ce niveau ou quitter (ANGLAIS)
+    QMessageBox messageBox;
+    messageBox.setWindowTitle("Game Over");
+    messageBox.setText("You lost the game");
+    messageBox.setIcon(QMessageBox::Critical);
+    messageBox.exec();
+}
+
+unsigned int GuiView::displayUserSaves() {
+    filesystem::path path_to_saves("levels/saves");
+    unsigned int numberSaves { 0 };
+
+    QDialog dialog;
+    dialog.setWindowTitle("Save Selection");
+    QVBoxLayout *layout = new QVBoxLayout(&dialog);
+
+    for (const auto& entry : filesystem::directory_iterator(path_to_saves))
+    {
+        if (entry.is_regular_file())
+        {
+            string filename { entry.path().filename().string() };
+            // Remove the double quotes if they exist.
+            if (filename.front() == '"' && filename.back() == '"') {
+                filename = filename.substr(1, filename.size() - 2);
+            }
+
+            // Remove the file extension.
+            size_t extension_pos = filename.rfind('.');
+            if (extension_pos != std::string::npos) {
+                filename = filename.substr(0, extension_pos);
+            }
+
+            if(filename.size() != 0) {
+                QLabel *label = new QLabel(QString::fromStdString(filename));
+                QPushButton *button = new QPushButton("Load");
+
+                QObject::connect(button, &QPushButton::clicked, [this, &dialog, label]() {
+                    load(label->text());
+                    dialog.accept();
+                });
+
+                QHBoxLayout *itemLayout = new QHBoxLayout;
+                itemLayout->addWidget(label);
+                itemLayout->addWidget(button);
+                layout->addLayout(itemLayout);
+
+                numberSaves++;
+            }
+        }
+    }
+    dialog.exec();
+    return numberSaves;
 }
 
 void GuiView::update(std::pair<unsigned int, unsigned int> sizes, std::vector<GameObject> elements){
@@ -143,13 +216,11 @@ bool GuiView::eventFilter(QObject *obj, QEvent *event) {
         QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
         if (keyEvent->key() == Qt::Key_S && keyEvent->modifiers() == Qt::ShiftModifier)
         {
-            //callSave controller
+            save();
             return true;
         }
     }
-
-        // Call the base class implementation to handle other events
-        return QMainWindow::eventFilter(obj, event);
+    return QMainWindow::eventFilter(obj, event);
 }
 
 map<Element, QPixmap> GuiView::generateImages() {
@@ -180,6 +251,19 @@ map<Element, QPixmap> GuiView::generateImages() {
     elementImageMap[Element::FLAG] = Util::displayAsImage(Element::FLAG);
 
     return elementImageMap;
+}
+
+void GuiView::editLevelLabel(unsigned int level) {
+    QString levelString = QString::number(level);
+    ui->lbLevelCounter->setText(levelString);
+}
+
+void GuiView::load(QString qName) {
+    string name = qName.toStdString();
+    stringstream ss;
+    ss << "saves/" << name;
+    string filename = ss.str();
+    controller_->chooseLevel(filename);
 }
 
 void GuiView::setController(GuiController* controller) {

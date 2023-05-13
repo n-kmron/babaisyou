@@ -25,12 +25,12 @@ rock 3 2
 rock 7 2
 rock 9 3
 rock 14 12
-rock 7 7
+rock 5 7
 text_wall 17 3
 is 17 4
 stop 17 5
 text_baba 2 12
-baba 6 7
+baba 3 7
 is 3 12
 you 4 12
 text_rock 9 14

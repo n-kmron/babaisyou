@@ -20,7 +20,6 @@ private slots:
     void displayMenu();
     void displayHelp();
     void save();
-    void loadSave();
     void restart();
 
 private:
@@ -37,9 +36,20 @@ private:
      */
     std::vector<std::vector<Element>> getPositionsMap(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements);
 
+    /**
+     * @brief display the image corresponding to the element as parameter at the position given
+     */
     void displayImage(const Element & elem, int height, int width);
 
+    /**
+     * @brief generate all images a single-time and store them in a map as QPixmap
+     */
     std::map<Element, QPixmap> generateImages();
+
+    /**
+     * @brief ask the controller to load a save
+     */
+    void load(QString qName);
 
 protected:
 
@@ -57,7 +67,9 @@ public:
 
     void displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements);
 
-    void displayWon();
+    void displayFinalWon();
+
+    void displayNextLevel(unsigned int actualLevel);
 
     void displayKilled();
 
@@ -65,6 +77,12 @@ public:
      * @brief asks user if he wants to overwrite a save
      */
     bool overwriteSave();
+
+    void savedSuccessful();
+
+    void savedFailed(std::string message);
+
+    void editLevelLabel(unsigned int level);
 
     unsigned int displayUserSaves();
 

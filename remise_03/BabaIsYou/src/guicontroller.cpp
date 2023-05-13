@@ -7,7 +7,7 @@
 
 using namespace std;
 
-GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_5") }, view_ { std::move(view) } {
+GuiController::GuiController(GuiView* view) : game_ { make_unique<Game>("level_1") }, view_ { std::move(view) } {
 }
 
 void GuiController::launch() {
@@ -17,6 +17,7 @@ void GuiController::launch() {
 }
 
 void GuiController::start() {
+    view_->editLevelLabel(game_->level());
     game_->start();
 }
 
@@ -55,10 +56,12 @@ void GuiController::checkGameState() {
         restart();
     }
     if(isWon()) {
-        view_->displayWon();
         if(game_->level() < 5) {
+            view_->displayNextLevel(game_->level());
             nextLevel();
             start();
+        } else {
+            view_->displayFinalWon();
         }
     }
 }
@@ -89,6 +92,10 @@ void GuiController::restart() {
 }
 
 void GuiController::checkSave(string name) {
+    if(name.length() == 0) {
+        view_->savedFailed("No valid name entered");
+        return;
+    }
     stringstream ss;
     ss << "levels/saves/" << name << ".txt";
     string location = ss.str();
@@ -105,4 +112,11 @@ void GuiController::checkSave(string name) {
 
 void GuiController::saveGame(string name) {
     game_->saveGame(name);
+    view_->savedSuccessful();
+}
+
+void GuiController::chooseLevel(string filename) {
+    game_ = make_unique<Game>(filename);
+    registerAsObserver();
+    start();
 }

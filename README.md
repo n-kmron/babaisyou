@@ -36,4 +36,15 @@ PS : le fichier .mdj n'est pas documenté car un fichier pdf d'explications est 
 <p>Le projet graphique est disponible dans le répertoire <i>'remise_03/BabaIsYou'</i>.</p>
 <p>le <code>working directory</code> de ce projet doit être (à partir de la racine 'BabaIsYou'): <code>/BabaIsYou/src</code></p>
 <p><b>Brève description du projet : </b> Nous avons conçu une interface visuelle agréable et simple d'utilisation pour les utilisateurs avec toutes nos fonctionnalités via des raccourcis, des boutons et un menu d'application. Notre application est responsive et s'adapte donc à la dimension de la fenêtre pour les appareils de DESKTOP uniquement. Les sprites ne sont chargés qu'une fois par la vue afin d'éviter une surcharge progressive.</p>
-<p><b>UPDATE : tous les points donnés dans votre feedback ont été patchés et nous n'avons soulignés aucun bug apparent dans cette version. De plus, tous les avertissement ont également été supprimés.</b></p>
+<p><b>UPDATE : tous les points donnés dans votre feedback ont été patchés et nous n'avons soulignés aucun bug apparent dans cette version. De plus, tous les avertissement précédents ont également été supprimés.</b></p>
+
+<p><b>Les avertissements que contiennent le projet :</b> 
+<ul>
+    <li>
+        GuiView::displayUserSaves : Pass a context object as 3rd connect parameter.
+    </li>
+    <li>
+        GuiView::displayUserSaves : Potential leak of memory pointed to by 'layout' 
+    </li>
+</ul>
+</p>

@@ -9,7 +9,6 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})  # Adjust the path i
 #comment : ask for all warnings and strict compliance with the standard
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
-#ajouter les fichiers ici
 add_executable(BabaIsYou
     main.cpp
     guiview.ui

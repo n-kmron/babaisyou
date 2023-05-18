@@ -11,6 +11,11 @@ class MenuView : public QWidget
 {
     Q_OBJECT
 
+private slots:
+    void startNewGame();
+    void loadASave();
+
+
 public:
     explicit MenuView(QWidget *parent = nullptr);
     ~MenuView();

@@ -6,33 +6,23 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1259</width>
+    <height>750</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
+  <property name="styleSheet">
+   <string notr="true">background-color:#232323</string>
+  </property>
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>130</y>
-     <width>58</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Menu</string>
-   </property>
-  </widget>
-  <widget class="QWidget" name="">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>40</y>
-     <width>202</width>
-     <height>44</height>
+     <x>260</x>
+     <y>150</y>
+     <width>823</width>
+     <height>162</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -40,8 +30,8 @@
      <widget class="QLabel" name="lbTitleBaba">
       <property name="font">
        <font>
-        <family>Marker Felt</family>
-        <pointsize>36</pointsize>
+        <family>Segoe UI</family>
+        <pointsize>72</pointsize>
         <italic>false</italic>
         <bold>true</bold>
         <strikeout>false</strikeout>
@@ -52,7 +42,7 @@
        <string notr="true">color: #de396b;</string>
       </property>
       <property name="text">
-       <string>BABA</string>
+       <string>BABA </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -63,16 +53,19 @@
      <widget class="QLabel" name="lbTitleIs">
       <property name="font">
        <font>
-        <family>Marker Felt</family>
-        <pointsize>36</pointsize>
+        <family>Segoe UI</family>
+        <pointsize>72</pointsize>
         <italic>false</italic>
         <bold>true</bold>
         <strikeout>false</strikeout>
         <kerning>true</kerning>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: #DFDFDF;</string>
+      </property>
       <property name="text">
-       <string>IS</string>
+       <string> IS </string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -83,8 +76,8 @@
      <widget class="QLabel" name="lbTitleYou">
       <property name="font">
        <font>
-        <family>Marker Felt</family>
-        <pointsize>36</pointsize>
+        <family>Segoe UI</family>
+        <pointsize>72</pointsize>
         <italic>false</italic>
         <bold>true</bold>
         <strikeout>false</strikeout>
@@ -95,7 +88,7 @@
        <string notr="true">color: #de396b;</string>
       </property>
       <property name="text">
-       <string>YOU</string>
+       <string> YOU</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -103,6 +96,84 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="btnStart">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>390</y>
+     <width>291</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>24</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Start new game</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnLoad">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>390</y>
+     <width>291</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>24</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Load a save</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelOr">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>390</y>
+     <width>81</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Segoe UI Black</family>
+     <pointsize>24</pointsize>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #DFDFDF;</string>
+   </property>
+   <property name="text">
+    <string>OR</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="img">
+   <property name="geometry">
+    <rect>
+     <x>-10</x>
+     <y>440</y>
+     <width>351</width>
+     <height>281</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>sprites/babaHome-removebg-preview.png</pixmap>
+   </property>
   </widget>
  </widget>
  <resources/>

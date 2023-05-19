@@ -31,7 +31,7 @@ class LevelMechanics
         /**
          * @brief set a new position for the gameobject in elements_ in a new direction
          */
-        void setNewPosition(const Direction & dir, const GameObject & object);
+        void setNewPosition(const Direction & dir, GameObject & object);
 
 
         /**
@@ -57,11 +57,6 @@ class LevelMechanics
          * @param reverseElement say if the element has to be revert from rule to playable type
          */
         bool isElementOnPos(const std::vector<Element> & elementsOnPos, const Element & elementToFind, bool reverseElement);
-
-        /**
-         * @brief check if there is something that could block a move
-         */
-        bool isBlockerOnPos(const std::vector<Element> & elementsOnPos);
 
         void dropElement(const GameObject & elem);
 

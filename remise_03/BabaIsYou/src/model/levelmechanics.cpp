@@ -34,12 +34,13 @@ vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
     return typeElement;
 }
 
-void LevelMechanics::setNewPosition(const Direction & dir, const GameObject & object) {
+void LevelMechanics::setNewPosition(const Direction & dir, GameObject & object) {
     for(unsigned int index=0; index<elements_.size(); ++index) {
         GameObject current = elements_.at(index);
         if(current.element() == object.element() && current.pos() == object.pos()) {
             Position pos = current.pos().next(dir);
             elements_.at(index).setPosition(pos);
+            return;
         }
     }
 }
@@ -100,19 +101,6 @@ bool LevelMechanics::isElementOnPos(const std::vector<Element> & elementsOnPos, 
     return false;
 }
 
-bool LevelMechanics::isBlockerOnPos(const std::vector<Element> & elementsOnPos) {
-    if(!elementsOnPos.empty()) {
-        for(unsigned int index=0; index<elementsOnPos.size(); ++index) {
-            if(elementsOnPos.at(index) == Element::BABA
-                    || elementsOnPos.at(index) == Element::FLAG
-                    || elementsOnPos.at(index) == Element::ROCK
-                    || elementsOnPos.at(index) == Element::WALL)
-                return true;
-            }
-        }
-    return false;
-}
-
 void LevelMechanics::dropElement(const GameObject & elem) {
     for(unsigned int index=0; index<elements_.size(); ++index) {
         GameObject current = elements_.at(index);
@@ -129,6 +117,7 @@ void LevelMechanics::move(const Direction & dir) {
     rules_.scanRules(elements_);
 
     vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
+    //vector<GameObject> newSet;
     for(unsigned int index=0; index<allIsYou.size(); ++index) {
         if(isMovable(dir,allIsYou.at(index).pos())) {
             setNewPosition(dir, allIsYou.at(index));
@@ -151,11 +140,6 @@ bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
     for(unsigned int index=0; index<isStop.size(); ++index) {
        if(isElementOnPos(elementsOnNewPosition, isStop.at(index), true)) return false;
     }
-
-    //if there is anything on the position to check
-    /*if(isBlockerOnPos(elementsOnNewPosition)) {
-        return isMovable(dir, posToCheck);
-    }*/
 
     //if there is a rule on the position to check, first we must check if this last one is movable
     vector<Element> rules = Util::allRules();

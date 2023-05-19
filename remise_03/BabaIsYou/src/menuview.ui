@@ -200,7 +200,7 @@ border-radius: 10px;</string>
     <string/>
    </property>
    <property name="pixmap">
-    <pixmap>sprites/babaHome-removebg-preview.png</pixmap>
+    <pixmap>sprites/menuview.png</pixmap>
    </property>
   </widget>
  </widget>

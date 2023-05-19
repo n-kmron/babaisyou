@@ -256,6 +256,9 @@ background-color: white;</string>
      <height>26</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">color: #DFDFDF;</string>
+   </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
      <string>File</string>

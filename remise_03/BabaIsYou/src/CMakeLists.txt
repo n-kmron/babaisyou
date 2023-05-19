@@ -49,12 +49,12 @@ add_executable(BabaIsYou
     model/levelmechanics.cpp
 )
 
+target_link_libraries(BabaIsYou PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-target_link_libraries(BabaIsYou PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_sources(BabaIsYou PRIVATE ${SOURCES})
-
 
 install(TARGETS BabaIsYou
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

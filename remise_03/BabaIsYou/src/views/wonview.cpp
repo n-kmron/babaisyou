@@ -9,10 +9,6 @@ WonView::WonView(QWidget *parent) :
     connect(ui->btnExit, &QPushButton::clicked,&QCoreApplication::quit);
 }
 
-void WonView::displayMenu(){
-
-}
-
 WonView::~WonView()
 {
     delete ui;

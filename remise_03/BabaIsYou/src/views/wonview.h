@@ -11,9 +11,6 @@ class WonView : public QWidget
 {
     Q_OBJECT
 
-private slots:
-    void displayMenu();
-
 public:
     explicit WonView(QWidget *parent = nullptr);
     ~WonView();

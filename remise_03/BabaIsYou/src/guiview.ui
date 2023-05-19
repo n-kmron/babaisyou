@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>Baba Is You</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #1a1a1a;</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QGraphicsView" name="myGraphicsView">
     <property name="geometry">
@@ -62,6 +65,11 @@
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#548048;
+color: #DFDFDF;
+border-radius: 10px;</string>
+    </property>
     <property name="text">
      <string>Save</string>
     </property>
@@ -88,6 +96,11 @@
     </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color:#548048;
+color: #DFDFDF;
+border-radius: 10px;</string>
     </property>
     <property name="text">
      <string>Restart</string>
@@ -137,6 +150,9 @@
          <strikeout>false</strikeout>
          <kerning>true</kerning>
         </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #DFDFDF;</string>
        </property>
        <property name="text">
         <string> IS </string>
@@ -194,7 +210,7 @@
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true"/>
+        <string notr="true">color: #DFDFDF;</string>
        </property>
        <property name="text">
         <string>LEVEL </string>

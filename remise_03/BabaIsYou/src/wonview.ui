@@ -6,24 +6,68 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1200</width>
+    <height>820</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1200</width>
+    <height>820</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1200</width>
+    <height>820</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:#232323</string>
+  </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>170</x>
-     <y>140</y>
-     <width>58</width>
-     <height>16</height>
+     <x>290</x>
+     <y>90</y>
+     <width>641</width>
+     <height>431</height>
     </rect>
    </property>
    <property name="text">
-    <string>WonView</string>
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>sprites/babaWin-removebg-preview.png</pixmap>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnBackToTheMenu">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>550</y>
+     <width>281</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Back to the menu</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnExit">
+   <property name="geometry">
+    <rect>
+     <x>670</x>
+     <y>550</y>
+     <width>281</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Exit</string>
    </property>
   </widget>
  </widget>

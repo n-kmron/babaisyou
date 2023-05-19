@@ -1,6 +1,7 @@
 //#include "consolecontroller.h"
 #include "guicontroller.h"
 #include "views/guiview.h"
+#include "views/menuview.h"
 #include <memory>
 #include <utility>
 #include "QtWidgets/qapplication.h"
@@ -17,11 +18,13 @@ int main(int argc, char *argv[])
     //ConsoleController controller;
 
     //use the forward declaration
-    GuiView view;
+    MenuView view;
+    view.show();
+    /*GuiView view;
     GuiController controller(&view);
     view.setController(&controller);
 
-    controller.launch();
+    controller.launch();*/
     return application.exec();
 }
 

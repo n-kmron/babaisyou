@@ -81,148 +81,142 @@
      <string>Restart</string>
     </property>
    </widget>
-   <widget class="QLabel" name="lbTitleBaba">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>620</x>
-      <y>40</y>
-      <width>111</width>
-      <height>51</height>
+      <x>530</x>
+      <y>20</y>
+      <width>420</width>
+      <height>70</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Marker Felt</family>
-      <pointsize>36</pointsize>
-      <italic>false</italic>
-      <bold>true</bold>
-      <strikeout>false</strikeout>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #de396b;</string>
-    </property>
-    <property name="text">
-     <string>BABA</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="lbTitleBaba">
+       <property name="font">
+        <font>
+         <family>Marker Felt</family>
+         <pointsize>36</pointsize>
+         <italic>false</italic>
+         <bold>true</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #de396b;</string>
+       </property>
+       <property name="text">
+        <string>BABA </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbTitleIs">
+       <property name="font">
+        <font>
+         <family>Marker Felt</family>
+         <pointsize>36</pointsize>
+         <italic>false</italic>
+         <bold>true</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="text">
+        <string> IS </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbTitleYou">
+       <property name="font">
+        <font>
+         <family>Marker Felt</family>
+         <pointsize>36</pointsize>
+         <italic>false</italic>
+         <bold>true</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #de396b;</string>
+       </property>
+       <property name="text">
+        <string>YOU</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QLabel" name="lbTitleYou">
-    <property name="geometry">
-     <rect>
-      <x>770</x>
-      <y>40</y>
-      <width>71</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Marker Felt</family>
-      <pointsize>36</pointsize>
-      <italic>false</italic>
-      <bold>true</bold>
-      <strikeout>false</strikeout>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #de396b;</string>
-    </property>
-    <property name="text">
-     <string>YOU</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbTitleIs">
-    <property name="geometry">
-     <rect>
-      <x>710</x>
-      <y>40</y>
-      <width>71</width>
-      <height>51</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Marker Felt</family>
-      <pointsize>36</pointsize>
-      <italic>false</italic>
-      <bold>true</bold>
-      <strikeout>false</strikeout>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="text">
-     <string>IS</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbLevel">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
       <x>670</x>
       <y>90</y>
-      <width>111</width>
-      <height>51</height>
+      <width>141</width>
+      <height>39</height>
      </rect>
     </property>
-    <property name="font">
-     <font>
-      <family>Marker Felt</family>
-      <pointsize>20</pointsize>
-      <italic>false</italic>
-      <bold>true</bold>
-      <strikeout>false</strikeout>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string>LEVEL</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-   </widget>
-   <widget class="QLabel" name="lbLevelCounter">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
-      <y>100</y>
-      <width>41</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Marker Felt</family>
-      <pointsize>20</pointsize>
-      <italic>false</italic>
-      <bold>true</bold>
-      <strikeout>false</strikeout>
-      <kerning>true</kerning>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: #de396b;
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="lbLevel">
+       <property name="font">
+        <font>
+         <family>Marker Felt</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>true</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+       <property name="text">
+        <string>LEVEL </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lbLevelCounter">
+       <property name="font">
+        <font>
+         <family>Marker Felt</family>
+         <pointsize>20</pointsize>
+         <italic>false</italic>
+         <bold>true</bold>
+         <strikeout>false</strikeout>
+         <kerning>true</kerning>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #de396b;
 background-color: white;</string>
-    </property>
-    <property name="text">
-     <string>1</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -231,7 +225,7 @@ background-color: white;</string>
      <x>0</x>
      <y>0</y>
      <width>1600</width>
-     <height>36</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

@@ -1,11 +1,11 @@
 #include "menuview.h"
 #include "ui_menuview.h"
-#include "../guicontroller.h"
-#include "guiview.h"
 
-MenuView::MenuView(QWidget *parent) :
+MenuView::MenuView(QWidget *parent, GuiView *view, GuiController* controller) :
     QWidget(parent),
-    ui(new Ui::MenuView)
+    ui(new Ui::MenuView),
+    view_ (view),
+    controller_ (controller)
 {
     ui->setupUi(this);
     connect(ui->btnStart, &QPushButton::clicked, this, &MenuView::startNewGame);
@@ -14,16 +14,13 @@ MenuView::MenuView(QWidget *parent) :
 
 void MenuView::startNewGame(){
     this->close();
-    //use the forward declaration
-    GuiView* view = new GuiView();
-    GuiController* controller = new GuiController(view);
-    view->setController(controller);
-
-    controller->launch();
+    controller_->launch();
 }
 
 void MenuView::loadASave(){
-
+    this->close();
+    controller_->launch();
+    view_->displayUserSaves();
 }
 
 MenuView::~MenuView()

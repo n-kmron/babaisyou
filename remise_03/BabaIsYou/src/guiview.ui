@@ -81,12 +81,12 @@
      <string>Restart</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>530</x>
-      <y>20</y>
-      <width>420</width>
+      <x>610</x>
+      <y>30</y>
+      <width>241</width>
       <height>70</height>
      </rect>
     </property>
@@ -159,11 +159,11 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>670</x>
-      <y>90</y>
+      <x>650</x>
+      <y>100</y>
       <width>141</width>
       <height>39</height>
      </rect>
@@ -225,7 +225,7 @@ background-color: white;</string>
      <x>0</x>
      <y>0</y>
      <width>1600</width>
-     <height>26</height>
+     <height>36</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -241,7 +241,6 @@ background-color: white;</string>
     <addaction name="actionSaveGame"/>
     <addaction name="actionLoadGame"/>
     <addaction name="actionRestart"/>
-    <addaction name="actionBackToMenu_2"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -288,7 +287,7 @@ background-color: white;</string>
     <string>Back to menu</string>
    </property>
   </action>
-  <action name="actionBackToMenu_2">
+  <action name="actionMenu">
    <property name="text">
     <string>Back to menu</string>
    </property>

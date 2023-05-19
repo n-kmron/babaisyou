@@ -13,6 +13,7 @@ WonView::WonView(QWidget *parent) :
 void WonView::displayMenu(){
 
 }
+
 WonView::~WonView()
 {
     delete ui;

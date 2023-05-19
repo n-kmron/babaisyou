@@ -8,6 +8,9 @@ using namespace std;
 
 class Util {
 
+private:
+    const static int IMAGE_SIZE = 32;
+
 public:
 
 /**
@@ -226,7 +229,7 @@ QPixmap static displayAsImage(const Element& elem) {
 
     QString imagePath = QString::fromStdString(imageFromElement.at(elem));
     QPixmap originalPixmap(imagePath);
-    QPixmap pixmap = originalPixmap.scaled(QSize(32, 32), Qt::KeepAspectRatio);
+    QPixmap pixmap = originalPixmap.scaled(QSize(IMAGE_SIZE, IMAGE_SIZE), Qt::KeepAspectRatio);
 
     return pixmap;
 }

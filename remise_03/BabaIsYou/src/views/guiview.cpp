@@ -1,4 +1,7 @@
 #include "guiview.h"
+#include "wonview.h"
+#include "menuview.h"
+#include "helpview.h"
 #include "../guicontroller.h"
 #include "QtWidgets/qboxlayout.h"
 #include "ui_guiview.h"
@@ -33,18 +36,15 @@ GuiView::GuiView(QWidget *parent) :
     connect(ui->actionLoadGame, &QAction::triggered, this, &GuiView::displayUserSaves);
     connect(ui->actionSaveGame, &QAction::triggered, this, &GuiView::save);
     connect(ui->actionRestart, &QAction::triggered, this, &GuiView::restart);
-    connect(ui->actionBackToMenu, &QAction::triggered, this, &GuiView::displayMenu);
     connect(ui->actionDisplayHelp, &QAction::triggered, this, &GuiView::displayHelp);
     connect(ui->btnSave, &QPushButton::clicked, this, &GuiView::save);
     connect(ui->btnRestart, &QPushButton::clicked, this, &GuiView::restart);
 }
 
-void GuiView::displayMenu() {
-    //display main menu and close this window
-}
-
 void GuiView::displayHelp() {
-    //display main menu and close this window
+    HelpView* help = new HelpView();
+    help->show();
+    help->setAttribute(Qt::WA_DeleteOnClose);
 }
 void GuiView::save() {
     bool ok;
@@ -99,8 +99,10 @@ void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, 
 }
 
 void GuiView::displayFinalWon() {
-    //close this window
-    //new view for the final win
+    this->close();
+    WonView* won = new WonView();;
+    won->show();
+    won->setAttribute(Qt::WA_DeleteOnClose);
 }
 
 void GuiView::displayNextLevel(unsigned int actualLevel) {

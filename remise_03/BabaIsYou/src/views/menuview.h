@@ -2,6 +2,8 @@
 #define MENUVIEW_H
 
 #include <QWidget>
+#include "guiview.h"
+#include "../guicontroller.h"
 
 namespace Ui {
 class MenuView;
@@ -17,11 +19,13 @@ private slots:
 
 
 public:
-    explicit MenuView(QWidget *parent = nullptr);
+    explicit MenuView(QWidget *parent = nullptr, GuiView *view = nullptr, GuiController *controller = nullptr);
     ~MenuView();
 
 private:
     Ui::MenuView *ui;
+    GuiView* view_;
+    GuiController* controller_;
 };
 
 #endif // MENUVIEW_H

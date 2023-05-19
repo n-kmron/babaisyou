@@ -174,9 +174,12 @@ bool LevelMechanics::isWon() {
     vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
 
     //for each winning type, find all occurences on the map and check if a isYou element is on the same position
+
     for(unsigned int i=0; i<allIsYou.size(); ++i) {
         for(unsigned int j=0; j<allIsWin.size(); ++j) {
-            if(allIsYou.at(i).pos() == allIsWin.at(j).pos()) return true;
+            if(allIsYou.at(i).pos() == allIsWin.at(j).pos()) {
+                return true;
+            }
         }
     }
     return false;

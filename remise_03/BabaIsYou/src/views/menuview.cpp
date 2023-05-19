@@ -1,5 +1,7 @@
 #include "menuview.h"
 #include "ui_menuview.h"
+#include "../guicontroller.h"
+#include "guiview.h"
 
 MenuView::MenuView(QWidget *parent) :
     QWidget(parent),
@@ -11,8 +13,15 @@ MenuView::MenuView(QWidget *parent) :
 }
 
 void MenuView::startNewGame(){
+    this->close();
+    //use the forward declaration
+    GuiView* view = new GuiView();
+    GuiController* controller = new GuiController(view);
+    view->setController(controller);
 
+    controller->launch();
 }
+
 void MenuView::loadASave(){
 
 }

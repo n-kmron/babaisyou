@@ -1,6 +1,4 @@
 //#include "consolecontroller.h"
-#include "guicontroller.h"
-#include "views/guiview.h"
 #include "views/menuview.h"
 #include <memory>
 #include <utility>
@@ -16,15 +14,9 @@ int main(int argc, char *argv[])
 
     //to activate console launcher uncomment this line below and put 'run in terminal'
     //ConsoleController controller;
-
-    //use the forward declaration
     MenuView view;
     view.show();
-    /*GuiView view;
-    GuiController controller(&view);
-    view.setController(&controller);
 
-    controller.launch();*/
     return application.exec();
 }
 

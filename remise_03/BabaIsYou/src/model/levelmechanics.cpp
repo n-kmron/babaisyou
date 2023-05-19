@@ -153,9 +153,9 @@ bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
     }
 
     //if there is anything on the position to check
-    if(isBlockerOnPos(elementsOnNewPosition)) {
+    /*if(isBlockerOnPos(elementsOnNewPosition)) {
         return isMovable(dir, posToCheck);
-    }
+    }*/
 
     //if there is a rule on the position to check, first we must check if this last one is movable
     vector<Element> rules = Util::allRules();
@@ -164,7 +164,6 @@ bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
             return isMovable(dir, posToCheck.next(dir));
         }
     }
-
     return true;
 }
 

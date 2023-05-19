@@ -31,10 +31,10 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>410</x>
-     <y>140</y>
-     <width>521</width>
-     <height>131</height>
+     <x>210</x>
+     <y>130</y>
+     <width>871</width>
+     <height>137</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">

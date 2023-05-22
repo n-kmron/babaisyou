@@ -35,8 +35,8 @@ PS : le fichier .mdj n'est pas documenté car un fichier pdf d'explications est 
 <h3>Date : 26/05/2023</h3>
 <p>Le projet graphique est disponible dans le répertoire <i>'remise_03/BabaIsYou'</i>.</p>
 <p>le <code>working directory</code> de ce projet doit être (à partir de la racine 'BabaIsYou'): <code>/BabaIsYou/src</code></p>
-<p><b>Brève description du projet : </b> Nous avons conçu une interface visuelle agréable et simple d'utilisation pour les utilisateurs avec toutes nos fonctionnalités via des raccourcis, des boutons et un menu d'application. Notre application est responsive et s'adapte donc à la dimension de la fenêtre pour les appareils de DESKTOP uniquement. Les sprites ne sont chargés qu'une fois par la vue afin d'éviter une surcharge progressive.</p>
-<p><b>UPDATE : tous les points donnés dans votre feedback ont été patchés et nous n'avons soulignés aucun bug apparent dans cette version. De plus, tous les avertissement précédents ont également été supprimés.</b></p>
+<p><b>Brève description du projet : </b> Nous avons conçu une interface visuelle agréable et simple d'utilisation pour les utilisateurs avec toutes nos fonctionnalités via des raccourcis, des boutons et un menu d'application. Notre application n'est pas responsive (resize indisponible) et est conçue pour les appareils de DESKTOP uniquement. Les sprites ne sont chargés qu'une fois par la vue afin d'éviter une surcharge progressive.</p>
+<p><b>UPDATE : tous les points donnés dans votre feedback ont été patchés. De plus, tous les avertissement précédents ont également été supprimés.</b></p>
 
 <p><b>Les avertissements que contiennent le projet :</b> 
 <ul>
@@ -48,3 +48,4 @@ PS : le fichier .mdj n'est pas documenté car un fichier pdf d'explications est 
     </li>
 </ul>
 </p>
+<p>2 utilisations de new sont recensées dans le code sans delete (pour la création de vues) mais via cet attribut : setAttribute(Qt::WA_DeleteOnClose), le delete est implicitement appelé quand nécessaire</p>

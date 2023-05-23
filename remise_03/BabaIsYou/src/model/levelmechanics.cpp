@@ -34,12 +34,13 @@ vector<GameObject> LevelMechanics::findAllElement(const Element & element) {
     return typeElement;
 }
 
-void LevelMechanics::setNewPosition(const Direction & dir, const GameObject & object) {
+void LevelMechanics::setNewPosition(const Direction & dir, GameObject & object) {
     for(unsigned int index=0; index<elements_.size(); ++index) {
         GameObject current = elements_.at(index);
         if(current.element() == object.element() && current.pos() == object.pos()) {
             Position pos = current.pos().next(dir);
             elements_.at(index).setPosition(pos);
+            return;
         }
     }
 }
@@ -116,15 +117,16 @@ void LevelMechanics::move(const Direction & dir) {
     rules_.scanRules(elements_);
 
     vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
+    //vector<GameObject> newSet;
     for(unsigned int index=0; index<allIsYou.size(); ++index) {
         if(isMovable(dir,allIsYou.at(index).pos())) {
             setNewPosition(dir, allIsYou.at(index));
             checkToKill();
             checkIfGameObjectPushed(dir, allIsYou.at(index).pos());
             checkIfRulePushed(dir, allIsYou.at(index).pos());
-            //checkToSink(dir, allIsYou.at(index).pos());
         }
     }
+    rules_.scanRules(elements_);
 }
 
 bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
@@ -146,7 +148,6 @@ bool LevelMechanics::isMovable(const Direction & dir, Position pos) {
             return isMovable(dir, posToCheck.next(dir));
         }
     }
-
     return true;
 }
 
@@ -156,9 +157,12 @@ bool LevelMechanics::isWon() {
     vector<GameObject> allIsYou = fromRuleToGameObjectOccurences(Element::YOU);
 
     //for each winning type, find all occurences on the map and check if a isYou element is on the same position
+
     for(unsigned int i=0; i<allIsYou.size(); ++i) {
         for(unsigned int j=0; j<allIsWin.size(); ++j) {
-            if(allIsYou.at(i).pos() == allIsWin.at(j).pos()) return true;
+            if(allIsYou.at(i).pos() == allIsWin.at(j).pos()) {
+                return true;
+            }
         }
     }
     return false;
@@ -201,8 +205,12 @@ bool LevelMechanics::checkToSink(const Direction & dir, Position pos) {
 
 bool LevelMechanics::isThereIsYou() {
     vector<Element> isYou = rules_.rules()[Element::YOU];
-    vector<GameObject> isYouOccurences = findAllElement(fromRuleTypeToPlayableType(isYou.at(0)));
+    vector<GameObject> isYouOccurences;
+    if(!isYou.empty()) {
+        isYouOccurences = findAllElement(fromRuleTypeToPlayableType(isYou.at(0)));
+    }
     return !isYou.empty() && !isYouOccurences.empty();
+
 }
 
 void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos) {
@@ -213,8 +221,11 @@ void LevelMechanics::checkIfGameObjectPushed(const Direction & dir, Position pos
         if(allIsPush.at(index).pos() == posToCheck) {
             if(isMovable(dir, allIsPush.at(index).pos())) {
                 checkIfGameObjectPushed(dir, posToCheck);
+                checkIfRulePushed(dir, posToCheck);
                 if(checkToSink(dir, posToCheck)) dropElement(allIsPush.at(index));
-                setNewPosition(dir, allIsPush.at(index));
+                if(isMovable(dir, pos)) {
+                    setNewPosition(dir, allIsPush.at(index));
+                }
             }
         }
     }
@@ -231,6 +242,7 @@ void LevelMechanics::checkIfRulePushed(const Direction & dir, Position pos) {
             if(occurences.at(occurencesIndex).pos() == posToCheck) {
                 if(isMovable(dir, occurences.at(occurencesIndex).pos())) {
                     checkIfRulePushed(dir, posToCheck);
+                    checkIfGameObjectPushed(dir, posToCheck);
                     if(isMovable(dir, pos)) {
                         setNewPosition(dir, occurences.at(occurencesIndex));
                     }
@@ -255,7 +267,6 @@ void LevelMechanics::saveGame(string location) {
         }
         outfile.close();
         cout << "The game has been saved !" << endl;
-        exit(0);
     }
     else
     {

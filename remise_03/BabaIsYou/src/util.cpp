@@ -2,10 +2,15 @@
 #include "model/gameobject.h"
 #include <map>
 #include <vector>
+#include <QPixmap>
+#include <utility>
 
 using namespace std;
 
 class Util {
+
+private:
+    const static int IMAGE_SIZE = 32;
 
 public:
 
@@ -196,33 +201,41 @@ unsigned int static getZIndexOfElement(const Element & elem) {
 //-------------------------------------------------------------------
 
 
-string static displayAsImage(const Element& elem) {
-    static map<Element, string> imageFromElement = {
-        {Element::NULLELEMENT, "sprites/void.png"},
-        {Element::TEXT_BABA, "sprites/text_baba.png"},
-        {Element::TEXT_WALL, "sprites/text_wall.png"},
-        {Element::TEXT_ROCK, "sprites/text_rock.png"},
-        {Element::TEXT_LAVA, "sprites/text_lava.png"},
-        {Element::TEXT_GOOP, "sprites/text_goop.png"},
-        {Element::TEXT_FLAG, "sprites/text_flag.png"},
-        {Element::IS, "sprites/is.png"},
-        {Element::YOU, "sprites/you.png"},
-        {Element::WIN, "sprites/win.png"},
-        {Element::STOP, "sprites/stop.png"},
-        {Element::SINK, "sprites/sink.png"},
-        {Element::PUSH, "sprites/push.png"},
-        {Element::KILL, "sprites/kill.png"},
-        {Element::BABA, "sprites/baba.png"},
-        {Element::WALL, "sprites/wall.png"},
-        {Element::ROCK, "sprites/rock.png"},
-        {Element::LAVA, "sprites/lava.png"},
-        {Element::GRASS, "sprites/grass.png"},
-        {Element::METAL, "sprites/void.png"},
-        {Element::GOOP, "sprites/goop.png"},
-        {Element::FLAG, "sprites/flag.png"}
+QPixmap static displayAsImage(const Element& elem) {
+
+    QPixmap spritesheet("sprites/spritesheet.png");
+
+    //the pair represent x and y movement in the spritesheet for the element
+    static map<Element, pair<unsigned int, unsigned int>> imageMovement = {
+        {Element::NULLELEMENT, pair<unsigned int, unsigned int>(0, 0)},
+        {Element::TEXT_BABA, pair<unsigned int, unsigned int>(1, 0)},
+        {Element::TEXT_WALL, pair<unsigned int, unsigned int>(2, 0)},
+        {Element::TEXT_ROCK, pair<unsigned int, unsigned int>(3, 0)},
+        {Element::TEXT_LAVA, pair<unsigned int, unsigned int>(4, 0)},
+        {Element::TEXT_GOOP, pair<unsigned int, unsigned int>(0, 1)},
+        {Element::TEXT_FLAG, pair<unsigned int, unsigned int>(1, 1)},
+        {Element::IS, pair<unsigned int, unsigned int>(2, 1)},
+        {Element::YOU, pair<unsigned int, unsigned int>(3, 1)},
+        {Element::WIN, pair<unsigned int, unsigned int>(4, 1)},
+        {Element::STOP, pair<unsigned int, unsigned int>(0, 2)},
+        {Element::SINK, pair<unsigned int, unsigned int>(1, 2)},
+        {Element::PUSH, pair<unsigned int, unsigned int>(2, 2)},
+        {Element::KILL, pair<unsigned int, unsigned int>(3, 2)},
+        {Element::BABA, pair<unsigned int, unsigned int>(4, 2)},
+        {Element::WALL, pair<unsigned int, unsigned int>(0, 3)},
+        {Element::ROCK, pair<unsigned int, unsigned int>(1, 3)},
+        {Element::LAVA, pair<unsigned int, unsigned int>(2, 3)},
+        {Element::GRASS, pair<unsigned int, unsigned int>(3, 3)},
+        {Element::METAL, pair<unsigned int, unsigned int>(4, 3)},
+        {Element::GOOP, pair<unsigned int, unsigned int>(0, 4)},
+        {Element::FLAG, pair<unsigned int, unsigned int>(1, 4)}
     };
 
-    return imageFromElement.at(elem);
+    unsigned int xMove = imageMovement.at(elem).first;
+    unsigned int yMove = imageMovement.at(elem).second;
+    QPixmap pixmap = spritesheet.copy(xMove * IMAGE_SIZE, yMove * IMAGE_SIZE, IMAGE_SIZE, IMAGE_SIZE);
+
+    return pixmap;
 }
 
 };

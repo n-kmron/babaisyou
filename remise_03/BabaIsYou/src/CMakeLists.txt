@@ -9,20 +9,27 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR})  # Adjust the path i
 #comment : ask for all warnings and strict compliance with the standard
 set(CMAKE_CXX_FLAGS "-Wall -pedantic-errors")
 
-#ajouter les fichiers ici
 add_executable(BabaIsYou
     main.cpp
+    guiview.ui
+    menuview.ui
+    helpview.ui
+    wonview.ui
     util.cpp
-    view.h
     consolecontroller.h
     consolecontroller.cpp
     guicontroller.h
     guicontroller.cpp
-    textview.h
-    textview.cpp
-    guiview.h
-    guiview.cpp
-    guiview.ui
+    views/menuview.h
+    views/menuview.cpp
+    views/helpview.h
+    views/helpview.cpp
+    views/wonview.h
+    views/wonview.cpp
+    views/textview.h
+    views/textview.cpp
+    views/guiview.h
+    views/guiview.cpp
     model/observer.h
     model/observable.h
     model/rulemanager.h
@@ -42,12 +49,12 @@ add_executable(BabaIsYou
     model/levelmechanics.cpp
 )
 
+target_link_libraries(BabaIsYou PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-target_link_libraries(BabaIsYou PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_sources(BabaIsYou PRIVATE ${SOURCES})
-
 
 install(TARGETS BabaIsYou
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})

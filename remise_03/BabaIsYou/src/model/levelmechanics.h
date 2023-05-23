@@ -31,7 +31,7 @@ class LevelMechanics
         /**
          * @brief set a new position for the gameobject in elements_ in a new direction
          */
-        void setNewPosition(const Direction & dir, const GameObject & object);
+        void setNewPosition(const Direction & dir, GameObject & object);
 
 
         /**

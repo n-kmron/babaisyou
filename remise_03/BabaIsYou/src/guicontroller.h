@@ -2,27 +2,26 @@
 #define GUICONTROLLER_H
 
 #include "model/game.h"
-#include "guiview.h"
 #include <memory>
+#include "QtGui/qevent.h"
 
+class GuiView;
 
 class GuiController {
 
 private:
     std::unique_ptr<Game> game_;
-    GuiView view_;
+    GuiView* view_;
 
 public:
 
-    GuiController();
+    GuiController(GuiView* view);
 
     void launch();
 
     void start();
 
     void move(const std::string & dir);
-
-    void playShot();
 
     bool isWon();
 
@@ -35,6 +34,11 @@ public:
     void restart();
 
     void nextLevel();
+
+    void manageEvents(QKeyEvent *keyEvent);
+
+    void checkGameState();
+
 
     /**
      * @brief the row is the first member of the pair and col is the second one

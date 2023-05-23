@@ -2,7 +2,7 @@
 #include <regex>
 #include <string>
 #include "textview.h"
-#include "util.cpp"
+#include "../util.cpp"
 #include <unistd.h>
 #include <vector>
 #include <sstream>
@@ -150,7 +150,7 @@ string TextView::askWhichLevel() {
                 }
             }
             if(input == "N") {
-                return "level_5";
+                return "level_1";
             }
         } else {
             displayError("Invalid input. Please try again");

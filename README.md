@@ -43,9 +43,6 @@ PS : le fichier .mdj n'est pas documenté car un fichier pdf d'explications est 
     <li>
         GuiView::displayUserSaves : Pass a context object as 3rd connect parameter.
     </li>
-    <li>
-        GuiView::displayUserSaves : Potential leak of memory pointed to by 'layout' 
-    </li>
 </ul>
 </p>
 <p>2 utilisations de new sont recensées dans le code sans delete (pour la création de vues) mais via cet attribut : setAttribute(Qt::WA_DeleteOnClose), le delete est implicitement appelé quand nécessaire</p>

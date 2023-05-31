@@ -2,7 +2,9 @@
 Implementation of famous Baba Is You from scratch using C++20
 
 ## Brief description
-We have designed a pleasant and easy to use visual interface for users with all our functionalities via shortcuts, buttons and an application menu. Our application is not responsive (resize unavailable) and is designed for DESKTOP devices only. Sprites are only loaded once (using a single spritesheet) by the view to avoid progressive overloading.
+We have designed a pleasant and easy to use visual interface for users with all our functionalities via shortcuts, buttons and an application menu. Our application is not responsive (resize unavailable) and is designed for DESKTOP devices only. Sprites are only loaded once (using a single spritesheet) by the view to avoid progressive overloading. 
+
+The project is cross-platform (macos and windows)
 
 ## Building and launch
 

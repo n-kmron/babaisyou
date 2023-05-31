@@ -1,6 +1,5 @@
 #include "guiview.h"
 #include "wonview.h"
-#include "menuview.h"
 #include "helpview.h"
 #include "../guicontroller.h"
 #include "QtWidgets/qboxlayout.h"
@@ -84,15 +83,13 @@ void GuiView::restart() {
     controller_->restart();
 }
 
-void GuiView::displayBoard(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements) {
-    vector<vector<Element>> positionsMap = getPositionsMap(sizes, elements);
+void GuiView::displayBoard(const pair<unsigned int, unsigned int> & sizes, const vector<GameObject> & elements) {
 
-    for(unsigned int height=0; height<sizes.first; ++height) {
-        for(unsigned int width=0; width<sizes.second; ++width) {
-            if(positionsMap.size() >= height && positionsMap.at(height).size() >= width) {
-                displayImage(positionsMap.at(height).at(width), height, width);
-            }
-        }
+    for(unsigned int index = 0; index<elements.size(); ++index) {
+        Element elem = elements.at(index).element();
+        unsigned int height = elements.at(index).pos().row();
+        unsigned int width = elements.at(index).pos().col();
+        displayImage(elem, height, width);
     }
     QRect viewContentRect = ui->myGraphicsView->contentsRect();
     scene_.setSceneRect(viewContentRect);
@@ -127,8 +124,10 @@ unsigned int GuiView::displayUserSaves() {
     unsigned int numberSaves { 0 };
 
     QDialog dialog;
+    dialog.setLayout(nullptr);
     dialog.setWindowTitle("Save Selection");
-    QVBoxLayout *layout = new QVBoxLayout(&dialog);
+    QVBoxLayout *layout = new QVBoxLayout();
+    dialog.setLayout(layout); // dialog will handle layout deletion -> no memory leak
 
     for (const auto& entry : filesystem::directory_iterator(path_to_saves))
     {
@@ -156,8 +155,8 @@ unsigned int GuiView::displayUserSaves() {
                 });
 
                 QHBoxLayout *itemLayout = new QHBoxLayout;
-                itemLayout->addWidget(label);
-                itemLayout->addWidget(button);
+                itemLayout->addWidget(label); //ownership so no delete
+                itemLayout->addWidget(button); //ownership so no delete
                 layout->addLayout(itemLayout);
 
                 numberSaves++;
@@ -174,25 +173,6 @@ void GuiView::update(std::pair<unsigned int, unsigned int> sizes, std::vector<Ga
 }
 
 // PRIVATE FUNCTIONS ----------------
-
-vector<vector<Element>> GuiView::getPositionsMap(const pair<unsigned int, unsigned int> & sizes, const vector<GameObject> & elements) {
-    vector<vector<Element>> positionsMap(sizes.first, vector<Element>(sizes.second));
-    for(unsigned int i=0; i<elements.size(); ++i) {
-        GameObject current = elements.at(i);
-        unsigned int row = current.pos().row();
-        unsigned int col = current.pos().col();
-        Element elem = current.element();
-        if(positionsMap.at(row).at(col) != Element::NULLELEMENT) {
-            if(Util::getZIndexOfElement(elem) > Util::getZIndexOfElement(positionsMap.at(row).at(col))) {
-                positionsMap.at(row).at(col) = elem;
-            }
-        } else {
-            positionsMap.at(row).at(col) = elem;
-        }
-    }
-
-    return positionsMap;
-}
 
 void GuiView::displayImage(const Element & elem, int height, int width) {
     QGraphicsPixmapItem* item = new QGraphicsPixmapItem();

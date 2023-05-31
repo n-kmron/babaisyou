@@ -31,11 +31,6 @@ private:
     std::map<Element, QPixmap> images_;
 
     /**
-     * @brief transform the game state from a vector<GameObject> by a 2d array
-     */
-    std::vector<std::vector<Element>> getPositionsMap(const std::pair<unsigned int, unsigned int> & sizes, const std::vector<GameObject> & elements);
-
-    /**
      * @brief display the image corresponding to the element as parameter at the position given
      */
     void displayImage(const Element & elem, int height, int width);

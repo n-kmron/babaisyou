@@ -126,7 +126,6 @@ void LevelMechanics::move(const Direction & dir) {
             checkIfRulePushed(dir, allIsYou.at(index).pos());
         }
     }
-    rules_.scanRules(elements_);
 }
 
 bool LevelMechanics::isMovable(const Direction & dir, Position pos) {

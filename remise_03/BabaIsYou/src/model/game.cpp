@@ -25,7 +25,7 @@ void Game::saveGame(string name) {
     notifyObservers(levelSize(), elements());
 }
 
-void Game::move(const Direction & dir) {
+void Game::move(Direction dir) {
     levelMechanics_.move(dir);
     notifyObservers(levelSize(), elements());
 }

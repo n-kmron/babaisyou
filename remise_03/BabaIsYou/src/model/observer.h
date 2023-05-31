@@ -4,9 +4,6 @@
 #include "gameobject.h"
 #include <vector>
 
-/**
- * @brief Observer interface to implements the observable-observers design pattern
- */
 class Observer
 {
     public:

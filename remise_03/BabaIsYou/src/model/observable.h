@@ -4,9 +4,6 @@
 #include <set>
 #include "observer.h"
 
-/**
- * @brief Observable interface to implements the observable-observers design pattern
- */
 class Observable
 {
 private:
